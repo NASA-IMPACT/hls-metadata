@@ -15,24 +15,26 @@ class Metadata:
 
     def __init__(self, data_file, obj):
         #initialize the granule level metadata file
-        self.granule = {}
-        granule_tag = self.granule['Granule'] = {}
-        self.granule['Granule']['GranuleUR'] = ''
-        self.granule['Granule']['InsertTime'] = ''
-        self.granule['Granule']['LastUpdate'] = ''
-        self.granule['Granule']['Collection'] = {}
-        self.granule['Granule']['DataGranule'] = {}
-        self.granule['Granule']['Temporal'] = {}
-        self.granule['Granule']['Spatial'] = {}
-        self.granule['Granule']['Platforms'] = {}
-        self.granule['Granule']['OnlineAccessURLs'] = {}
-        self.granule['Granule']['OnlineAccessURLs']['OnlineAccessURL']={}
-        self.granule['Granule']['OnlineResources'] = {}
-        self.granule['Granule']['OnlineResources']['OnlineResource'] = [{},{}]
-        self.granule['Granule']['AdditionalAttributes'] = {}
-        self.granule['Granule']['Orderable'] = ''
-        self.granule['Granule']['DataFormat'] = ''
-        self.granule['Granule']['Visible'] = ''
+        self.root = {
+          'GranuleUR' :  '',
+          'InsertTime' :  '',
+          'LastUpdate' :  '',
+          'Collection' :  {},
+          'DataGranule' :  {},
+          'Temporal' :  {},
+          'Spatial' :  {},
+          'Platforms' :  {},
+          'OnlineAccessURLs' :  {},
+          'OnlineAccessURLs': { 'OnlineAccessURL': {} },
+          'OnlineResources' :  {},
+          'OnlineResources': { 'OnlineResource' : {} },
+          'AssociatedBrowseImageURLs' :  {},
+          'AssociatedBrowseImageURLs': { 'ProviderBrowseURL' : {} },
+          'AdditionalAttributes' :  {},
+          'Orderable' :  '',
+          'DataFormat' :  '',
+          'Visible' :  '',
+        }
         self.data_file = data_file
         self.object = obj
         self.bucket = 'hls-global'
@@ -72,19 +74,23 @@ class Metadata:
         constant values and establishes the required list of additional attributes
         for each granule.
         '''
-        self.product = product = self.data_file.split('.')[1]
-        with open('util/' + product +'.json','r') as template_file:
+        self.product =self.data_file.split('.')[1]
+        with open('../util/' + self.product +'.json','r') as template_file:
             template = json.load(template_file)
+        template = template[self.product]
         spacecraft_name = self.attributes.get('SPACECRAFT_NAME')
         platform = "LANDSAT-8" if spacecraft_name is None else spacecraft_name
-        self.granule['Granule']['Collection']['DataSetId'] = template[product]['DataSetId']
-        self.granule['Granule']['Platforms'] = template[product][platform]
-        self.granule['Granule']['AdditionalAttributes']=template[product]['AdditionalAttributes']
+        self.root['Collection']['DataSetId'] = template['DataSetId']
         self.data_format = self.data_file.split('.')[-1]
-        self.granule['Granule']['GranuleUR'] = self.data_file.replace('.' + self.data_format,'') 
-        self.granule['Granule']['Orderable'] = template[product]['Orderable']
-        self.granule['Granule']['DataFormat'] = self.data_format
-        self.granule['Granule']['Visible'] = template[product]['Visible']
+        self.root = {
+            **self.root,
+            'Platforms':template[platform],
+            'AdditionalAttributes':template['AdditionalAttributes'],
+            'GranuleUR':self.data_file.replace('.' + self.data_format,''),
+            'Orderable':template['Orderable'],
+            'Visible':template['Visible'],
+            'DataFormat':self.data_format
+        }
 
     def attribute_handler(self):
         '''
@@ -94,9 +100,9 @@ class Metadata:
         provides this mapping so that the appropriate value can be added
         for each of the additional attribute fields.
         '''
-        with open("util/" + self.product + "_attribute_mapping.json","r") as attribute_file:
+        with open("../util/" + self.product + "_attribute_mapping.json","r") as attribute_file:
             attribute_mapping = json.load(attribute_file)
-        for attribute in self.granule['Granule']['AdditionalAttributes']['AdditionalAttribute']:
+        for attribute in self.root['AdditionalAttributes']['AdditionalAttribute']:
             attribute_name = attribute_mapping[attribute['Name']]
             attribute['Value'] = self.attributes.get(attribute_name,"Not Available")
 
@@ -108,18 +114,21 @@ class Metadata:
         AccessURL for each data file?). OnlineResourceURLs are also built
         here and those point to the browse and metadata files.
         '''
-        path = "/".join([self.bucket,self.product,'data'])
-        self.granule['Granule']['OnlineAccessURLs']['OnlineAccessURL']['URL'] = path + self.data_file
-        self.granule['Granule']['OnlineAccessURLs']['OnlineAccessURL']['URLDescription'] = "This file may be downloaded directly from this link"
-        self.granule['Granule']['OnlineAccessURLs']['OnlineAccessURL']['MimeType'] = "application/x-" + self.granule['Granule']['DataFormat']
-        self.granule['Granule']['OnlineResources']['OnlineResource'][0]['URL'] = path.replace('data','thumbnail') + self.data_file.replace(self.granule['Granule']['DataFormat'],'jpeg')
-        self.granule['Granule']['OnlineResources']['OnlineResource'][0]['Description'] = "This Browse file may be downloaded directly from this link"
-        self.granule['Granule']['OnlineResources']['OnlineResource'][0]['Type'] = 'BROWSE'
-        self.granule['Granule']['OnlineResources']['OnlineResource'][0]['MimeType'] = 'image/jpeg'
-        self.granule['Granule']['OnlineResources']['OnlineResource'][1]['URL'] = path.replace('data','metadata') + self.data_file.replace(self.granule['Granule']['DataFormat'],'cmr.xml')
-        self.granule['Granule']['OnlineResources']['OnlineResource'][1]['Description'] = "This Metadata file may be downloaded directly from this link"
-        self.granule['Granule']['OnlineResources']['OnlineResource'][1]['Type'] = 'EXTENDED METADATA'
-        self.granule['Granule']['OnlineResources']['OnlineResource'][1]['MimeType'] = 'text/xml'
+        path = "s3://" + "/".join([self.bucket,self.product,'data'])
+        self.root['OnlineAccessURLs']['OnlineAccessURL'] = {
+            'URL': "/".join([path,self.data_file]),
+            'URLDescription':"This file may be downloaded directly from this link",
+            'MimeType':"application/x-" + self.data_format
+        }
+        self.root['OnlineResources']['OnlineResource'] = {
+            'URL':"/".join([path.replace('data','metadata'), self.data_file.replace(self.data_format,'cmr.xml')]),
+            'Type':'EXTENDED METADATA',
+            'MimeType':'text/xml'
+        }
+        self.root['AssociatedBrowseImageURLs']['ProviderBrowseURL'] = {
+            'URL': "/".join([path.replace('data','thumbnail'),self.data_file.replace(self.data_format,'jpeg')]),
+            'Description': "This Browse file may be downloaded directly from this link"
+        }
 
     def data_granule_handler(self):
         '''
@@ -130,11 +139,11 @@ class Metadata:
         '''
         try:
             production_datetime = datetime.datetime.strptime(self.attributes['HLS_PROCESSING_TIME'],"%Y-%m-%dT%H:%M:%SZ")
-            production_date = production_datetime.strftime('%Y-%m:%dT%H:%M:%S.%fZ')
+            production_date = production_datetime.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
         except:
             production_date = self.attributes['HLS_PROCESSING_TIME']
         version = self.data_file[-7:].replace('.' + self.data_format,'')
-        extension = '.' + '.'.join(['v'+version,self.granule['Granule']['DataFormat']])
+        extension = '.' + '.'.join(['v'+version,self.data_format])
         data_granule = {
                         'SizeMBDataGranule':self.object.size,
                         'ProducerGranuleId': self.data_file.replace(extension,''),
@@ -142,7 +151,7 @@ class Metadata:
                         'ProductionDateTime': production_date,
                         'LocalVersionId': self.data_file[-7:].replace('.' + self.data_format,'')
                         }
-        self.granule['Granule']['DataGranule'] = data_granule
+        self.root['DataGranule'] = data_granule
 
     def time_handler(self):
         '''
@@ -154,15 +163,22 @@ class Metadata:
         and Junchang that these are the appropriate fields.
         '''
         time_format = '%Y-%m-%dT%H:%M:%S.%fZ'
-        self.granule['Granule']['InsertTime'] = datetime.datetime.utcnow().strftime(time_format)
-        self.granule['Granule']['LastUpdate'] = self.object.last_modified.strftime(time_format)
+        self.root = {
+            **self.root,
+            'InsertTime': datetime.datetime.utcnow().strftime(time_format),
+            'LastUpdate':self.object.last_modified.strftime(time_format)
+        }
+
         sensing_time = self.attributes['SENSING_TIME'].split(';')
+        temporal = self.root['Temporal']
         if len(sensing_time) == 1:
-            self.granule['Granule']['Temporal']['SingleDateTime'] = sensing_time[0]
+            temporal['SingleDateTime'] = sensing_time[0]
         else:
-            self.granule['Granule']['Temporal']['RangeDateTime'] = {}
-            self.granule['Granule']['Temporal']['RangeDateTime']['BeginningDateTime'] = sensing_time[0]
-            self.granule['Granule']['Temporal']['RangeDateTime']['EndingDateTime'] = sensing_time[1]
+            temporal['RangeDateTime'] = {
+                'BeginningDateTime': sensing_time[0],
+                'EndingDateTime': sensing_time[1]
+            }
+        self.root['Temporal'] = temporal
 
     def lat_lon_4326(self, bound):
         """
@@ -196,14 +212,13 @@ class Metadata:
         coords = [float(elem) for coord in coords for elem in re.findall(FLOAT_REGEX, coord)]
         coords = [coords[1], coords[0], coords[3], coords[2]]
         bounding_box = self.lat_lon_4326(coords)
-        self.granule['Granule']['Spatial']['HorizontalSpatialDomain'] = {}
-        self.granule['Granule']['Spatial']['HorizontalSpatialDomain']['Geometry'] = {}
+        self.root['Spatial']['HorizontalSpatialDomain'] = {'Geometry':{}}
         bounding_box_dict = {} ; bounding_box_dict['BoundingRectangle'] = {}
         bounding_box_dict['WestBoundingCoordinate'] = bounding_box[2]
         bounding_box_dict['BoundingRectangle']['EastBoundingCoordinate'] = bounding_box[0]
         bounding_box_dict['BoundingRectangle']['NorthBoundingCoordinate'] = bounding_box[3]
         bounding_box_dict['BoundingRectangle']['SouthBoundingCoordinate'] = bounding_box[1]
-        self.granule['Granule']['Spatial']['HorizontalSpatialDomain']['Geometry'] = bounding_box_dict
+        self.root['Spatial']['HorizontalSpatialDomain']['Geometry'] = bounding_box_dict
 
     def move_to_S3(self,bucket_name,report_name):
         '''
@@ -237,7 +252,7 @@ class Metadata:
 
         file_name = self.data_file.replace('hdf', 'cmr.xml')
         with open(file_name, 'w') as xml_metadata:
-            xml_file = dicttoxml(self.granule, root=False, attr_type=False).decode('utf-8')
+            xml_file = dicttoxml({'Granule': self.root}, root=False, attr_type=False).decode('utf-8')
             # Hacky way of getting rid of item tag
             xml_file = xml_file.replace('<item>','')
             xml_metadata.write(xml_file)
