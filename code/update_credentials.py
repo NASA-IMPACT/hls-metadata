@@ -1,5 +1,4 @@
 import boto3
-import os
 
 def assume_role(role_arn,role_session_name):
     '''
