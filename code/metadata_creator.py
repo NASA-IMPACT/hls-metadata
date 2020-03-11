@@ -49,7 +49,7 @@ class Metadata:
         self.extract_attributes()
         self.template_handler()
         self.attribute_handler()
-        self.online_resource()
+        #self.online_resource() - will be handled by LPDAAC
         self.data_granule_handler()
         self.time_handler()
         self.location_handler()
@@ -288,6 +288,7 @@ class Metadata:
         ).decode("utf-8")
         # Hacky way of getting rid of item tag
         xml_file = xml_file.replace("<item>", "")
+        xml_file = xml_file.replace('</item>','')
 
         return xml_file
 
