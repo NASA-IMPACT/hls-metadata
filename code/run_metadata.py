@@ -51,7 +51,7 @@ for obj in bucket.objects.filter(Prefix=path):
     file_name = obj.key.split('/')[-1]
     if file_name.endswith('hdf') and not os.path.exists('output/' + product_id +'/' + file_name.replace('hdf','cmr.xml')):
         bucket.download_file(obj.key,file_name)
-        result = Metadata(file_name,obj).extract_and_store()
+        result = Metadata(file_name).save_to_S3()
         count += 1
         print(count, ': ', file_name, ' - ', result)
         os.remove(file_name)
