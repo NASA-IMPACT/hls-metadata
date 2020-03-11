@@ -17,7 +17,7 @@ ignores the hdr file and only accesses the hdf files in the data bucket.
 '''
 
 bucket_name = 'hls-global'
-product_id = 'S30'
+product_id = 'L30'
 folder = 'data'
 path = "/".join([product_id,folder,''])
 

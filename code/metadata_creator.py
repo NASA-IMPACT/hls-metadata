@@ -53,7 +53,7 @@ class Metadata:
         self.extract_attributes()
         self.template_handler()
         self.attribute_handler()
-        self.online_resource()
+        #self.online_resource() - will be handled by LPDAAC
         self.data_granule_handler()
         self.time_handler()
         self.location_handler()
@@ -176,7 +176,7 @@ class Metadata:
         else:
             temporal['RangeDateTime'] = {
                 'BeginningDateTime': sensing_time[0],
-                'EndingDateTime': sensing_time[1]
+                'EndingDateTime': sensing_time[-1]
             }
         self.root['Temporal'] = temporal
 
@@ -255,6 +255,7 @@ class Metadata:
             xml_file = dicttoxml({'Granule': self.root}, root=False, attr_type=False).decode('utf-8')
             # Hacky way of getting rid of item tag
             xml_file = xml_file.replace('<item>','')
+            xml_file = xml_file.replace('</item>','')
             xml_metadata.write(xml_file)
         result = self.move_to_S3(self.object.bucket_name,file_name)
         if result is True: os.remove(file_name)
