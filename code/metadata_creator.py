@@ -5,6 +5,7 @@ import re
 import xmltodict
 import json
 import boto3
+import update_credentials
 import click
 
 from dicttoxml import dicttoxml
