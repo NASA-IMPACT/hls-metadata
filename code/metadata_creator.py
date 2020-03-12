@@ -1,16 +1,16 @@
 import os
 import datetime
-import rasterio
 import re
-import xmltodict
 import json
 import boto3
 import update_credentials
 import click
+import logging
 
 from dicttoxml import dicttoxml
 from pyhdf.SD import SD, SDC
 from pyproj import Proj, transform
+from botocore.exceptions import ClientError
 
 
 class Metadata:
@@ -50,7 +50,7 @@ class Metadata:
         self.extract_attributes()
         self.template_handler()
         self.attribute_handler()
-        #self.online_resource() - will be handled by LPDAAC
+        # self.online_resource() - will be handled by LPDAAC
         self.data_granule_handler()
         self.time_handler()
         self.location_handler()
@@ -67,8 +67,8 @@ class Metadata:
         there are several fields that will consistent across all granules
         in addition - there are a number of additional attribute fields that
         need to be filled for S30 and L30. The L30.json and S30.json sets the
-        constant values and establishes the required list of additional attributes
-        for each granule.
+        constant values and establishes the required list of additional
+        attributes for each granule.
         """
         self.product = self.data_file.split(".")[1]
         with open("../util/" + self.product + ".json", "r") as template_file:
@@ -100,9 +100,13 @@ class Metadata:
             "../util/" + self.product + "_attribute_mapping.json", "r"
         ) as attribute_file:
             attribute_mapping = json.load(attribute_file)
-        for attribute in self.root["AdditionalAttributes"]["AdditionalAttribute"]:
+        for attribute in self.root["AdditionalAttributes"][
+            "AdditionalAttribute"
+        ]:
             attribute_name = attribute_mapping[attribute["Name"]]
-            attribute["Value"] = self.attributes.get(attribute_name, "Not Available")
+            attribute["Value"] = self.attributes.get(
+                attribute_name, "Not Available"
+            )
 
     def online_resource(self):
         """
@@ -115,7 +119,9 @@ class Metadata:
         path = "s3://" + "/".join([self.bucket, self.product, "data"])
         self.root["OnlineAccessURLs"]["OnlineAccessURL"] = {
             "URL": "/".join([path, self.data_file]),
-            "URLDescription": "This file may be downloaded directly from this link",
+            "URLDescription": (
+                "This file may be downloaded directly from this link"
+            ),
             "MimeType": "application/x-" + self.data_format,
         }
         self.root["OnlineResources"]["OnlineResource"] = {
@@ -135,13 +141,15 @@ class Metadata:
                     self.data_file.replace(self.data_format, "jpeg"),
                 ]
             ),
-            "Description": "This Browse file may be downloaded directly from this link",
+            "Description": (
+                "This Browse file may be downloaded directly from this link"
+            ),
         }
 
     def data_granule_handler(self):
         """
         Here we fill the required values for the DataGranule dictionary
-        using the data file name, the data file attributes, and the 
+        using the data file name, the data file attributes, and the
         S3 object summary. The code also normalizes processing time
         to match the format of the times written in the time_handler
         """
@@ -149,8 +157,10 @@ class Metadata:
             production_datetime = datetime.datetime.strptime(
                 self.attributes["HLS_PROCESSING_TIME"], "%Y-%m-%dT%H:%M:%SZ"
             )
-            production_date = production_datetime.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-        except:
+            production_date = production_datetime.strftime(
+                "%Y-%m-%dT%H:%M:%S.%fZ"
+            )
+        except Exception:
             production_date = self.attributes["HLS_PROCESSING_TIME"]
         version = self.data_file[-7:].replace("." + self.data_format, "")
         extension = "." + ".".join(["v" + version, self.data_format])
@@ -159,7 +169,9 @@ class Metadata:
             "ProducerGranuleId": self.data_file.replace(extension, ""),
             "DayNightFlag": "DAY",
             "ProductionDateTime": production_date,
-            "LocalVersionId": self.data_file[-7:].replace("." + self.data_format, ""),
+            "LocalVersionId": self.data_file[-7:].replace(
+                "." + self.data_format, ""
+            ),
         }
         self.root["DataGranule"] = data_granule
 
@@ -188,7 +200,7 @@ class Metadata:
         else:
             temporal["RangeDateTime"] = {
                 "BeginningDateTime": sensing_time[0],
-                "EndingDateTime": sensing_time[1],
+                "EndingDateTime": sensing_time[-1],
             }
         self.root["Temporal"] = temporal
 
@@ -223,10 +235,12 @@ class Metadata:
         The lat_lon_4326 method returns a bounding box in the following
         format [East,South,West,North].
         """
-        FLOAT_REGEX = "\d+\.\d+"
+        FLOAT_REGEX = r"\d+\.\d+"
         coords = self.attributes["StructMetadata.0"].split("\n\t\t")[5:7]
         coords = [
-            float(elem) for coord in coords for elem in re.findall(FLOAT_REGEX, coord)
+            float(elem)
+            for coord in coords
+            for elem in re.findall(FLOAT_REGEX, coord)
         ]
         coords = [coords[1], coords[0], coords[3], coords[2]]
         bounding_box = self.lat_lon_4326(coords)
@@ -234,20 +248,22 @@ class Metadata:
         bounding_box_dict = {}
         bounding_box_dict["BoundingRectangle"] = {}
         bounding_box_dict["WestBoundingCoordinate"] = bounding_box[2]
-        bounding_box_dict["BoundingRectangle"]["EastBoundingCoordinate"] = bounding_box[
-            0
-        ]
+        bounding_box_dict["BoundingRectangle"][
+            "EastBoundingCoordinate"
+        ] = bounding_box[0]
         bounding_box_dict["BoundingRectangle"][
             "NorthBoundingCoordinate"
         ] = bounding_box[3]
         bounding_box_dict["BoundingRectangle"][
             "SouthBoundingCoordinate"
         ] = bounding_box[1]
-        self.root["Spatial"]["HorizontalSpatialDomain"]["Geometry"] = bounding_box_dict
+        self.root["Spatial"]["HorizontalSpatialDomain"][
+            "Geometry"
+        ] = bounding_box_dict
 
     def save_to_S3(self):
         """
-        If the metadata file is able to be successfully written by the 
+        If the metadata file is able to be successfully written by the
         processing code, we move the data to S3 using the assumed role
         from GCC. This is required for the bucket access policy to be
         applied correctly such that LPDAAC has read/get access.
@@ -265,7 +281,7 @@ class Metadata:
             aws_session_token=creds["SessionToken"],
         )
         try:
-            response = client.put_object(
+            client.put_object(
                 Bucket=self.bucket, Key=object_name, Body=self.xml
             )
         except ClientError as e:
@@ -289,7 +305,7 @@ class Metadata:
         ).decode("utf-8")
         # Hacky way of getting rid of item tag
         xml_file = xml_file.replace("<item>", "")
-        xml_file = xml_file.replace('</item>','')
+        xml_file = xml_file.replace("</item>", "")
 
         return xml_file
 
@@ -314,4 +330,3 @@ def create_metadata(data_file, save=None, s3=False):
 
 if __name__ == "__main__":
     create_metadata()
-
