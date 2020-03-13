@@ -1,12 +1,7 @@
 *.pyc
 __pycache__/
-<<<<<<< HEAD
 venv/
 .vscode/
-=======
-.vscode/
-venv/
->>>>>>> master
 .tox/
 dist/
 *.egg-info
