@@ -1,9 +1,9 @@
 import os
 import boto3
 import datetime
-from metadata_creator import update_credentials
+from . import update_credentials
 
-from metadata_creator.metadata_creator import Metadata
+from .metadata_creator import Metadata
 
 """
 This is essentially a wrapper function for the metadata_creator class.

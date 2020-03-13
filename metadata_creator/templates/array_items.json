@@ -1,0 +1,8 @@
+{
+    "AdditionalAttributes": "AdditionalAttribute",
+    "Instruments": "Instrument",
+    "Platforms": "Platform",
+    "OnlineAccessUrls": "OnlineAccessUrl",
+    "OnlineResources": "OnlineResource",
+    "AssociatedBrowseImageURLs": "ProviderBrowseURL"
+}

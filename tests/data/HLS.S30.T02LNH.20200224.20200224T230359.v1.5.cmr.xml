@@ -1,12 +1,12 @@
 <Granule>
   <GranuleUR>HLS.S30.T02LNH.20200224.20200224T230359.v1.5</GranuleUR>
-  <InsertTime>2020-03-12T17:56:01.020434Z</InsertTime>
-  <LastUpdate>2020-03-11T14:33:45.000000Z</LastUpdate>
+  <InsertTime>2020-03-13T20:37:03.313688Z</InsertTime>
+  <LastUpdate>2020-03-12T15:09:08.036305Z</LastUpdate>
   <Collection>
     <DataSetId>HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5</DataSetId>
   </Collection>
   <DataGranule>
-    <SizeMBDataGranule>4154.25390625</SizeMBDataGranule>
+    <SizeMBDataGranule>4154</SizeMBDataGranule>
     <ProducerGranuleId>HLS.S30.T02LNH.20200224.20200224T230359</ProducerGranuleId>
     <DayNightFlag>DAY</DayNightFlag>
     <ProductionDateTime>2020-03-11T19:33:40.000000Z</ProductionDateTime>
@@ -19,175 +19,241 @@
     <HorizontalSpatialDomain>
       <Geometry>
         <BoundingRectangle>
-          <WestBoundingCoordinate>5.46942128306234</WestBoundingCoordinate>
-          <EastBoundingCoordinate>4.486803918269626</EastBoundingCoordinate>
-          <NorthBoundingCoordinate>16.257530348938275</NorthBoundingCoordinate>
-          <SouthBoundingCoordinate>15.271180166975041</SouthBoundingCoordinate>
+          <WestBoundingCoordinate>5.46942128</WestBoundingCoordinate>
+          <EastBoundingCoordinate>4.48680392</EastBoundingCoordinate>
+          <NorthBoundingCoordinate>16.25753035</NorthBoundingCoordinate>
+          <SouthBoundingCoordinate>15.27118017</SouthBoundingCoordinate>
         </BoundingRectangle>
       </Geometry>
     </HorizontalSpatialDomain>
   </Spatial>
   <Platforms>
-    <ShortName>Sentinel-2B</ShortName>
-    <Type>Earth Observation Satellites</Type>
-    <Instruments>
-      <Instrument>
-        <ShortName>Sentinel-2 MSI</ShortName>
-        <LongName>Sentinel-2 Multispectral Imager</LongName>
-      </Instrument>
-    </Instruments>
+    <Platform>
+      <ShortName>Sentinel-2B</ShortName>
+      <Type>Earth Observation Satellites</Type>
+      <Instruments>
+        <Instrument>
+          <ShortName>Sentinel-2 MSI</ShortName>
+          <LongName>Sentinel-2 Multispectral Imager</LongName>
+        </Instrument>
+      </Instruments>
+    </Platform>
   </Platforms>
-  <OnlineAccessURLs>
-    <OnlineAccessURL/>
-  </OnlineAccessURLs>
-  <OnlineResources>
-    <OnlineResource/>
-  </OnlineResources>
-  <AssociatedBrowseImageURLs>
-    <ProviderBrowseURL/>
-  </AssociatedBrowseImageURLs>
+  <OnlineAccessURLs/>
+  <OnlineResources/>
+  <AssociatedBrowseImageURLs/>
   <AdditionalAttributes>
     <AdditionalAttribute>
       <Name>DATASTRIP_ID</Name>
       <DataType>STRING</DataType>
       <Description>Datastrip ID</Description>
       <Value>S2B_OPER_MSI_L1C_DS_EPAE_20200224T230359_S20200224T214901_N02.09</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>SPACECRAFT_NAME</Name>
       <DataType>STRING</DataType>
       <Description>Name of the spacecraft</Description>
       <Value>Sentinel-2B</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>cloud_coverage</Name>
       <DataType>FLOAT</DataType>
       <Description>Percent of cloud coverage</Description>
-      <Value>100</Value>
+      <Value>100.0</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MGRS_Tile_ID</Name>
       <DataType>STRING</DataType>
       <Description>Tile identifier of MGRS grid</Description>
-      <Value>Not Available</Value>
+      <Value>None</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>spatial_coverage</Name>
-      <DataType>FLOAT</DataType>
+      <DataType>INT</DataType>
       <Description>Percentage of spatial coverage</Description>
       <Value>100</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>SPATIAL_RESOLUTION</Name>
       <DataType>INT</DataType>
       <Description>Spatial Resolution</Description>
       <Value>30</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>HORIZONTAL_CS_CODE</Name>
       <DataType>STRING</DataType>
       <Description>EPSG code</Description>
       <Value>EPSG:32702</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>HORIZONTAL_CS_NAME</Name>
       <DataType>STRING</DataType>
       <Description>Coordinate system and UTM identifier</Description>
       <Value>WGS84 / UTM zone 02S</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>ULX</Name>
-      <DataType>INT</DataType>
+      <DataType>FLOAT</DataType>
       <Description>Longitude</Description>
       <Value>499980.0</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>ULY</Name>
-      <DataType>INT</DataType>
+      <DataType>FLOAT</DataType>
       <Description>Latitude</Description>
       <Value>-1699980.0</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>OVR_RESAMPLING_ALG</Name>
       <DataType>STRING</DataType>
       <Description>Re sampling Algorithm</Description>
-      <Value>Not Available</Value>
+      <Value>None</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>add_offset</Name>
       <DataType>FLOAT</DataType>
       <Description>additional offset</Description>
-      <Value>Not Available</Value>
+      <Value>None</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>scale_factor</Name>
       <DataType>FLOAT</DataType>
       <Description>Scale factor</Description>
-      <Value>Not Available</Value>
+      <Value>None</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>_FillValue</Name>
       <DataType>FLOAT</DataType>
       <Description>Fill Value</Description>
-      <Value>Not Available</Value>
+      <Value>None</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>NCOLS</Name>
       <DataType>INT</DataType>
       <Description>Number of Columns</Description>
       <Value>3660</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>NROWS</Name>
       <DataType>INT</DataType>
       <Description>Number of rows</Description>
       <Value>3660</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MEAN_SUN_AZIMUTH_ANGLE_B01</Name>
       <DataType>FLOAT</DataType>
       <Description>Mean sun azimuth angle band 1</Description>
-      <Value>79.0038278920395</Value>
+      <Value>79.00382789</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MEAN_SUN_ZENITH_ANGLE_B01</Name>
       <DataType>FLOAT</DataType>
       <Description>Mean sun zenith angle band 1</Description>
-      <Value>26.4187449666419</Value>
+      <Value>26.41874497</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MEAN_VIEW_AZIMUTH_ANGLE_B01</Name>
       <DataType>FLOAT</DataType>
       <Description>Mean view azimuth angle band 1</Description>
-      <Value>292.801031543727</Value>
+      <Value>292.80103154</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MEAN_VIEW_ZENITH_ANGLE_B01</Name>
       <DataType>FLOAT</DataType>
       <Description>Mean view zenith angle band 1</Description>
-      <Value>11.8329333309387</Value>
+      <Value>11.83293333</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>NBAR_Solar_Zenith</Name>
       <DataType>FLOAT</DataType>
       <Description>NBAR solar zenith</Description>
-      <Value>30.504444298279186</Value>
+      <Value>30.5044443</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MSI_band_01_bandpass_adjustment_slope_and_offset</Name>
-      <DataType>FLOAT</DataType>
+      <DataType>STRING</DataType>
       <Description>MSI band 1 bandpass adjustment slope and offset</Description>
       <Value>0.995900, -0.000200</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MSI_band_02_bandpass_adjustment_slope_and_offset</Name>
       <DataType>STRING</DataType>
       <Description>MSI band 2 bandpass adjustment slope and offset</Description>
       <Value>0.977800, -0.004000</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MSI_band_03_bandpass_adjustment_slope_and_offset</Name>
       <DataType>STRING</DataType>
       <Description>MSI band 03 bandpass adjustment slope and offset</Description>
       <Value>1.007500, -0.000800</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MSI_band_04_bandpass_adjustment_slope_and_offset</Name>
       <DataType>STRING</DataType>
       <Description>MSI band 4 bandpass adjustment slope and offset</Description>
       <Value>0.976100, 0.001000</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MSI_band_11_bandpass_adjustment_slope_and_offset</Name>
       <DataType>STRING</DataType>
       <Description>MSI band 11 bandpass adjustment slope and offset</Description>
       <Value>1.000000, -0.000300</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MSI_band_12_bandpass_adjustment_slope_and_offset</Name>
       <DataType>STRING</DataType>
       <Description>MSI band 12 bandpass adjustment slope and offset</Description>
       <Value>0.986700, 0.000400</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>MSI_band_8a_bandpass_adjustment_slope_and_offset</Name>
       <DataType>STRING</DataType>
       <Description>MSI band 8a bandpass adjustment slope and offset</Description>
       <Value>0.996600, 0.000000</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>arop_ave_xshift(meters)</Name>
-      <DataType>INT</DataType>
+      <DataType>FLOAT</DataType>
       <Description>arop ave xshift in meters</Description>
       <Value>0.0</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>arop_ave_yshift(meters)</Name>
-      <DataType>INT</DataType>
+      <DataType>FLOAT</DataType>
       <Description>arop ave yshift in meters</Description>
       <Value>0.0</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>arop_ncp</Name>
       <DataType>INT</DataType>
       <Description>arop ncp</Description>
       <Value>0</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>arop_rmse(meters)</Name>
-      <DataType>INT</DataType>
+      <DataType>FLOAT</DataType>
       <Description>arop root mean square error</Description>
       <Value>0.0</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>arop_s2_refimg</Name>
       <DataType>STRING</DataType>
       <Description>arop s2 remimg</Description>
       <Value>NONE</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>AngleBand</Name>
       <DataType>STRING</DataType>
       <Description>Angle Band</Description>
-      <Value>0123456789101112</Value>
+      <Value>0,1,2,3,4,5,6,7,8,9,10,11,12</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>ACCODE</Name>
       <DataType>STRING</DataType>
       <Description>ACCODE</Description>
       <Value>LaSRC</Value>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>PROCESSING_BASELINE</Name>
       <DataType>STRING</DataType>
       <Description>Processing baseline</Description>
@@ -198,3 +264,4 @@
   <DataFormat>hdf</DataFormat>
   <Visible>True</Visible>
 </Granule>
+

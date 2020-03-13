@@ -1,232 +1,230 @@
 {
-	"S30":{
-		"ShortName":"HLSS30",
-		"DataSetId":"HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5",
+	"S30": {
+		"ShortName": "HLSS30",
+		"DataSetId": "HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5",
 		"Orderable": false,
 		"Visible": true,
-		"Sentinel-2A":{
-			"ShortName":"Sentinel-2A",
+		"Sentinel-2A": {
+			"ShortName": "Sentinel-2A",
 			"Type": "Earth Observation Satellites",
-			"Instruments":{
-				"Instrument":{
+			"Instruments": [
+				{
 					"ShortName": "Sentinel-2 MSI",
-					"LongName":"Sentinel-2 Multispectral Imager"
+					"LongName": "Sentinel-2 Multispectral Imager"
 				}
-			}
+			]
 		},
-		"Sentinel-2B":{
-			"ShortName":"Sentinel-2B",
-			"Type":"Earth Observation Satellites",
-			"Instruments":{
-				"Instrument":{
+		"Sentinel-2B": {
+			"ShortName": "Sentinel-2B",
+			"Type": "Earth Observation Satellites",
+			"Instruments": [
+				{
 					"ShortName": "Sentinel-2 MSI",
-					"LongName":"Sentinel-2 Multispectral Imager"
+					"LongName": "Sentinel-2 Multispectral Imager"
 				}
-			}
+			]
 		},
-		"Sentinel-2C":{
-			"ShortName":"Sentinel-2C",
-			"Type":"Earth Observation Satellites",
-			"Instruments":{
-				"Instrument":{
+		"Sentinel-2C": {
+			"ShortName": "Sentinel-2C",
+			"Type": "Earth Observation Satellites",
+			"Instruments": [
+				{
 					"ShortName": "Sentinel-2 MSI",
-					"LongName":"Sentinel-2 Multispectral Imager"
+					"LongName": "Sentinel-2 Multispectral Imager"
 				}
-			}
+			]
 		},
-		"Sentinel-2D":{
-			"ShortName":"Sentinel-2D",
-			"Type":"Earth Observation Satellites",
-			"Instruments":{
-				"Instrument":{
+		"Sentinel-2D": {
+			"ShortName": "Sentinel-2D",
+			"Type": "Earth Observation Satellites",
+			"Instruments": [
+				{
 					"ShortName": "Sentinel-2 MSI",
-					"LongName":"Sentinel-2 Multispectral Imager"
+					"LongName": "Sentinel-2 Multispectral Imager"
 				}
-			}
+			]
 		},
-	"AdditionalAttributes": {
-		"AdditionalAttribute": [
+		"AdditionalAttributes": [
 			{
 				"Name": "DATASTRIP_ID",
 				"DataType": "STRING",
 				"Description": "Datastrip ID"
 			},
 			{
-		  "Name": "SPACECRAFT_NAME",
-			  "DataType": "STRING",
-		  "Description": "Name of the spacecraft"
-		},
-		{
-		  "Name": "cloud_coverage",
-		  "DataType": "FLOAT",
-		  "Description": "Percent of cloud coverage"
-		},
-		{
-		  "Name": "MGRS_Tile_ID",
-		  "DataType": "STRING",
-		  "Description": "Tile identifier of MGRS grid"
-		},
-		{
-		  "Name": "spatial_coverage",
-		  "DataType": "FLOAT",
-		  "Description": "Percentage of spatial coverage"
-		},
-		{
-		  "Name": "SPATIAL_RESOLUTION",
-		  "DataType": "INT",
-		  "Description": "Spatial Resolution"
-		},
-		{
-		  "Name": "HORIZONTAL_CS_CODE",
-		  "DataType": "STRING",
-		  "Description": "EPSG code"
-		},
-		{
-		  "Name": "HORIZONTAL_CS_NAME",
-		  "DataType": "STRING",
-		  "Description": "Coordinate system and UTM identifier"
-		},
-		{
-		  "Name": "ULX",
-		  "DataType": "INT",
-		  "Description": "Longitude"
-		},
-		{
-		  "Name": "ULY",
-		  "DataType": "INT",
-		  "Description": "Latitude"
-		},
-		{
-		  "Name": "OVR_RESAMPLING_ALG",
-		  "DataType": "STRING",
-		  "Description": "Re sampling Algorithm"
-		},
-		{
-		  "Name": "add_offset",
-		  "DataType": "FLOAT",
-		  "Description": "additional offset"
-		},
-		{
-		  "Name": "scale_factor",
-		  "DataType": "FLOAT",
-		  "Description": "Scale factor"
-		},
-		{
-		  "Name": "_FillValue",
-		  "DataType": "FLOAT",
-		  "Description": "Fill Value"
-		},
-		{
-		  "Name": "NCOLS",
-		  "DataType": "INT",
-		  "Description": "Number of Columns"
-		},
-		{
-		  "Name": "NROWS",
-		  "DataType": "INT",
-		  "Description": "Number of rows"
-		},
-		{
-		  "Name": "MEAN_SUN_AZIMUTH_ANGLE_B01",
-		  "DataType": "FLOAT",
-		  "Description": "Mean sun azimuth angle band 1"
-		},
-		{
-		  "Name": "MEAN_SUN_ZENITH_ANGLE_B01",
-		  "DataType": "FLOAT",
-		  "Description": "Mean sun zenith angle band 1"
-		},
-		{
-		  "Name": "MEAN_VIEW_AZIMUTH_ANGLE_B01",
-		  "DataType": "FLOAT",
-		  "Description": "Mean view azimuth angle band 1"
-		},
-		{
-		  "Name": "MEAN_VIEW_ZENITH_ANGLE_B01",
-		  "DataType": "FLOAT",
-		  "Description": "Mean view zenith angle band 1"
-		},
-		{
-		  "Name": "NBAR_Solar_Zenith",
-		  "DataType": "FLOAT",
-		  "Description": "NBAR solar zenith"
-		},
-		{
-		  "Name": "MSI_band_01_bandpass_adjustment_slope_and_offset",
-		  "DataType": "FLOAT",
-		  "Description": "MSI band 1 bandpass adjustment slope and offset"
-		},
-		{
-		  "Name": "MSI_band_02_bandpass_adjustment_slope_and_offset",
-		  "DataType": "STRING",
-		  "Description": "MSI band 2 bandpass adjustment slope and offset"
-		},
-		{
-		  "Name": "MSI_band_03_bandpass_adjustment_slope_and_offset",
-		  "DataType": "STRING",
-		  "Description": "MSI band 03 bandpass adjustment slope and offset"
-		},
-		{
-		  "Name": "MSI_band_04_bandpass_adjustment_slope_and_offset",
-		  "DataType": "STRING",
-		  "Description": "MSI band 4 bandpass adjustment slope and offset"
-		},
-		{
-		  "Name": "MSI_band_11_bandpass_adjustment_slope_and_offset",
-		  "DataType": "STRING",
-		  "Description": "MSI band 11 bandpass adjustment slope and offset"
-		},
-		{
-		  "Name": "MSI_band_12_bandpass_adjustment_slope_and_offset",
-		  "DataType": "STRING",
-		  "Description": "MSI band 12 bandpass adjustment slope and offset"
-		},
-		{
-		  "Name": "MSI_band_8a_bandpass_adjustment_slope_and_offset",
-		  "DataType": "STRING",
-		  "Description": "MSI band 8a bandpass adjustment slope and offset"
-		},
-		{
-		  "Name": "arop_ave_xshift(meters)",
-		  "DataType": "INT",
-		  "Description": "arop ave xshift in meters"
-		},
-		{
-		  "Name": "arop_ave_yshift(meters)",
-		  "DataType": "INT",
-		  "Description": "arop ave yshift in meters"
-		},
-		{
-		  "Name": "arop_ncp",
-		  "DataType": "INT",
-		  "Description": "arop ncp"
-		},
-		{
-		  "Name": "arop_rmse(meters)",
-		  "DataType": "INT",
-		  "Description": "arop root mean square error"
-		},
-		{
-		  "Name": "arop_s2_refimg",
-		  "DataType": "STRING",
-		  "Description": "arop s2 remimg"
-		},
-		{
-		  "Name": "AngleBand",
-		  "DataType": "STRING",
-		  "Description": "Angle Band"
-		},
-		{
-		  "Name": "ACCODE",
-		  "DataType": "STRING",
-		  "Description": "ACCODE"
-		},
-		{
-		  "Name": "PROCESSING_BASELINE",
-		  "DataType": "STRING",
-		  "Description": "Processing baseline"		
-		}
-	    ]
+				"Name": "SPACECRAFT_NAME",
+				"DataType": "STRING",
+				"Description": "Name of the spacecraft"
+			},
+			{
+				"Name": "cloud_coverage",
+				"DataType": "FLOAT",
+				"Description": "Percent of cloud coverage"
+			},
+			{
+				"Name": "MGRS_Tile_ID",
+				"DataType": "STRING",
+				"Description": "Tile identifier of MGRS grid"
+			},
+			{
+				"Name": "spatial_coverage",
+				"DataType": "INT",
+				"Description": "Percentage of spatial coverage"
+			},
+			{
+				"Name": "SPATIAL_RESOLUTION",
+				"DataType": "INT",
+				"Description": "Spatial Resolution"
+			},
+			{
+				"Name": "HORIZONTAL_CS_CODE",
+				"DataType": "STRING",
+				"Description": "EPSG code"
+			},
+			{
+				"Name": "HORIZONTAL_CS_NAME",
+				"DataType": "STRING",
+				"Description": "Coordinate system and UTM identifier"
+			},
+			{
+				"Name": "ULX",
+				"DataType": "FLOAT",
+				"Description": "Longitude"
+			},
+			{
+				"Name": "ULY",
+				"DataType": "FLOAT",
+				"Description": "Latitude"
+			},
+			{
+				"Name": "OVR_RESAMPLING_ALG",
+				"DataType": "STRING",
+				"Description": "Re sampling Algorithm"
+			},
+			{
+				"Name": "add_offset",
+				"DataType": "FLOAT",
+				"Description": "additional offset"
+			},
+			{
+				"Name": "scale_factor",
+				"DataType": "FLOAT",
+				"Description": "Scale factor"
+			},
+			{
+				"Name": "_FillValue",
+				"DataType": "FLOAT",
+				"Description": "Fill Value"
+			},
+			{
+				"Name": "NCOLS",
+				"DataType": "INT",
+				"Description": "Number of Columns"
+			},
+			{
+				"Name": "NROWS",
+				"DataType": "INT",
+				"Description": "Number of rows"
+			},
+			{
+				"Name": "MEAN_SUN_AZIMUTH_ANGLE_B01",
+				"DataType": "FLOAT",
+				"Description": "Mean sun azimuth angle band 1"
+			},
+			{
+				"Name": "MEAN_SUN_ZENITH_ANGLE_B01",
+				"DataType": "FLOAT",
+				"Description": "Mean sun zenith angle band 1"
+			},
+			{
+				"Name": "MEAN_VIEW_AZIMUTH_ANGLE_B01",
+				"DataType": "FLOAT",
+				"Description": "Mean view azimuth angle band 1"
+			},
+			{
+				"Name": "MEAN_VIEW_ZENITH_ANGLE_B01",
+				"DataType": "FLOAT",
+				"Description": "Mean view zenith angle band 1"
+			},
+			{
+				"Name": "NBAR_Solar_Zenith",
+				"DataType": "FLOAT",
+				"Description": "NBAR solar zenith"
+			},
+			{
+				"Name": "MSI_band_01_bandpass_adjustment_slope_and_offset",
+				"DataType": "STRING",
+				"Description": "MSI band 1 bandpass adjustment slope and offset"
+			},
+			{
+				"Name": "MSI_band_02_bandpass_adjustment_slope_and_offset",
+				"DataType": "STRING",
+				"Description": "MSI band 2 bandpass adjustment slope and offset"
+			},
+			{
+				"Name": "MSI_band_03_bandpass_adjustment_slope_and_offset",
+				"DataType": "STRING",
+				"Description": "MSI band 03 bandpass adjustment slope and offset"
+			},
+			{
+				"Name": "MSI_band_04_bandpass_adjustment_slope_and_offset",
+				"DataType": "STRING",
+				"Description": "MSI band 4 bandpass adjustment slope and offset"
+			},
+			{
+				"Name": "MSI_band_11_bandpass_adjustment_slope_and_offset",
+				"DataType": "STRING",
+				"Description": "MSI band 11 bandpass adjustment slope and offset"
+			},
+			{
+				"Name": "MSI_band_12_bandpass_adjustment_slope_and_offset",
+				"DataType": "STRING",
+				"Description": "MSI band 12 bandpass adjustment slope and offset"
+			},
+			{
+				"Name": "MSI_band_8a_bandpass_adjustment_slope_and_offset",
+				"DataType": "STRING",
+				"Description": "MSI band 8a bandpass adjustment slope and offset"
+			},
+			{
+				"Name": "arop_ave_xshift(meters)",
+				"DataType": "FLOAT",
+				"Description": "arop ave xshift in meters"
+			},
+			{
+				"Name": "arop_ave_yshift(meters)",
+				"DataType": "FLOAT",
+				"Description": "arop ave yshift in meters"
+			},
+			{
+				"Name": "arop_ncp",
+				"DataType": "INT",
+				"Description": "arop ncp"
+			},
+			{
+				"Name": "arop_rmse(meters)",
+				"DataType": "FLOAT",
+				"Description": "arop root mean square error"
+			},
+			{
+				"Name": "arop_s2_refimg",
+				"DataType": "STRING",
+				"Description": "arop s2 remimg"
+			},
+			{
+				"Name": "AngleBand",
+				"DataType": "STRING",
+				"Description": "Angle Band"
+			},
+			{
+				"Name": "ACCODE",
+				"DataType": "STRING",
+				"Description": "ACCODE"
+			},
+			{
+				"Name": "PROCESSING_BASELINE",
+				"DataType": "STRING",
+				"Description": "Processing baseline"
+			}
+		]
 	}
-    }
 }

@@ -16,7 +16,7 @@ setup(
     ],
     extras_require={
         "dev": ["flake8", "black"],
-        "test": ["pytest", "xmltodict"]
+        "test": ["pytest", "lxml"]
     },
     package_data={"metadata_creator": ["templates/*.json"]},
     entry_points={

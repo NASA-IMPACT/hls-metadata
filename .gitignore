@@ -7,3 +7,6 @@ venv/
 .vscode/
 venv/
 >>>>>>> master
+.tox/
+dist/
+*.egg-info

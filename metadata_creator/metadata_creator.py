@@ -3,14 +3,14 @@ import datetime
 import re
 import json
 import boto3
-from metadata_creator import update_credentials
+from . import update_credentials
 import click
 import logging
-
-from dicttoxml import dicttoxml
-from pyhdf.SD import SD, SDC
+from collections import OrderedDict
+from pyhdf.SD import SD
 from pyproj import CRS, transform
 from botocore.exceptions import ClientError
+from lxml import etree
 
 current_dir = os.path.dirname(__file__)
 util_dir = os.path.join(current_dir, "templates")
@@ -19,31 +19,31 @@ util_dir = os.path.join(current_dir, "templates")
 class Metadata:
     def __init__(self, data_path, bucket="hls-global"):
         # initialize the granule level metadata file
-        self.root = {
-            "GranuleUR": "",
-            "InsertTime": "",
-            "LastUpdate": "",
-            "Collection": {},
-            "DataGranule": {},
-            "Temporal": {},
-            "Spatial": {},
-            "Platforms": {},
-            "OnlineAccessURLs": {"OnlineAccessURL": {}},
-            "OnlineResources": {"OnlineResource": {}},
-            "AssociatedBrowseImageURLs": {"ProviderBrowseURL": {}},
-            "AdditionalAttributes": {},
-            "Orderable": "",
-            "DataFormat": "",
-            "Visible": "",
-        }
+        self.root = OrderedDict()
+        self.root["GranuleUR"] = None
+        self.root["InsertTime"] = None
+        self.root["LastUpdate"] = None
+        self.root["Collection"] = {}
+        self.root["DataGranule"] = {}
+        self.root["Temporal"] = {}
+        self.root["Spatial"] = {}
+        self.root["Platforms"] = []
+        self.root["OnlineAccessURLs"] = []
+        self.root["OnlineResources"] = []
+        self.root["AssociatedBrowseImageURLs"] = []
+        self.root["AdditionalAttributes"] = []
+        self.root["Orderable"] = None
+        self.root["DataFormat"] = None
+        self.root["Visible"] = None
+
         self.data_path = data_path
         self.data_file = os.path.basename(self.data_path)
         self.product = self.data_file.split(".")[1]
         self.report_name = self.data_file.replace("hdf", "cmr.xml")
         self.bucket = bucket
+        self.generate()
 
-    @property
-    def xml(self):
+    def generate(self):
         """
         Public: Main method to run. Extract metadata as xml
         Examples
@@ -55,17 +55,24 @@ class Metadata:
         self.extract_attributes()
         self.template_handler()
         self.attribute_handler()
-        # self.online_resource() - will be handled by LPDAAC
         self.data_granule_handler()
         self.time_handler()
         self.location_handler()
-        return self.to_xml()
+        return
 
     def extract_attributes(self):
         # extract the attributes from the data file
-        granule = SD(self.data_path, SDC.READ)
+        try:
+            granule = SD(self.data_path, 1)
+        except TypeError:
+            granule = SD(self.data_path.encode("utf-8"), 1)
         self.attributes = granule.attributes()
         granule.end()
+
+        if "AngleBand" in self.attributes:
+            self.attributes["AngleBand"] = ",".join(
+                [str(a) for a in self.attributes["AngleBand"]]
+            )
 
     def template_handler(self):
         """
@@ -78,21 +85,20 @@ class Metadata:
         with open(
             os.path.join(util_dir, self.product + ".json"), "r"
         ) as template_file:
-            template = json.load(template_file)
+            template = json.load(template_file, object_pairs_hook=OrderedDict)
         template = template[self.product]
         spacecraft_name = self.attributes.get("SPACECRAFT_NAME")
         platform = "LANDSAT-8" if spacecraft_name is None else spacecraft_name
         self.root["Collection"]["DataSetId"] = template["DataSetId"]
         self.data_format = self.data_file.split(".")[-1]
-        self.root = {
-            **self.root,
-            "Platforms": template[platform],
-            "AdditionalAttributes": template["AdditionalAttributes"],
-            "GranuleUR": self.data_file.replace("." + self.data_format, ""),
-            "Orderable": template["Orderable"],
-            "Visible": template["Visible"],
-            "DataFormat": self.data_format,
-        }
+        self.root["Platforms"].append(template[platform])
+        self.root["AdditionalAttributes"] = template["AdditionalAttributes"]
+        self.root["GranuleUR"] = self.data_file.replace(
+            "." + self.data_format, ""
+        )
+        self.root["Orderable"] = template["Orderable"]
+        self.root["Visible"] = template["Visible"]
+        self.root["DataFormat"] = self.data_format
 
     def attribute_handler(self):
         """
@@ -106,14 +112,16 @@ class Metadata:
             os.path.join(util_dir, self.product + "_attribute_mapping.json"),
             "r",
         ) as attribute_file:
-            attribute_mapping = json.load(attribute_file)
-        for attribute in self.root["AdditionalAttributes"][
-            "AdditionalAttribute"
-        ]:
-            attribute_name = attribute_mapping[attribute["Name"]]
-            attribute["Value"] = self.attributes.get(
-                attribute_name, "Not Available"
+            attribute_mapping = json.load(
+                attribute_file, object_pairs_hook=OrderedDict
             )
+        for attribute in self.root["AdditionalAttributes"]:
+            attribute_name = attribute_mapping[attribute["Name"]]
+            attribute["Value"] = self.attributes.get(attribute_name, None)
+            if attribute["DataType"] == "FLOAT" and attribute["Value"]:
+                attribute["Value"] = round(
+                    float(self.attributes.get(attribute_name, None)), 8
+                )
 
     def online_resource(self):
         """
@@ -171,15 +179,18 @@ class Metadata:
             production_date = self.attributes["HLS_PROCESSING_TIME"]
         version = self.data_file[-7:].replace("." + self.data_format, "")
         extension = "." + ".".join(["v" + version, self.data_format])
-        data_granule = {
-            "SizeMBDataGranule": os.path.getsize(self.data_path) / 1024,
-            "ProducerGranuleId": self.data_file.replace(extension, ""),
-            "DayNightFlag": "DAY",
-            "ProductionDateTime": production_date,
-            "LocalVersionId": self.data_file[-7:].replace(
-                "." + self.data_format, ""
-            ),
-        }
+        data_granule = OrderedDict()
+        data_granule["SizeMBDataGranule"] = int(
+            os.path.getsize(self.data_path) / 1024
+        )
+        data_granule["ProducerGranuleId"] = self.data_file.replace(
+            extension, ""
+        )
+        data_granule["DayNightFlag"] = "DAY"
+        data_granule["ProductionDateTime"] = production_date
+        data_granule["LocalVersionId"] = self.data_file[-7:].replace(
+            "." + self.data_format, ""
+        )
         self.root["DataGranule"] = data_granule
 
     def time_handler(self):
@@ -192,13 +203,12 @@ class Metadata:
         and Junchang that these are the appropriate fields.
         """
         time_format = "%Y-%m-%dT%H:%M:%S.%fZ"
-        self.root = {
-            **self.root,
-            "InsertTime": datetime.datetime.utcnow().strftime(time_format),
-            "LastUpdate": datetime.datetime.fromtimestamp(
-                os.path.getmtime(self.data_path)
-            ).strftime(time_format),
-        }
+        self.root["InsertTime"] = datetime.datetime.utcnow().strftime(
+            time_format
+        )
+        self.root["LastUpdate"] = datetime.datetime.fromtimestamp(
+            os.path.getmtime(self.data_path)
+        ).strftime(time_format)
 
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
@@ -251,17 +261,15 @@ class Metadata:
         ]
         coords = [coords[1], coords[0], coords[3], coords[2]]
         bounding_box = self.lat_lon_4326(coords)
+        bounding_box = [round(c, 8) for c in bounding_box]
         self.root["Spatial"]["HorizontalSpatialDomain"] = {"Geometry": {}}
-        bounding_box_dict = {
-            "BoundingRectangle": {
-                "WestBoundingCoordinate": bounding_box[2],
-                "EastBoundingCoordinate": bounding_box[0],
-                "NorthBoundingCoordinate": bounding_box[3],
-                "SouthBoundingCoordinate": bounding_box[1],
-            }
-        }
-        self.root["Spatial"]["HorizontalSpatialDomain"][
-            "Geometry"
+        bounding_box_dict = OrderedDict()
+        bounding_box_dict["WestBoundingCoordinate"] = bounding_box[2]
+        bounding_box_dict["EastBoundingCoordinate"] = bounding_box[0]
+        bounding_box_dict["NorthBoundingCoordinate"] = bounding_box[3]
+        bounding_box_dict["SouthBoundingCoordinate"] = bounding_box[1]
+        self.root["Spatial"]["HorizontalSpatialDomain"]["Geometry"][
+            "BoundingRectangle"
         ] = bounding_box_dict
 
     def save_to_S3(self):
@@ -298,26 +306,62 @@ class Metadata:
         with open(output_path, "w") as xml_metadata:
             xml_metadata.write(self.xml)
 
-    def to_xml(self):
+    @property
+    def json(self):
+        return json.dumps(self.root, indent=2)
+
+    @property
+    def xml(self):
         """
         This method converts the dictionary to xml and removes the item tag
         for fields with a list of elements (e.g. AdditionalAttribute).
+        For lists, it singularizes the key to the list to make the tag
         """
-        xml_file = dicttoxml(
-            {"Granule": self.root}, root=False, attr_type=False
-        ).decode("utf-8")
-        # Hacky way of getting rid of item tag
-        xml_file = xml_file.replace("<item>", "")
-        xml_file = xml_file.replace("</item>", "")
+        with open(
+            os.path.join(util_dir, "array_items.json"), "r"
+        ) as template_file:
+            template = json.load(template_file, object_pairs_hook=OrderedDict)
 
-        return xml_file
+        def data2xml(d, name="data"):
+            r = etree.Element(name)
+            return etree.tostring(
+                buildxml(r, d), pretty_print=True, encoding="unicode"
+            )
+
+        def buildxml(r, d):
+            if isinstance(d, dict):
+                for k, v in d.items():
+                    s = etree.SubElement(r, k)
+                    buildxml(s, v)
+            elif isinstance(d, tuple) or isinstance(d, list):
+                for v in d:
+                    if r.tag in template:
+                        tag = template[r.tag]
+                    else:
+                        tag = "item"
+                    s = etree.SubElement(r, tag)
+                    buildxml(s, v)
+            elif isinstance(d, str):
+                r.text = d
+            else:
+                r.text = str(d)
+            return r
+
+        return data2xml(self.root, "Granule")
 
 
 @click.command()
 @click.argument("data_path")
+@click.option(
+    "--outputformat",
+    "-f",
+    nargs=1,
+    default="xml",
+    help="Metadata Format (xml, json, yaml)",
+)
 @click.option("--save", nargs=1, help="Save Metadata to File")
 @click.option("--s3", default=False, help="Save Metadata to S3")
-def create_metadata(data_path, save=None, s3=False):
+def create_metadata(data_path, outputformat="xml", save=None, s3=False):
     """
     Extract Metadata from HDF file
     """
@@ -328,7 +372,12 @@ def create_metadata(data_path, save=None, s3=False):
     if s3:
         md.save_to_S3()
         return
-    print(md.xml)
+    if outputformat == "json":
+        print(md.json)
+    elif outputformat == "yaml":
+        print(md.yaml)
+    else:
+        print(md.xml)
 
 
 if __name__ == "__main__":
