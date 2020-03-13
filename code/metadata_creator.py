@@ -18,7 +18,6 @@ class Metadata:
         self.root = {
             "GranuleUR": "",
             "InsertTime": "",
-            "LastUpdate": "",
             "Collection": {},
             "DataGranule": {},
             "Temporal": {},
@@ -190,17 +189,19 @@ class Metadata:
         self.root = {
             **self.root,
             "InsertTime": datetime.datetime.utcnow().strftime(time_format),
-            "LastUpdate": self.object.last_modified.strftime(time_format),
         }
 
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
         if len(sensing_time) == 1:
-            temporal["SingleDateTime"] = sensing_time[0]
+            time = datetime.datetime.strptime(sensing_time[0][:-2],time_format[:-1])
+            temporal["SingleDateTime"] = time.strftime(time_format)
         else:
+            time1 = datetime.datetime.strptime(sensing_time[0][:-2],time_format[:-1])
+            time2 = datetime.datetime.strptime(sensing_time[-1][:-2].replace(' ',''),time_format[:-1])
             temporal["RangeDateTime"] = {
-                "BeginningDateTime": sensing_time[0],
-                "EndingDateTime": sensing_time[-1],
+                "BeginningDateTime": time1.strftime(time_format),
+                "EndingDateTime": time2.strftime(time_format),
             }
         self.root["Temporal"] = temporal
 
