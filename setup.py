@@ -8,7 +8,6 @@ setup(
     install_requires=[
         "boto3",
         "botocore",
-        "dicttoxml",
         "click",
         "numpy",
         "pyhdf",
@@ -21,7 +20,8 @@ setup(
     package_data={"metadata_creator": ["templates/*.json"]},
     entry_points={
         "console_scripts": [
-            "create_metadata=metadata_creator.metadata_creator:create_metadata"
+            "create_metadata=metadata_creator.metadata_creator:create_metadata",
+            "run_metadata=metadata_creator.run_metadata:run_metadata"
         ]
     },
 )
