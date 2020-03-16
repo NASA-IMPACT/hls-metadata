@@ -46,7 +46,7 @@
 				"Description": "Sensor ID"
 			},
 			{
-				"Name": "cloud_coverage",
+				"Name": "CLOUD_COVERAGE",
 				"DataType": "FLOAT",
 				"Description": "Percentage of cloud cover"
 			},
@@ -56,13 +56,13 @@
 				"Description": "Sentinel 2 Tile ID"
 			},
 			{
-				"Name": "spatial_coverage",
+				"Name": "SPATIAL_COVERAGE",
 				"DataType": "INT",
 				"Description": "Spatial Coverage"
 			},
 			{
 				"Name": "SPATIAL_RESOLUTION",
-				"DataType": "INT",
+				"DataType": "FLOA",
 				"Description": "Spatial resolution"
 			},
 			{
@@ -101,32 +101,32 @@
 				"Description": "Mean sun zenith angle"
 			},
 			{
-				"Name": "NBAR_Solar_Zenith",
+				"Name": "NBAR_SOLAR_ZENITH",
 				"DataType": "FLOAT",
 				"Description": "NBAR solar zenith"
 			},
 			{
-				"Name": "arop_ave_xshift(meters)",
+				"Name": "AROP_AVE_XSHIFT(meters)",
 				"DataType": "FLOAT",
 				"Description": "arop ave xshift in meters"
 			},
 			{
-				"Name": "arop_ave_yshift(meters)",
+				"Name": "AROP_AVE_YSHIFT(meters)",
 				"DataType": "FLOAT",
 				"Description": "arop ave yshift in meters"
 			},
 			{
-				"Name": "arop_ncp",
+				"Name": "AROP_NCP",
 				"DataType": "INT",
 				"Description": "arop ncp"
 			},
 			{
-				"Name": "arop_rmse(meters)",
+				"Name": "AROP_RMSE(METERS)",
 				"DataType": "FLOAT",
 				"Description": "arop root mean square error in meters"
 			},
 			{
-				"Name": "arop_s2_refimg",
+				"Name": "AROP_S2_REFIMG",
 				"DataType": "INT",
 				"Description": "arop s2 refimg"
 			},

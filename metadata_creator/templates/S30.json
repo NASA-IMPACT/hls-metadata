@@ -56,17 +56,17 @@
 				"Description": "Name of the spacecraft"
 			},
 			{
-				"Name": "cloud_coverage",
-				"DataType": "FLOAT",
+				"Name": "CLOUD_COVERAGE",
+				"DataType": "INT",
 				"Description": "Percent of cloud coverage"
 			},
 			{
-				"Name": "MGRS_Tile_ID",
+				"Name": "MGRS_TILE_ID",
 				"DataType": "STRING",
 				"Description": "Tile identifier of MGRS grid"
 			},
 			{
-				"Name": "spatial_coverage",
+				"Name": "SPATIAL_COVERAGE",
 				"DataType": "INT",
 				"Description": "Percentage of spatial coverage"
 			},
@@ -101,17 +101,17 @@
 				"Description": "Re sampling Algorithm"
 			},
 			{
-				"Name": "add_offset",
+				"Name": "ADD_OFFSET",
 				"DataType": "FLOAT",
 				"Description": "additional offset"
 			},
 			{
-				"Name": "scale_factor",
+				"Name": "SCALE_FACTOR",
 				"DataType": "FLOAT",
 				"Description": "Scale factor"
 			},
 			{
-				"Name": "_FillValue",
+				"Name": "FILLVALUE",
 				"DataType": "FLOAT",
 				"Description": "Fill Value"
 			},
@@ -126,93 +126,93 @@
 				"Description": "Number of rows"
 			},
 			{
-				"Name": "MEAN_SUN_AZIMUTH_ANGLE_B01",
+				"Name": "MEAN_SUN_AZIMUTH_ANGLE(B01)",
 				"DataType": "FLOAT",
 				"Description": "Mean sun azimuth angle band 1"
 			},
 			{
-				"Name": "MEAN_SUN_ZENITH_ANGLE_B01",
+				"Name": "MEAN_SUN_ZENITH_ANGLE(B01)",
 				"DataType": "FLOAT",
 				"Description": "Mean sun zenith angle band 1"
 			},
 			{
-				"Name": "MEAN_VIEW_AZIMUTH_ANGLE_B01",
+				"Name": "MEAN_VIEW_AZIMUTH_ANGLE(B01)",
 				"DataType": "FLOAT",
 				"Description": "Mean view azimuth angle band 1"
 			},
 			{
-				"Name": "MEAN_VIEW_ZENITH_ANGLE_B01",
+				"Name": "MEAN_VIEW_ZENITH_ANGLE(B01)",
 				"DataType": "FLOAT",
 				"Description": "Mean view zenith angle band 1"
 			},
 			{
-				"Name": "NBAR_Solar_Zenith",
+				"Name": "NBAR_SOLAR_ZENITH",
 				"DataType": "FLOAT",
 				"Description": "NBAR solar zenith"
 			},
 			{
-				"Name": "MSI_band_01_bandpass_adjustment_slope_and_offset",
-				"DataType": "STRING",
+				"Name": "MSI_BAND_01_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
+				"DataType": "FLOAT",
 				"Description": "MSI band 1 bandpass adjustment slope and offset"
 			},
 			{
-				"Name": "MSI_band_02_bandpass_adjustment_slope_and_offset",
-				"DataType": "STRING",
+				"Name": "MSI_BAND_02_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
+				"DataType": "FLOAT",
 				"Description": "MSI band 2 bandpass adjustment slope and offset"
 			},
 			{
-				"Name": "MSI_band_03_bandpass_adjustment_slope_and_offset",
-				"DataType": "STRING",
+				"Name": "MSI_BAND_03_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
+				"DataType": "FLOAT",
 				"Description": "MSI band 03 bandpass adjustment slope and offset"
 			},
 			{
-				"Name": "MSI_band_04_bandpass_adjustment_slope_and_offset",
-				"DataType": "STRING",
+				"Name": "MSI_BAND_04_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
+				"DataType": "FLOAT",
 				"Description": "MSI band 4 bandpass adjustment slope and offset"
 			},
 			{
-				"Name": "MSI_band_11_bandpass_adjustment_slope_and_offset",
-				"DataType": "STRING",
+				"Name": "MSI_BAND_11_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
+				"DataType": "FLOAT",
 				"Description": "MSI band 11 bandpass adjustment slope and offset"
 			},
 			{
-				"Name": "MSI_band_12_bandpass_adjustment_slope_and_offset",
-				"DataType": "STRING",
+				"Name": "MSI_BAND_12_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
+				"DataType": "FLOAT",
 				"Description": "MSI band 12 bandpass adjustment slope and offset"
 			},
 			{
-				"Name": "MSI_band_8a_bandpass_adjustment_slope_and_offset",
-				"DataType": "STRING",
+				"Name": ""MSI_BAND_8A_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
+				"DataType": "FLOAT",
 				"Description": "MSI band 8a bandpass adjustment slope and offset"
 			},
 			{
-				"Name": "arop_ave_xshift(meters)",
+				"Name": "AROP_AVE_XSHIFT(meters)",
 				"DataType": "FLOAT",
 				"Description": "arop ave xshift in meters"
 			},
 			{
-				"Name": "arop_ave_yshift(meters)",
+				"Name": "AROP_AVE_YSHIFT(meters)",
 				"DataType": "FLOAT",
 				"Description": "arop ave yshift in meters"
 			},
 			{
-				"Name": "arop_ncp",
+				"Name": "AROP_NCP",
 				"DataType": "INT",
 				"Description": "arop ncp"
 			},
 			{
-				"Name": "arop_rmse(meters)",
+				"Name": "AROP_RMSE(METERS)",
 				"DataType": "FLOAT",
 				"Description": "arop root mean square error"
 			},
 			{
-				"Name": "arop_s2_refimg",
+				"Name": "AROP_S2_REFIMG",
 				"DataType": "STRING",
 				"Description": "arop s2 remimg"
 			},
 			{
-				"Name": "AngleBand",
-				"DataType": "STRING",
+				"Name": "ANGLEBAND",
+				"DataType": "INT",
 				"Description": "Angle Band"
 			},
 			{
