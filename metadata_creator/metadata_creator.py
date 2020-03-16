@@ -263,8 +263,8 @@ class Metadata:
         self.root["Spatial"]["HorizontalSpatialDomain"] = {"Geometry": {}}
         bounding_box_dict = OrderedDict()
         bounding_box_dict["WestBoundingCoordinate"] = bounding_box[2]
-        bounding_box_dict["EastBoundingCoordinate"] = bounding_box[0]
         bounding_box_dict["NorthBoundingCoordinate"] = bounding_box[3]
+        bounding_box_dict["EastBoundingCoordinate"] = bounding_box[0]
         bounding_box_dict["SouthBoundingCoordinate"] = bounding_box[1]
         self.root["Spatial"]["HorizontalSpatialDomain"]["Geometry"][
             "BoundingRectangle"
