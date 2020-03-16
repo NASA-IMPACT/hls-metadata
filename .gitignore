@@ -1,4 +1,7 @@
 *.pyc
 __pycache__/
-.vscode/
 venv/
+.vscode/
+.tox/
+dist/
+*.egg-info
