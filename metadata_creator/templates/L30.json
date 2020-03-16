@@ -1,0 +1,155 @@
+{
+	"L30": {
+		"ShortName": "HLSL30",
+		"DataSetId": "HLS Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30 m V1.5",
+		"Visible": true,
+		"Orderable": false,
+		"LANDSAT-8": {
+			"ShortName": "LANDSAT-8",
+			"Type": "Earth Observation Satellites",
+			"Instruments": [
+				{
+					"ShortName": "OLI",
+					"LongName": "Operational Land Imager"
+				}
+			]
+		},
+		"LANDSAT-9": {
+			"ShortName": "LANDSAT-9",
+			"Type": "Earth Observation Satellites",
+			"Instruments": [
+				{
+					"ShortName": "OLI",
+					"LongName": "Operational Land Imager"
+				}
+			]
+		},
+		"AdditionalAttributes": [
+			{
+				"Name": "LANDSAT_PRODUCT_ID",
+				"DataType": "STRING",
+				"Description": "LANDSAT product ID"
+			},
+			{
+				"Name": "LANDSAT_SCENE_ID",
+				"DataType": "STRING",
+				"Description": "LANDSAT Scene ID"
+			},
+			{
+				"Name": "DATA_TYPE",
+				"DataType": "STRING",
+				"Description": "Data type"
+			},
+			{
+				"Name": "SENSOR",
+				"DataType": "STRING",
+				"Description": "Sensor ID"
+			},
+			{
+				"Name": "cloud_coverage",
+				"DataType": "FLOAT",
+				"Description": "Percentage of cloud cover"
+			},
+			{
+				"Name": "SENTINEL2_TILEID",
+				"DataType": "STRING",
+				"Description": "Sentinel 2 Tile ID"
+			},
+			{
+				"Name": "spatial_coverage",
+				"DataType": "INT",
+				"Description": "Spatial Coverage"
+			},
+			{
+				"Name": "SPATIAL_RESOLUTION",
+				"DataType": "INT",
+				"Description": "Spatial resolution"
+			},
+			{
+				"Name": "HORIZONTAL_CS_NAME",
+				"DataType": "STRING",
+				"Description": "UTM zone and Coordinate System"
+			},
+			{
+				"Name": "ULX",
+				"DataType": "FLOAT",
+				"Description": "Longitude"
+			},
+			{
+				"Name": "ULY",
+				"DataType": "FLOAT",
+				"Description": "Latitude"
+			},
+			{
+				"Name": "NCOLS",
+				"DataType": "INT",
+				"Description": "Number of columns"
+			},
+			{
+				"Name": "NROWS",
+				"DataType": "INT",
+				"Description": "Number of rows"
+			},
+			{
+				"Name": "MEAN_SUN_AZIMUTH_ANGLE",
+				"DataType": "FLOAT",
+				"Description": "Mean sun azimuth angle"
+			},
+			{
+				"Name": "MEAN_SUN_ZENITH_ANGLE",
+				"DataType": "FLOAT",
+				"Description": "Mean sun zenith angle"
+			},
+			{
+				"Name": "NBAR_Solar_Zenith",
+				"DataType": "FLOAT",
+				"Description": "NBAR solar zenith"
+			},
+			{
+				"Name": "arop_ave_xshift(meters)",
+				"DataType": "FLOAT",
+				"Description": "arop ave xshift in meters"
+			},
+			{
+				"Name": "arop_ave_yshift(meters)",
+				"DataType": "FLOAT",
+				"Description": "arop ave yshift in meters"
+			},
+			{
+				"Name": "arop_ncp",
+				"DataType": "INT",
+				"Description": "arop ncp"
+			},
+			{
+				"Name": "arop_rmse(meters)",
+				"DataType": "FLOAT",
+				"Description": "arop root mean square error in meters"
+			},
+			{
+				"Name": "arop_s2_refimg",
+				"DataType": "INT",
+				"Description": "arop s2 refimg"
+			},
+			{
+				"Name": "ACCODE",
+				"DataType": "STRING",
+				"Description": "ACCODE"
+			},
+			{
+				"Name": "TIRS_SSM_MODEL",
+				"DataType": "STRING",
+				"Description": "TIRS SSM model"
+			},
+			{
+				"Name": "TIRS_SSM_POSITION_STATUS",
+				"DataType": "STRING",
+				"Description": "TIRS SSM position status"
+			},
+			{
+				"Name": "USGS_SOFTWARE",
+				"DataType": "STRING",
+				"Description": "USGS software version number"
+			}
+		]
+	}
+}
