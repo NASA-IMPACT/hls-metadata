@@ -106,12 +106,12 @@
 				"Description": "NBAR solar zenith"
 			},
 			{
-				"Name": "AROP_AVE_XSHIFT(meters)",
+				"Name": "AROP_AVE_XSHIFT(METERS)",
 				"DataType": "FLOAT",
 				"Description": "arop ave xshift in meters"
 			},
 			{
-				"Name": "AROP_AVE_YSHIFT(meters)",
+				"Name": "AROP_AVE_YSHIFT(METERS)",
 				"DataType": "FLOAT",
 				"Description": "arop ave yshift in meters"
 			},
