@@ -117,6 +117,16 @@ class Metadata:
             )
         for attribute in self.root["AdditionalAttributes"]:
             attribute_name = attribute_mapping[attribute["Name"]]
+            values = self.attributes.get(attribute_name,None)
+            try:
+                values = values.split(";")
+                self.root["AdditionalAttributes"][attribume_name]["Values"] = []
+                for value in values:
+                    if attribute["DataType"] == "FLOAT":
+                        value = round(float(value),8)
+                    self.root["AdditionalAttributes"][attribume_name]["Values"].append({"Value":value})
+            except:
+                attribute["Values"]["Value"] = values
             attribute["Value"] = self.attributes.get(attribute_name, None)
             if attribute["DataType"] == "FLOAT" and attribute["Value"]:
                 attribute["Value"] = round(
