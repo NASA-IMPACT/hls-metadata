@@ -181,7 +181,7 @@
 				"Description": "MSI band 12 bandpass adjustment slope and offset"
 			},
 			{
-				"Name": ""MSI_BAND_8A_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
+				"Name": "MSI_BAND_8A_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET",
 				"DataType": "FLOAT",
 				"Description": "MSI band 8a bandpass adjustment slope and offset"
 			},
