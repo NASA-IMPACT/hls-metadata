@@ -4,5 +4,6 @@
     "Platforms": "Platform",
     "OnlineAccessUrls": "OnlineAccessUrl",
     "OnlineResources": "OnlineResource",
-    "AssociatedBrowseImageURLs": "ProviderBrowseURL"
+    "AssociatedBrowseImageURLs": "ProviderBrowseURL",
+    "Values": "Value"
 }

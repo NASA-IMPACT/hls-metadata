@@ -7,7 +7,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "boto3",
-        "botocore",
+        "botocore>=1.15.23",
         "click",
         "numpy",
         "pyhdf",
