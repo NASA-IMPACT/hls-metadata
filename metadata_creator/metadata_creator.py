@@ -73,11 +73,6 @@ class Metadata:
         self.attributes = granule.attributes()
         granule.end()
 
-        # if "AngleBand" in self.attributes:
-        #    self.attributes["AngleBand"] = ",".join(
-        #        [str(a) for a in self.attributes["AngleBand"]]
-        #    )
-
     def template_handler(self):
         """
         there are several fields that will consistent across all granules
