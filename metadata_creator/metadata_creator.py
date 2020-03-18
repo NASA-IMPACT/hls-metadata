@@ -8,7 +8,11 @@ import click
 import logging
 from collections import OrderedDict
 from pyhdf.SD import SD
-from pyproj import CRS, transform
+
+try:
+    from pyproj import CRS, transform
+except ImportError:
+    from pyproj import Proj, transform
 from botocore.exceptions import ClientError
 from lxml import etree
 
@@ -69,10 +73,10 @@ class Metadata:
         self.attributes = granule.attributes()
         granule.end()
 
-        if "AngleBand" in self.attributes:
-            self.attributes["AngleBand"] = ",".join(
-                [str(a) for a in self.attributes["AngleBand"]]
-            )
+        # if "AngleBand" in self.attributes:
+        #    self.attributes["AngleBand"] = ",".join(
+        #        [str(a) for a in self.attributes["AngleBand"]]
+        #    )
 
     def template_handler(self):
         """
@@ -117,21 +121,33 @@ class Metadata:
             )
         for attribute in self.root["AdditionalAttributes"]:
             attribute_name = attribute_mapping[attribute["Name"]]
-            values = self.attributes.get(attribute_name,None)
-            try:
-                values = values.split(";")
-                self.root["AdditionalAttributes"][attribume_name]["Values"] = []
-                for value in values:
-                    if attribute["DataType"] == "FLOAT":
-                        value = round(float(value),8)
-                    self.root["AdditionalAttributes"][attribume_name]["Values"].append({"Value":value})
-            except:
-                attribute["Values"]["Value"] = values
-            attribute["Value"] = self.attributes.get(attribute_name, None)
-            if attribute["DataType"] == "FLOAT" and attribute["Value"]:
-                attribute["Value"] = round(
-                    float(self.attributes.get(attribute_name, None)), 8
-                )
+            value = self.attributes.get(attribute_name, None)
+            if not value:
+                attribute["Values"] = {"Value": None}
+                continue
+
+            values = None
+            datatype = attribute["DataType"]
+            if isinstance(value, list):
+                values = value
+
+            if (
+                not values
+                and datatype in ("FLOAT", "INT")
+                and "," in str(value)
+            ):
+                values = value.split(",")
+
+            if not values:
+                values = [value]
+
+            if datatype == "FLOAT":
+                if values:
+                    values = [round(float(v), 8) for v in values]
+                else:
+                    value = round(float(value), 8)
+
+            attribute["Values"] = values
 
     def online_resource(self):
         """
@@ -220,13 +236,23 @@ class Metadata:
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
         if len(sensing_time) == 1:
-            time = datetime.datetime.strptime(sensing_time[0][:-2],time_format[:-1])
+            time = datetime.datetime.strptime(
+                sensing_time[0][:-2], time_format[:-1]
+            )
             temporal["SingleDateTime"] = time.strftime(time_format)
         else:
-            time1 = datetime.datetime.strptime(sensing_time[0][:-2],time_format[:-1])
-            time2 = datetime.datetime.strptime(sensing_time[-1][:-2].replace(' ',''),time_format[:-1])
-            temporal["RangeDateTime"]["BeginningDateTime"] = time1.strftime(time_format),
-            temporal["RangeDateTime"]["EndingDateTime"] = time2.strftime(time_format)
+            time1 = datetime.datetime.strptime(
+                sensing_time[0][:-2], time_format[:-1]
+            )
+            time2 = datetime.datetime.strptime(
+                sensing_time[-1][:-2].replace(" ", ""), time_format[:-1]
+            )
+            temporal["RangeDateTime"]["BeginningDateTime"] = (
+                time1.strftime(time_format),
+            )
+            temporal["RangeDateTime"]["EndingDateTime"] = time2.strftime(
+                time_format
+            )
         self.root["Temporal"] = temporal
 
     def lat_lon_4326(self, bound):
@@ -241,8 +267,15 @@ class Metadata:
 
         Returns the boundingbox in EPSG:4326 format
         """
-        hdf_proj = CRS.from_epsg(3857)
-        reproj_proj = CRS.from_epsg(4326)
+
+        # deal with older and newer versions of pyproj
+        try:
+            hdf_proj = CRS.from_epsg(3857)
+            reproj_proj = CRS.from_epsg(4326)
+        except NameError:
+            hdf_proj = Proj(init="EPSG:3857")
+            reproj_proj = Proj(init="EPSG:4326")
+
         top_left_lon, top_left_lat = transform(
             hdf_proj, reproj_proj, bound[0], bound[1]
         )
