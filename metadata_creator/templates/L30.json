@@ -58,7 +58,7 @@
 			},
 			{
 				"Name": "SPATIAL_RESOLUTION",
-				"DataType": "FLOA",
+				"DataType": "FLOAT",
 				"Description": "Spatial resolution"
 			},
 			{

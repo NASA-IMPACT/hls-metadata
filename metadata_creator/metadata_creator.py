@@ -143,7 +143,8 @@ class Metadata:
                     values = [round(float(v), 8) for v in values]
                 else:
                     value = round(float(value), 8)
-
+            del attribute['DataType']
+            del attribute['Description']
             attribute["Values"] = values
 
     def online_resource(self):
