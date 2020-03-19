@@ -6,41 +6,33 @@
 		"Visible": true,
 		"Sentinel-2A": {
 			"ShortName": "Sentinel-2A",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "Sentinel-2 MSI",
-					"LongName": "Sentinel-2 Multispectral Imager"
+					"ShortName": "Sentinel-2 MSI"
 				}
 			]
 		},
 		"Sentinel-2B": {
 			"ShortName": "Sentinel-2B",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "Sentinel-2 MSI",
-					"LongName": "Sentinel-2 Multispectral Imager"
+					"ShortName": "Sentinel-2 MSI"
 				}
 			]
 		},
 		"Sentinel-2C": {
 			"ShortName": "Sentinel-2C",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "Sentinel-2 MSI",
-					"LongName": "Sentinel-2 Multispectral Imager"
+					"ShortName": "Sentinel-2 MSI"
 				}
 			]
 		},
 		"Sentinel-2D": {
 			"ShortName": "Sentinel-2D",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "Sentinel-2 MSI",
-					"LongName": "Sentinel-2 Multispectral Imager"
+					"ShortName": "Sentinel-2 MSI"
 				}
 			]
 		},

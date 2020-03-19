@@ -3,7 +3,8 @@ import datetime
 import re
 import json
 import boto3
-from . import update_credentials
+#from . import update_credentials
+import update_credentials
 import click
 import logging
 from collections import OrderedDict
@@ -32,9 +33,9 @@ class Metadata:
         self.root["Temporal"] = {}
         self.root["Spatial"] = {}
         self.root["Platforms"] = []
-        self.root["OnlineAccessURLs"] = []
-        self.root["OnlineResources"] = []
-        self.root["AssociatedBrowseImageURLs"] = []
+        #self.root["OnlineAccessURLs"] = []
+        #self.root["OnlineResources"] = []
+        #self.root["AssociatedBrowseImageUrls"] = []
         self.root["AdditionalAttributes"] = []
         self.root["Orderable"] = None
         self.root["DataFormat"] = None
@@ -95,8 +96,8 @@ class Metadata:
         self.root["GranuleUR"] = self.data_file.replace(
             "." + self.data_format, ""
         )
-        self.root["Orderable"] = template["Orderable"]
-        self.root["Visible"] = template["Visible"]
+        self.root["Orderable"] = str(template["Orderable"]).lower()
+        self.root["Visible"] = str(template["Visible"]).lower()
         self.root["DataFormat"] = self.data_format
 
     def attribute_handler(self):
@@ -117,8 +118,9 @@ class Metadata:
         for attribute in self.root["AdditionalAttributes"]:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
-            if not value:
-                attribute["Values"] = {"Value": None}
+            if value is None:
+                missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
+                attribute["Values"] = {"Value": missing_values[attribute['DataType']]}
                 continue
 
             values = None
@@ -227,6 +229,10 @@ class Metadata:
         self.root["InsertTime"] = datetime.datetime.utcnow().strftime(
             time_format
         )
+        #This needs to be updated to last update time of file
+        self.root["LastUpdate"] = datetime.datetime.utcnow().strftime(
+            time_format
+        )
 
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
@@ -236,6 +242,7 @@ class Metadata:
             )
             temporal["SingleDateTime"] = time.strftime(time_format)
         else:
+            temporal["RangeDateTime"] = {}
             time1 = datetime.datetime.strptime(
                 sensing_time[0][:-2], time_format[:-1]
             )

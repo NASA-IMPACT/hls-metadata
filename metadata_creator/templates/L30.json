@@ -6,21 +6,17 @@
 		"Orderable": false,
 		"LANDSAT-8": {
 			"ShortName": "LANDSAT-8",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "OLI",
-					"LongName": "Operational Land Imager"
+					"ShortName": "OLI"
 				}
 			]
 		},
 		"LANDSAT-9": {
 			"ShortName": "LANDSAT-9",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "OLI",
-					"LongName": "Operational Land Imager"
+					"ShortName": "OLI"
 				}
 			]
 		},
