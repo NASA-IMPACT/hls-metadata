@@ -121,6 +121,8 @@ class Metadata:
             if value is None:
                 missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
                 attribute["Values"] = {"Value": missing_values[attribute['DataType']]}
+                del attribute['DataType']
+                del attribute['Description']
                 continue
 
             values = None
