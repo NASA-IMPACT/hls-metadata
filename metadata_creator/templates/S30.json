@@ -38,14 +38,9 @@
 		},
 		"AdditionalAttributes": [
 			{
-				"Name": "DATASTRIP_ID",
+				"Name": "PRODUCT_URI",
 				"DataType": "STRING",
-				"Description": "Datastrip ID"
-			},
-			{
-				"Name": "SPACECRAFT_NAME",
-				"DataType": "STRING",
-				"Description": "Name of the spacecraft"
+				"Description": "Product Unique Resource Identifier"
 			},
 			{
 				"Name": "CLOUD_COVERAGE",

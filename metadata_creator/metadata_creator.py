@@ -37,7 +37,6 @@ class Metadata:
         #self.root["OnlineResources"] = []
         #self.root["AssociatedBrowseImageUrls"] = []
         self.root["AdditionalAttributes"] = []
-        self.root["DataFormat"] = None
 
         self.data_path = data_path
         self.data_file = os.path.basename(self.data_path)
@@ -94,7 +93,6 @@ class Metadata:
         self.root["GranuleUR"] = self.data_file.replace(
             "." + self.data_format, ""
         )
-        self.root["DataFormat"] = self.data_format.upper()
 
     def attribute_handler(self):
         """
@@ -115,8 +113,11 @@ class Metadata:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
             if value is None:
-                missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
-                attribute["Values"] = {"Value": missing_values[attribute['DataType']]}
+                if attribute["Name"] == "MGRS_TILE_ID":
+                    attribute["Values"] = {"Value": self.data_file.split(".")[2]}
+                else:    
+                    missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
+                    attribute["Values"] = {"Value": missing_values[attribute['DataType']]}
                 del attribute['DataType']
                 del attribute['Description']
                 continue
