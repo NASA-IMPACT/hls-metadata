@@ -37,9 +37,7 @@ class Metadata:
         #self.root["OnlineResources"] = []
         #self.root["AssociatedBrowseImageUrls"] = []
         self.root["AdditionalAttributes"] = []
-        self.root["Orderable"] = None
         self.root["DataFormat"] = None
-        self.root["Visible"] = None
 
         self.data_path = data_path
         self.data_file = os.path.basename(self.data_path)
@@ -96,9 +94,7 @@ class Metadata:
         self.root["GranuleUR"] = self.data_file.replace(
             "." + self.data_format, ""
         )
-        self.root["Orderable"] = str(template["Orderable"]).lower()
-        self.root["Visible"] = str(template["Visible"]).lower()
-        self.root["DataFormat"] = self.data_format
+        self.root["DataFormat"] = self.data_format.upper()
 
     def attribute_handler(self):
         """
