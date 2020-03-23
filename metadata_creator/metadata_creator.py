@@ -118,7 +118,7 @@ class Metadata:
             if value is None:
                 if attribute["Name"] == "MGRS_TILE_ID":
                     attribute["Values"] = {"Value": self.data_file.split(".")[2]}
-                else:    
+                else:
                     missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
                     attribute["Values"] = {"Value": missing_values[attribute['DataType']]}
                 del attribute['DataType']
@@ -331,10 +331,9 @@ class Metadata:
                 poly = Polygon(geom["coordinates"][0]).simplify(
                     0.01, preserve_topology=True
                 )
-                print(poly.exterior.coords)
                 for x, y in poly.exterior.coords:
                     points.append(
-                        {"Point": {"PointLongitude": x, "PointLatitude": y}}
+                        {"PointLongitude": x, "PointLatitude": y}
                     )
 
         spatial = {

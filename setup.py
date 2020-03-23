@@ -7,21 +7,20 @@ setup(
     include_package_data=True,
     install_requires=[
         "boto3",
-        "botocore>=1.15.23",
+        "botocore",
         "click",
         "numpy",
         "pyhdf",
         "pyproj",
+        "rasterio",
+        "shapely",
     ],
-    extras_require={
-        "dev": ["flake8", "black"],
-        "test": ["pytest", "lxml"]
-    },
+    extras_require={"dev": ["flake8", "black"], "test": ["pytest", "lxml"]},
     package_data={"metadata_creator": ["templates/*.json"]},
     entry_points={
         "console_scripts": [
             "create_metadata=metadata_creator.metadata_creator:create_metadata",
-            "run_metadata=metadata_creator.run_metadata:run_metadata"
+            "run_metadata=metadata_creator.run_metadata:run_metadata",
         ]
     },
 )
