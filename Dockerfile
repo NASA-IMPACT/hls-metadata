@@ -4,6 +4,6 @@ WORKDIR ${SRC_DIR}/hls-metadata
 RUN pip install --upgrade awscli numpy && pip install --ignore-installed pyparsing
 RUN pip install rasterio shapely --no-binary rasterio
 RUN pip install -e .['test']
-
+WORKDIR /data
 ENTRYPOINT ["/bin/sh", "-c"]
-CMD ["pytest"]
+CMD ["pytest ${SRC_DIR}/hls-metadata"]

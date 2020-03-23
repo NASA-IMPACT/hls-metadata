@@ -1,5 +1,22 @@
 #hls-metadata-brian - creates metadata for HLS
 
+The use of rasterio does not allow for the regular pip install of rasterio using wheels. To run this, you must make sure that there is a gdal version that supports HDF4 installed on the system and install rasterio using
+```
+pip install rasterio --no-binary rasterio
+```
+
+You can run/test using the included Dockerfile which will use the system that is used in the orchestration to run.
+
+```bash
+docker build -t metadata
+
+# run tests
+docker run metadata
+
+# run interactively
+docker run -it -v $PWD:/data metadata /bin/bash
+```
+
 Installation:
 Installation requires python development libraries and hdf4 binaries. On an Ubuntu/Debian system they can be installed with the following.
 ```bash
