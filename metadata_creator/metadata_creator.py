@@ -246,8 +246,8 @@ class Metadata:
         time2 = datetime.datetime.strptime(
             sensing_time[-1][:-2].replace(" ", ""), time_format[:-1]
         )
-        temporal["RangeDateTime"]["BeginningDateTime"] = (
-            time1.strftime(time_format),
+        temporal["RangeDateTime"]["BeginningDateTime"] = time1.strftime(
+            time_format
         )
         temporal["RangeDateTime"]["EndingDateTime"] = time2.strftime(
             time_format
