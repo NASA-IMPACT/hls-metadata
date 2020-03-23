@@ -6,21 +6,17 @@
 		"Orderable": false,
 		"LANDSAT-8": {
 			"ShortName": "LANDSAT-8",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "OLI",
-					"LongName": "Operational Land Imager"
+					"ShortName": "OLI"
 				}
 			]
 		},
 		"LANDSAT-9": {
 			"ShortName": "LANDSAT-9",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "OLI",
-					"LongName": "Operational Land Imager"
+					"ShortName": "OLI"
 				}
 			]
 		},
@@ -31,27 +27,12 @@
 				"Description": "LANDSAT product ID"
 			},
 			{
-				"Name": "LANDSAT_SCENE_ID",
-				"DataType": "STRING",
-				"Description": "LANDSAT Scene ID"
-			},
-			{
-				"Name": "DATA_TYPE",
-				"DataType": "STRING",
-				"Description": "Data type"
-			},
-			{
-				"Name": "SENSOR",
-				"DataType": "STRING",
-				"Description": "Sensor ID"
-			},
-			{
 				"Name": "CLOUD_COVERAGE",
 				"DataType": "FLOAT",
 				"Description": "Percentage of cloud cover"
 			},
 			{
-				"Name": "SENTINEL2_TILEID",
+				"Name": "MGRS_TILE_ID",
 				"DataType": "STRING",
 				"Description": "Sentinel 2 Tile ID"
 			},
@@ -62,7 +43,7 @@
 			},
 			{
 				"Name": "SPATIAL_RESOLUTION",
-				"DataType": "FLOA",
+				"DataType": "FLOAT",
 				"Description": "Spatial resolution"
 			},
 			{
@@ -104,31 +85,6 @@
 				"Name": "NBAR_SOLAR_ZENITH",
 				"DataType": "FLOAT",
 				"Description": "NBAR solar zenith"
-			},
-			{
-				"Name": "AROP_AVE_XSHIFT(METERS)",
-				"DataType": "FLOAT",
-				"Description": "arop ave xshift in meters"
-			},
-			{
-				"Name": "AROP_AVE_YSHIFT(METERS)",
-				"DataType": "FLOAT",
-				"Description": "arop ave yshift in meters"
-			},
-			{
-				"Name": "AROP_NCP",
-				"DataType": "INT",
-				"Description": "arop ncp"
-			},
-			{
-				"Name": "AROP_RMSE(METERS)",
-				"DataType": "FLOAT",
-				"Description": "arop root mean square error in meters"
-			},
-			{
-				"Name": "AROP_S2_REFIMG",
-				"DataType": "INT",
-				"Description": "arop s2 refimg"
 			},
 			{
 				"Name": "ACCODE",

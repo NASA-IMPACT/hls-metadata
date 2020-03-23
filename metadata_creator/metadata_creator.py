@@ -3,7 +3,8 @@ import datetime
 import re
 import json
 import boto3
-from . import update_credentials
+#from . import update_credentials
+import update_credentials
 import click
 import logging
 from collections import OrderedDict
@@ -35,13 +36,10 @@ class Metadata:
         self.root["Temporal"] = {}
         self.root["Spatial"] = {}
         self.root["Platforms"] = []
-        self.root["OnlineAccessURLs"] = []
-        self.root["OnlineResources"] = []
-        self.root["AssociatedBrowseImageURLs"] = []
+        #self.root["OnlineAccessURLs"] = []
+        #self.root["OnlineResources"] = []
+        #self.root["AssociatedBrowseImageUrls"] = []
         self.root["AdditionalAttributes"] = []
-        self.root["Orderable"] = None
-        self.root["DataFormat"] = None
-        self.root["Visible"] = None
 
         self.data_path = data_path
         self.data_file = os.path.basename(self.data_path)
@@ -98,9 +96,6 @@ class Metadata:
         self.root["GranuleUR"] = self.data_file.replace(
             "." + self.data_format, ""
         )
-        self.root["Orderable"] = template["Orderable"]
-        self.root["Visible"] = template["Visible"]
-        self.root["DataFormat"] = self.data_format
 
     def attribute_handler(self):
         """
@@ -120,8 +115,14 @@ class Metadata:
         for attribute in self.root["AdditionalAttributes"]:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
-            if not value:
-                attribute["Values"] = {"Value": None}
+            if value is None:
+                if attribute["Name"] == "MGRS_TILE_ID":
+                    attribute["Values"] = {"Value": self.data_file.split(".")[2]}
+                else:    
+                    missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
+                    attribute["Values"] = {"Value": missing_values[attribute['DataType']]}
+                del attribute['DataType']
+                del attribute['Description']
                 continue
 
             values = None
@@ -144,7 +145,8 @@ class Metadata:
                     values = [round(float(v), 8) for v in values]
                 else:
                     value = round(float(value), 8)
-
+            del attribute['DataType']
+            del attribute['Description']
             attribute["Values"] = values
 
     def online_resource(self):
@@ -230,27 +232,26 @@ class Metadata:
         self.root["InsertTime"] = datetime.datetime.utcnow().strftime(
             time_format
         )
+        #This needs to be updated to last update time of file
+        self.root["LastUpdate"] = datetime.datetime.utcnow().strftime(
+            time_format
+        )
 
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
-        if len(sensing_time) == 1:
-            time = datetime.datetime.strptime(
-                sensing_time[0][:-2], time_format[:-1]
-            )
-            temporal["SingleDateTime"] = time.strftime(time_format)
-        else:
-            time1 = datetime.datetime.strptime(
-                sensing_time[0][:-2], time_format[:-1]
-            )
-            time2 = datetime.datetime.strptime(
-                sensing_time[-1][:-2].replace(" ", ""), time_format[:-1]
-            )
-            temporal["RangeDateTime"]["BeginningDateTime"] = (
-                time1.strftime(time_format),
-            )
-            temporal["RangeDateTime"]["EndingDateTime"] = time2.strftime(
-                time_format
-            )
+        temporal["RangeDateTime"] = {}
+        time1 = datetime.datetime.strptime(
+            sensing_time[0][:-2], time_format[:-1]
+        )
+        time2 = datetime.datetime.strptime(
+            sensing_time[-1][:-2].replace(" ", ""), time_format[:-1]
+        )
+        temporal["RangeDateTime"]["BeginningDateTime"] = (
+            time1.strftime(time_format),
+        )
+        temporal["RangeDateTime"]["EndingDateTime"] = time2.strftime(
+            time_format
+        )
         self.root["Temporal"] = temporal
 
     def lat_lon_4326(self, bound):

@@ -6,54 +6,41 @@
 		"Visible": true,
 		"Sentinel-2A": {
 			"ShortName": "Sentinel-2A",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "Sentinel-2 MSI",
-					"LongName": "Sentinel-2 Multispectral Imager"
+					"ShortName": "Sentinel-2 MSI"
 				}
 			]
 		},
 		"Sentinel-2B": {
 			"ShortName": "Sentinel-2B",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "Sentinel-2 MSI",
-					"LongName": "Sentinel-2 Multispectral Imager"
+					"ShortName": "Sentinel-2 MSI"
 				}
 			]
 		},
 		"Sentinel-2C": {
 			"ShortName": "Sentinel-2C",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "Sentinel-2 MSI",
-					"LongName": "Sentinel-2 Multispectral Imager"
+					"ShortName": "Sentinel-2 MSI"
 				}
 			]
 		},
 		"Sentinel-2D": {
 			"ShortName": "Sentinel-2D",
-			"Type": "Earth Observation Satellites",
 			"Instruments": [
 				{
-					"ShortName": "Sentinel-2 MSI",
-					"LongName": "Sentinel-2 Multispectral Imager"
+					"ShortName": "Sentinel-2 MSI"
 				}
 			]
 		},
 		"AdditionalAttributes": [
 			{
-				"Name": "DATASTRIP_ID",
+				"Name": "PRODUCT_URI",
 				"DataType": "STRING",
-				"Description": "Datastrip ID"
-			},
-			{
-				"Name": "SPACECRAFT_NAME",
-				"DataType": "STRING",
-				"Description": "Name of the spacecraft"
+				"Description": "Product Unique Resource Identifier"
 			},
 			{
 				"Name": "CLOUD_COVERAGE",
