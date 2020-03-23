@@ -236,25 +236,19 @@ class Metadata:
 
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
-        if len(sensing_time) == 1:
-            time = datetime.datetime.strptime(
-                sensing_time[0][:-2], time_format[:-1]
-            )
-            temporal["SingleDateTime"] = time.strftime(time_format)
-        else:
-            temporal["RangeDateTime"] = {}
-            time1 = datetime.datetime.strptime(
-                sensing_time[0][:-2], time_format[:-1]
-            )
-            time2 = datetime.datetime.strptime(
-                sensing_time[-1][:-2].replace(" ", ""), time_format[:-1]
-            )
-            temporal["RangeDateTime"]["BeginningDateTime"] = (
-                time1.strftime(time_format),
-            )
-            temporal["RangeDateTime"]["EndingDateTime"] = time2.strftime(
-                time_format
-            )
+        temporal["RangeDateTime"] = {}
+        time1 = datetime.datetime.strptime(
+            sensing_time[0][:-2], time_format[:-1]
+        )
+        time2 = datetime.datetime.strptime(
+            sensing_time[-1][:-2].replace(" ", ""), time_format[:-1]
+        )
+        temporal["RangeDateTime"]["BeginningDateTime"] = (
+            time1.strftime(time_format),
+        )
+        temporal["RangeDateTime"]["EndingDateTime"] = time2.strftime(
+            time_format
+        )
         self.root["Temporal"] = temporal
 
     def lat_lon_4326(self, bound):
