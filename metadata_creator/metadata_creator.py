@@ -9,6 +9,9 @@ import click
 import logging
 from collections import OrderedDict
 from pyhdf.SD import SD
+import rasterio
+from rasterio import features
+from shapely.geometry import Polygon
 
 try:
     from pyproj import CRS, transform
@@ -59,7 +62,7 @@ class Metadata:
         self.attribute_handler()
         self.data_granule_handler()
         self.time_handler()
-        self.location_handler()
+        self.bounding_poly_handler()
         return
 
     def extract_attributes(self):
@@ -115,7 +118,7 @@ class Metadata:
             if value is None:
                 if attribute["Name"] == "MGRS_TILE_ID":
                     attribute["Values"] = {"Value": self.data_file.split(".")[2]}
-                else:    
+                else:
                     missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
                     attribute["Values"] = {"Value": missing_values[attribute['DataType']]}
                 del attribute['DataType']
@@ -308,6 +311,37 @@ class Metadata:
         self.root["Spatial"]["HorizontalSpatialDomain"]["Geometry"][
             "BoundingRectangle"
         ] = bounding_box_dict
+
+    def bounding_poly_handler(self):
+        path = "HDF4_EOS:EOS_GRID:" + self.data_path + ":Grid:Fmask"
+        points = []
+        with rasterio.open(path) as src:
+
+            for record in features.dataset_features(
+                src,
+                bidx=1,
+                sampling=10,
+                band=False,
+                as_mask=True,
+                with_nodata=False,
+                geographic=True,
+                precision=8,
+            ):
+                geom = record["geometry"]
+                poly = Polygon(geom["coordinates"][0]).simplify(
+                    0.01, preserve_topology=True
+                )
+                for x, y in poly.exterior.coords:
+                    points.append(
+                        {"PointLongitude": x, "PointLatitude": y}
+                    )
+
+        spatial = {
+            "HorizontalSpatialDomain": {
+                "Geometry": {"GPolygon": {"Boundary": points}}
+            }
+        }
+        self.root["Spatial"] = spatial
 
     def save_to_S3(self):
         """
