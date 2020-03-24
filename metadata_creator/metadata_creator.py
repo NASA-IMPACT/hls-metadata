@@ -115,18 +115,21 @@ class Metadata:
         for attribute in self.root["AdditionalAttributes"]:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
-            if value is None:
+            datatype = attribute["DataType"]
+            del attribute["DataType"]
+            del attribute["Description"]
+            if value is None and attribute.get("Values",None) is None:
                 if attribute["Name"] == "MGRS_TILE_ID":
-                    attribute["Values"] = {"Value": self.data_file.split(".")[2]}
+                    attribute["Values"] = {"Value": self.data_file.split(".")[2][1:]}
                 else:
                     missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
-                    attribute["Values"] = {"Value": missing_values[attribute['DataType']]}
-                del attribute['DataType']
-                del attribute['Description']
+                    attribute["Values"] = {"Value": missing_values[datatype]}
+                continue
+            elif attribute.get("Values",None) is not None:
+                print(attribute["Name"],attribute["Values"])
                 continue
 
             values = None
-            datatype = attribute["DataType"]
             if isinstance(value, list):
                 values = value
 
@@ -140,14 +143,13 @@ class Metadata:
             if not values:
                 values = [value]
 
-            if datatype == "FLOAT":
+            if datatype == "FLOAT" and value is not None:
                 if values:
                     values = [round(float(v), 8) for v in values]
                 else:
                     value = round(float(value), 8)
-            del attribute['DataType']
-            del attribute['Description']
             attribute["Values"] = values
+            print(attribute["Name"],attribute["Values"])
 
     def online_resource(self):
         """

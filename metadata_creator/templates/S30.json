@@ -64,12 +64,12 @@
 			},
 			{
                                 "Name": "HLS_PROCESSING_TIME",
-                                "DataType": "INT",
+                                "DataType": "STRING",
                                 "Description": "HLS Processing Date and Time"
                         },
                         {
                                 "Name": "SENSING_TIME",
-                                "DataType": "INT",
+                                "DataType": "STRING",
                                 "Description": "Image Sensing Date and Time"
                         },
 			{
@@ -101,33 +101,25 @@
 				"Name": "ADD_OFFSET",
 				"DataType": "INT",
 				"Description": "additional offset",
-				"Values": {
-					"Value": 0
-				}
+				"Values": [0]
 			},
 			{
 				"Name": "REF_SCALE_FACTOR",
 				"DataType": "FLOAT",
 				"Description": "Scale factor for reflectance bands",
-				"Values":{
-					"Value": 0.0001
-				}
+				"Values":[0.0001]
 			},
 			{
 				"Name": "FILLVALUE",
 				"DataType": "INT",
 				"Description": "Band Specific Data Fill Value",
-				"Values":{
-					"Value":-9999
-				}
+				"Values":[-9999]
 			},
 			{
                                 "Name": "QA_FILLVALUE",
                                 "DataType": "INT",
                                 "Description": "Quality Assurance Data  Fill Value",
-                                "Values":{
-                                        "Value":255
-                                }
+                                "Values":[255]
                         },
 			{
 				"Name": "NCOLS",
