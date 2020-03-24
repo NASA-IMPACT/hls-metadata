@@ -63,6 +63,16 @@
 				"Description": "Spatial Resolution"
 			},
 			{
+                                "Name": "HLS_PROCESSING_TIME",
+                                "DataType": "INT",
+                                "Description": "HLS Processing Date and Time"
+                        },
+                        {
+                                "Name": "SENSING_TIME",
+                                "DataType": "INT",
+                                "Description": "Image Sensing Date and Time"
+                        },
+			{
 				"Name": "HORIZONTAL_CS_CODE",
 				"DataType": "STRING",
 				"Description": "EPSG code"
@@ -83,25 +93,42 @@
 				"Description": "Latitude"
 			},
 			{
-				"Name": "OVR_RESAMPLING_ALG",
+				"Name": "SPATIAL_RESAMPLING_ALG",
 				"DataType": "STRING",
-				"Description": "Re sampling Algorithm"
+				"Description": "Spatial Re-sampling Algorithm"
 			},
 			{
 				"Name": "ADD_OFFSET",
-				"DataType": "FLOAT",
-				"Description": "additional offset"
+				"DataType": "INT",
+				"Description": "additional offset",
+				"Values": {
+					"Value": 0
+				}
 			},
 			{
-				"Name": "SCALE_FACTOR",
+				"Name": "REF_SCALE_FACTOR",
 				"DataType": "FLOAT",
-				"Description": "Scale factor"
+				"Description": "Scale factor for reflectance bands",
+				"Values":{
+					"Value": 0.0001
+				}
 			},
 			{
 				"Name": "FILLVALUE",
-				"DataType": "FLOAT",
-				"Description": "Fill Value"
+				"DataType": "INT",
+				"Description": "Band Specific Data Fill Value",
+				"Values":{
+					"Value":-9999
+				}
 			},
+			{
+                                "Name": "QA_FILLVALUE",
+                                "DataType": "INT",
+                                "Description": "Quality Assurance Data  Fill Value",
+                                "Values":{
+                                        "Value":255
+                                }
+                        },
 			{
 				"Name": "NCOLS",
 				"DataType": "INT",
@@ -205,7 +232,7 @@
 			{
 				"Name": "ACCODE",
 				"DataType": "STRING",
-				"Description": "ACCODE"
+				"Description": "LaSRC Version"
 			},
 			{
 				"Name": "PROCESSING_BASELINE",
