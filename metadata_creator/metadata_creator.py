@@ -3,8 +3,7 @@ import datetime
 import re
 import json
 import boto3
-#from . import update_credentials
-import update_credentials
+from . import update_credentials
 import click
 import logging
 from collections import OrderedDict
@@ -239,7 +238,7 @@ class Metadata:
 
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
-        temporal["RangeDateTime"] = OrderedDict
+        temporal["RangeDateTime"] = OrderedDict()
         time1 = datetime.datetime.strptime(
             sensing_time[0][:-2], time_format[:-1]
         )
@@ -333,7 +332,7 @@ class Metadata:
                 )
                 for x, y in poly.exterior.coords[:-1]:
                     points.append(
-                        OrderedDict({"PointLongitude": x, "PointLatitude": y})
+                        OrderedDict({"PointLatitude": y, "PointLongitude": x})
                     )
 
         spatial = {
