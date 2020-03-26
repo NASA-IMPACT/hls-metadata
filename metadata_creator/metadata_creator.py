@@ -3,7 +3,7 @@ import datetime
 import re
 import json
 import boto3
-from . import update_credentials
+import update_credentials
 import click
 import logging
 from collections import OrderedDict
@@ -331,13 +331,14 @@ class Metadata:
                     0.01, preserve_topology=True
                 )
                 for x, y in poly.exterior.coords[:-1]:
+                    print(x,y)
                     points.append(
                         OrderedDict({"PointLatitude": y, "PointLongitude": x})
                     )
 
         spatial = {
             "HorizontalSpatialDomain": {
-                "Geometry": {"GPolygon": {"Boundary": points}}
+                "Geometry": {"GPolygon": {"Boundary": points[::-1]}}
             }
         }
         self.root["Spatial"] = spatial
