@@ -126,7 +126,6 @@ class Metadata:
                     attribute["Values"] = {"Value": missing_values[datatype]}
                 continue
             elif attribute.get("Values",None) is not None:
-                print(attribute["Name"],attribute["Values"])
                 continue
 
             values = None
@@ -149,7 +148,6 @@ class Metadata:
                 else:
                     value = round(float(value), 8)
             attribute["Values"] = values
-            print(attribute["Name"],attribute["Values"])
 
     def online_resource(self):
         """
@@ -241,7 +239,7 @@ class Metadata:
 
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
-        temporal["RangeDateTime"] = {}
+        temporal["RangeDateTime"] = OrderedDict
         time1 = datetime.datetime.strptime(
             sensing_time[0][:-2], time_format[:-1]
         )
@@ -333,9 +331,9 @@ class Metadata:
                 poly = Polygon(geom["coordinates"][0]).simplify(
                     0.01, preserve_topology=True
                 )
-                for x, y in poly.exterior.coords:
+                for x, y in poly.exterior.coords[:-1]:
                     points.append(
-                        {"PointLongitude": x, "PointLatitude": y}
+                        OrderedDict({"PointLongitude": x, "PointLatitude": y})
                     )
 
         spatial = {
@@ -354,7 +352,6 @@ class Metadata:
         """
 
         object_name = "/".join([self.product, "metadata", self.report_name])
-        print(object_name)
         creds = update_credentials.assume_role(
             "arn:aws:iam::611670965994:role/gcc-S3Test", "brian_test"
         )
