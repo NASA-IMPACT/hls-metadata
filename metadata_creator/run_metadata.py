@@ -2,9 +2,9 @@ import os
 import boto3
 import datetime
 import click
-from . import update_credentials
+import update_credentials
 
-from .metadata_creator import Metadata
+from metadata_creator import Metadata
 
 """
 This is essentially a wrapper function for the metadata_creator class.
@@ -33,13 +33,11 @@ s3 = boto3.resource(
 )
 bucket = s3.Bucket(bucket_name)
 
-reset_credentials = True
-count = 0
-
-
 
 @click.command()
 def run_metadata():
+    reset_credentials = True
+    count = 0
     for obj in bucket.objects.filter(Prefix=path):
         if datetime.datetime.now().minute % 15 == 0 and reset_credentials is True:
             creds = update_credentials.assume_role(
