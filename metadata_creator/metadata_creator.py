@@ -239,11 +239,13 @@ class Metadata:
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
         temporal["RangeDateTime"] = OrderedDict()
+        sensing_time1 = sensing_time[0].split('+')[0].replace(" ","")[:-2]
+        sensing_time2 = sensing_time[-1].split('+')[-1].replace(" ","")[:-2]
         time1 = datetime.datetime.strptime(
-            sensing_time[0][:-2], time_format[:-1]
+            sensing_time1, time_format[:-1]
         )
         time2 = datetime.datetime.strptime(
-            sensing_time[-1][:-2].replace(" ", ""), time_format[:-1]
+            sensing_time2, time_format[:-1]
         )
         temporal["RangeDateTime"]["BeginningDateTime"] = time1.strftime(
             time_format
@@ -331,7 +333,6 @@ class Metadata:
                     0.01, preserve_topology=True
                 )
                 for x, y in poly.exterior.coords[:-1]:
-                    print(x,y)
                     points.append(
                         OrderedDict({"PointLatitude": y, "PointLongitude": x})
                     )
