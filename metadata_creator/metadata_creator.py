@@ -377,7 +377,7 @@ class Metadata:
 
                 for p in mpoly:
                     points = []
-                    for x, y in poly.exterior.coords[:-1]:
+                    for x, y in p.exterior.coords[:-1]:
                         points.append(
                             OrderedDict(
                                 {"PointLongitude": x, "PointLatitude": y}
