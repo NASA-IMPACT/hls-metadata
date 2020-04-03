@@ -10,7 +10,8 @@ from collections import OrderedDict
 from pyhdf.SD import SD
 import rasterio
 from rasterio import features
-from shapely.geometry import Polygon
+from shapely.geometry import Polygon, MultiPolygon
+from shapely import wkt, ops
 
 try:
     from pyproj import CRS, transform
@@ -21,6 +22,38 @@ from lxml import etree
 
 current_dir = os.path.dirname(__file__)
 util_dir = os.path.join(current_dir, "templates")
+
+
+def split_at_dateline(poly):
+    shifted = []
+    for pt in list(poly.boundary.coords):
+        if pt[0] < 0:
+            lon = pt[0] + 360
+        else:
+            lon = pt[0]
+        shifted.append([lon, pt[1]])
+
+    poly_shift = Polygon(shifted)
+    line = wkt.loads("LINESTRING(180 -90, 180 90)")
+
+    merged = ops.linemerge([poly_shift.boundary, line])
+    borders = ops.unary_union(merged)
+    polygons = ops.polygonize(borders)
+
+    new_poly = []
+    for p in polygons:
+        print("Shift Polygon: ", str(p))
+        deshifted = []
+        for pt in list(p.boundary.coords):
+            if p.bounds[2] > 180:
+                lon = pt[0] - 360
+            else:
+                lon = pt[0]
+            deshifted.append([lon, pt[1]])
+        new_poly.append(Polygon(deshifted))
+
+    split_poly = MultiPolygon(new_poly)
+    return split_poly
 
 
 class Metadata:
@@ -35,9 +68,9 @@ class Metadata:
         self.root["Temporal"] = {}
         self.root["Spatial"] = {}
         self.root["Platforms"] = []
-        #self.root["OnlineAccessURLs"] = []
-        #self.root["OnlineResources"] = []
-        #self.root["AssociatedBrowseImageUrls"] = []
+        # self.root["OnlineAccessURLs"] = []
+        # self.root["OnlineResources"] = []
+        # self.root["AssociatedBrowseImageUrls"] = []
         self.root["AdditionalAttributes"] = []
 
         self.data_path = data_path
@@ -117,14 +150,20 @@ class Metadata:
             datatype = attribute["DataType"]
             del attribute["DataType"]
             del attribute["Description"]
-            if value is None and attribute.get("Values",None) is None:
+            if value is None and attribute.get("Values", None) is None:
                 if attribute["Name"] == "MGRS_TILE_ID":
-                    attribute["Values"] = {"Value": self.data_file.split(".")[2][1:]}
+                    attribute["Values"] = {
+                        "Value": self.data_file.split(".")[2][1:]
+                    }
                 else:
-                    missing_values = {"INT":-9999,"FLOAT":-9999.9,"STRING":"Not Available"}
+                    missing_values = {
+                        "INT": -9999,
+                        "FLOAT": -9999.9,
+                        "STRING": "Not Available",
+                    }
                     attribute["Values"] = {"Value": missing_values[datatype]}
                 continue
-            elif attribute.get("Values",None) is not None:
+            elif attribute.get("Values", None) is not None:
                 continue
 
             values = None
@@ -231,7 +270,7 @@ class Metadata:
         self.root["InsertTime"] = datetime.datetime.utcnow().strftime(
             time_format
         )
-        #This needs to be updated to last update time of file
+        # This needs to be updated to last update time of file
         self.root["LastUpdate"] = datetime.datetime.utcnow().strftime(
             time_format
         )
@@ -316,6 +355,7 @@ class Metadata:
     def bounding_poly_handler(self):
         path = "HDF4_EOS:EOS_GRID:" + self.data_path + ":Grid:Fmask"
         points = []
+        geometries = []
         with rasterio.open(path) as src:
 
             for record in features.dataset_features(
@@ -332,16 +372,24 @@ class Metadata:
                 poly = Polygon(geom["coordinates"][0]).simplify(
                     0.01, preserve_topology=True
                 )
-                for x, y in poly.exterior.coords[:-1]:
-                    points.append(
-                        OrderedDict({"PointLatitude": y, "PointLongitude": x})
-                    )
+                if poly.bounds[0] < 0 and poly.bounds[1] >= 0:
+                    mpoly = split_at_dateline(poly)
+                else:
+                    mpoly = MultiPolygon([poly])
 
-        spatial = {
-            "HorizontalSpatialDomain": {
-                "Geometry": {"GPolygon": {"Boundary": points[::-1]}}
-            }
-        }
+                for p in mpoly:
+                    points = []
+                    for x, y in p.exterior.coords[:-1]:
+                        points.append(
+                            OrderedDict(
+                                {"PointLongitude": x, "PointLatitude": y}
+                            )
+                        )
+                    gpoly = {"Boundary": points}
+                    geometries.append(gpoly)
+
+        spatial = OrderedDict({"HorizontalSpatialDomain": {"Geometry": geometries}})
+
         self.root["Spatial"] = spatial
 
     def save_to_S3(self):

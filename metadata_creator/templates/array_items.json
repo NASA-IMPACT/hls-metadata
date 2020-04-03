@@ -6,5 +6,6 @@
     "OnlineResources": "OnlineResource",
     "AssociatedBrowseImageURLs": "ProviderBrowseURL",
     "Values": "Value",
-    "Boundary": "Point"
+    "Boundary": "Point",
+    "Geometry": "GPolygon"
 }
