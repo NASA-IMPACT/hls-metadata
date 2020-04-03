@@ -42,7 +42,7 @@ def split_at_dateline(poly):
 
     new_poly = []
     for p in polygons:
-        print("Shift Polygon: ", str(p))
+        #print("Shift Polygon: ", str(p))
         deshifted = []
         for pt in list(p.boundary.coords):
             if p.bounds[2] > 180:
@@ -382,7 +382,7 @@ class Metadata:
                     for x, y in p.exterior.coords[:-1]:
                         points.append(
                             OrderedDict(
-                                {"PointLongitude": x, "PointLatitude": y}
+                                {"PointLatitude": y, "PointLongitude": x}
                             )
                         )
                     gpoly = {"Boundary": points}
