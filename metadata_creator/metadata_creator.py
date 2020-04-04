@@ -385,6 +385,8 @@ class Metadata:
                                 {"PointLatitude": y, "PointLongitude": x}
                             )
                         )
+                    if p == mpoly[-1] and "+" not in self.attributes["SENSING_TIME"]:
+                        points.reverse()
                     gpoly = {"Boundary": points}
                     geometries.append(gpoly)
 
