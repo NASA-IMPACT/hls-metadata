@@ -10,7 +10,7 @@ from collections import OrderedDict
 from pyhdf.SD import SD
 import rasterio
 from rasterio import features
-from shapely.geometry import Polygon, MultiPolygon
+from shapely.geometry import polygon, Polygon, MultiPolygon
 from shapely import wkt, ops
 
 try:
@@ -379,14 +379,13 @@ class Metadata:
 
                 for p in mpoly:
                     points = []
+                    p = polygon.orient(p,sign=-1.0)
                     for x, y in p.exterior.coords[:-1]:
                         points.append(
                             OrderedDict(
                                 {"PointLatitude": y, "PointLongitude": x}
                             )
                         )
-                    if p == mpoly[-1] and "+" not in self.attributes["SENSING_TIME"]:
-                        points.reverse()
                     gpoly = {"Boundary": points}
                     geometries.append(gpoly)
 
