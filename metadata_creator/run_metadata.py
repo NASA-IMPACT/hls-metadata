@@ -18,7 +18,7 @@ ignores the hdr file and only accesses the hdf files in the data bucket.
 """
 
 file_type = "debug"
-s2Tile = "T54HTD"
+s2Tile = "T60WVC"
 
 buckets = {"sample": "hls-global",
     "debug": "hls-debug-output"
@@ -26,7 +26,7 @@ buckets = {"sample": "hls-global",
 
 bucket_name = buckets[file_type]
 
-paths = {"sample": ["S30/data/HLS.S30.17MPP"],
+paths = {"sample": ["S30/data/HLS.S30." + s2Tile],
     "debug": [
         "HLS.S30.T06WWA",
         "HLS.S30.T12RTS",
@@ -41,7 +41,6 @@ paths = {"sample": ["S30/data/HLS.S30.17MPP"],
 
 index = np.argwhere(np.char.find(np.asarray(paths[file_type]),s2Tile) >= 0)[0][0]
 path = paths[file_type][index]
-print(path)
 
 creds = update_credentials.assume_role(
     "arn:aws:iam::611670965994:role/gcc-S3Test", "brian_test"

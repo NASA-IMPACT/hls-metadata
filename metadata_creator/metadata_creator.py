@@ -286,10 +286,12 @@ class Metadata:
         time2 = datetime.datetime.strptime(
             sensing_time2, time_format[:-1]
         )
-        temporal["RangeDateTime"]["BeginningDateTime"] = time1.strftime(
+        start_time = time1 if time1 < time2 else time2
+        end_time = time2 if time1 < time2 else time1
+        temporal["RangeDateTime"]["BeginningDateTime"] = start_time.strftime(
             time_format
         )
-        temporal["RangeDateTime"]["EndingDateTime"] = time2.strftime(
+        temporal["RangeDateTime"]["EndingDateTime"] = end_time.strftime(
             time_format
         )
         self.root["Temporal"] = temporal
@@ -379,14 +381,14 @@ class Metadata:
 
                 for p in mpoly:
                     points = []
-                    p = polygon.orient(p,sign=-1.0)
+                    p = polygon.orient(p,sign=1.0)
                     for x, y in p.exterior.coords[:-1]:
                         points.append(
                             OrderedDict(
                                 {"PointLatitude": y, "PointLongitude": x}
                             )
                         )
-                    gpoly = {"Boundary": points}
+                    gpoly = {"Boundary": points[::-1]}
                     geometries.append(gpoly)
 
         spatial = OrderedDict({"HorizontalSpatialDomain": {"Geometry": geometries}})
