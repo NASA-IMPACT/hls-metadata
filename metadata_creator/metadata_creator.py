@@ -10,7 +10,14 @@ from collections import OrderedDict
 from pyhdf.SD import SD
 import rasterio
 from rasterio import features
-from shapely.geometry import polygon, Polygon, MultiPolygon
+from shapely.geometry import (
+    polygon,
+    Polygon,
+    MultiPolygon,
+    MultiPoint,
+    asShape,
+    mapping,
+)
 from shapely import wkt, ops
 
 try:
@@ -42,7 +49,7 @@ def split_at_dateline(poly):
 
     new_poly = []
     for p in polygons:
-        #print("Shift Polygon: ", str(p))
+        # print("Shift Polygon: ", str(p))
         deshifted = []
         for pt in list(p.boundary.coords):
             if p.bounds[2] > 180:
@@ -57,8 +64,9 @@ def split_at_dateline(poly):
 
 
 class Metadata:
-    def __init__(self, data_path, bucket="hls-global"):
+    def __init__(self, data_path, bucket="hls-global", debug=False):
         # initialize the granule level metadata file
+        self.debug = debug
         self.root = OrderedDict()
         self.root["GranuleUR"] = None
         self.root["InsertTime"] = None
@@ -278,14 +286,10 @@ class Metadata:
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
         temporal["RangeDateTime"] = OrderedDict()
-        sensing_time1 = sensing_time[0].split('+')[0].replace(" ","")[:-2]
-        sensing_time2 = sensing_time[-1].split('+')[-1].replace(" ","")[:-2]
-        time1 = datetime.datetime.strptime(
-            sensing_time1, time_format[:-1]
-        )
-        time2 = datetime.datetime.strptime(
-            sensing_time2, time_format[:-1]
-        )
+        sensing_time1 = sensing_time[0].split("+")[0].replace(" ", "")[:-2]
+        sensing_time2 = sensing_time[-1].split("+")[-1].replace(" ", "")[:-2]
+        time1 = datetime.datetime.strptime(sensing_time1, time_format[:-1])
+        time2 = datetime.datetime.strptime(sensing_time2, time_format[:-1])
         start_time = time1 if time1 < time2 else time2
         end_time = time2 if time1 < time2 else time1
         temporal["RangeDateTime"]["BeginningDateTime"] = start_time.strftime(
@@ -355,43 +359,76 @@ class Metadata:
         ] = bounding_box_dict
 
     def bounding_poly_handler(self):
+        debug = self.debug
         path = "HDF4_EOS:EOS_GRID:" + self.data_path + ":Grid:Fmask"
         points = []
         geometries = []
         with rasterio.open(path) as src:
-
+            # calculate polygons from mask
             for record in features.dataset_features(
                 src,
                 bidx=1,
-                sampling=10,
+                sampling=1,
                 band=False,
                 as_mask=True,
                 with_nodata=False,
                 geographic=True,
                 precision=8,
             ):
-                geom = record["geometry"]
-                poly = Polygon(geom["coordinates"][0]).simplify(
-                    0.01, preserve_topology=True
-                )
-                if poly.bounds[0] < 0 and poly.bounds[1] >= 0:
-                    mpoly = split_at_dateline(poly)
-                else:
-                    mpoly = MultiPolygon([poly])
+                # get list of coordinates from polygons
+                g = asShape(record["geometry"])
+                points.extend(list(g.exterior.coords))
 
-                for p in mpoly:
-                    points = []
-                    p = polygon.orient(p,sign=1.0)
-                    for x, y in p.exterior.coords[:-1]:
-                        points.append(
-                            OrderedDict(
-                                {"PointLatitude": y, "PointLongitude": x}
-                            )
-                        )
-                    gpoly = {"Boundary": points[::-1]}
-                    geometries.append(gpoly)
+            # short circuit if there are no points
+            if len(points) < 3:
+                self.location_handler()
+                return None
 
-        spatial = OrderedDict({"HorizontalSpatialDomain": {"Geometry": geometries}})
+            # create multipoint from list of points
+            mp = MultiPoint(points)
+
+            # create convex hull from the set of points
+            # making up the edges of the raster
+            ch = mp.convex_hull.simplify(0.01, preserve_topology=True)
+            if debug:
+                print(mapping(mp))
+                print(mapping(ch))
+
+            # check if this crosses the dateline
+            if ch.bounds[0] < -90 and ch.bounds[2] >= 90:
+                mpoly = split_at_dateline(ch)
+            else:
+                mpoly = MultiPolygon([ch])
+
+            # create geojson to use for debugging
+            gj = json.dumps(
+                {
+                    "type": "FeatureCollection",
+                    "features": [
+                        {
+                            "type": "Feature",
+                            "properties": {},
+                            "geometry": mapping(mpoly),
+                        }
+                    ],
+                }
+            )
+            if debug:
+                print(gj)
+
+            for p in mpoly:
+                points = []
+                p = polygon.orient(p, sign=1.0)
+                for x, y in p.exterior.coords[:-1]:
+                    points.append(
+                        OrderedDict({"PointLatitude": y, "PointLongitude": x})
+                    )
+                gpoly = {"Boundary": points[::-1]}
+                geometries.append(gpoly)
+
+        spatial = OrderedDict(
+            {"HorizontalSpatialDomain": {"Geometry": geometries}}
+        )
 
         self.root["Spatial"] = spatial
 
@@ -483,11 +520,14 @@ class Metadata:
 )
 @click.option("--save", nargs=1, help="Save Metadata to File")
 @click.option("--s3", default=False, help="Save Metadata to S3")
-def create_metadata(data_path, outputformat="xml", save=None, s3=False):
+@click.option("--debug/--no-debug", default=False, help="Add debugging output")
+def create_metadata(
+    data_path, outputformat="xml", save=None, s3=False, debug=False
+):
     """
     Extract Metadata from HDF file
     """
-    md = Metadata(data_path)
+    md = Metadata(data_path, debug=debug)
     if save:
         md.save_to_file(output_path=save)
         return
