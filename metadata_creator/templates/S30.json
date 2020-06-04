@@ -4,6 +4,7 @@
 		"DataSetId": "HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5",
 		"Orderable": false,
 		"Visible": true,
+                "DataFormat": "Cloud Optimized GeoTIFF (COG)",
 		"Sentinel-2A": {
 			"ShortName": "Sentinel-2A",
 			"Instruments": [
@@ -230,7 +231,19 @@
 				"Name": "PROCESSING_BASELINE",
 				"DataType": "STRING",
 				"Description": "Processing baseline"
-			}
+			},
+                        {
+                                "Name": "IDENTIFIER_PRODUCT_DOI",
+                                "DataType": "STRING",
+                                "Description": "digitial object identifier",
+                                "Values": ["10.5067/HLS/HLSS30.015"]
+                        },
+                        {
+                                "Name": "IDENTIFIER_PRODUCT_DOI_AUTHORITY",
+                                "DataType": "STRING",
+                                "Description": "doi authority",
+                                "Values": ["https://doi.org"]
+                        }
 		]
 	}
 }

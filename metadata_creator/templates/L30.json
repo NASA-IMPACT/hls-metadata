@@ -4,6 +4,7 @@
 		"DataSetId": "HLS Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30 m V1.5",
 		"Visible": true,
 		"Orderable": false,
+                "DataFormat": "Cloud Optimized GeoTIFF (COG)",
 		"LANDSAT-8": {
 			"ShortName": "LANDSAT-8",
 			"Instruments": [
@@ -145,6 +146,18 @@
 				"Name": "USGS_SOFTWARE",
 				"DataType": "STRING",
 				"Description": "USGS software version number"
+			},
+			{
+                                "Name": "IDENTIFIER_PRODUCT_DOI",
+                                "DataType": "STRING",
+                                "Description": "digitial object identifier",
+				"Values": ["10.5067/HLS/HLSL30.015"]
+                        },
+			{
+                                "Name": "IDENTIFIER_PRODUCT_DOI_AUTHORITY",
+                                "DataType": "STRING",
+                                "Description": "doi authority",
+				"Values": ["https://doi.org"]
 			}
 		]
 	}

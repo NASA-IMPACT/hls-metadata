@@ -130,11 +130,12 @@ class Metadata:
         spacecraft_name = self.attributes.get("SPACECRAFT_NAME")
         platform = "LANDSAT-8" if spacecraft_name is None else spacecraft_name
         self.root["Collection"]["DataSetId"] = template["DataSetId"]
-        self.data_format = self.data_file.split(".")[-1]
+        self.root["DataFormat"] = template["DataFormat"]
+        self.file_extension = self.data_file.split(".")[-1]
         self.root["Platforms"].append(template[platform])
         self.root["AdditionalAttributes"] = template["AdditionalAttributes"]
         self.root["GranuleUR"] = self.data_file.replace(
-            "." + self.data_format, ""
+            "." + self.file_extension, ""
         )
 
     def attribute_handler(self):
@@ -209,13 +210,13 @@ class Metadata:
             "URLDescription": (
                 "This file may be downloaded directly from this link"
             ),
-            "MimeType": "application/x-" + self.data_format,
+            "MimeType": "application/x-" + self.file_extension,
         }
         self.root["OnlineResources"]["OnlineResource"] = {
             "URL": "/".join(
                 [
                     path.replace("data", "metadata"),
-                    self.data_file.replace(self.data_format, "cmr.xml"),
+                    self.data_file.replace(self.file_extension, "cmr.xml"),
                 ]
             ),
             "Type": "EXTENDED METADATA",
@@ -225,7 +226,7 @@ class Metadata:
             "URL": "/".join(
                 [
                     path.replace("data", "thumbnail"),
-                    self.data_file.replace(self.data_format, "jpeg"),
+                    self.data_file.replace(self.file_extension, "jpeg"),
                 ]
             ),
             "Description": (
@@ -249,8 +250,8 @@ class Metadata:
             )
         except Exception:
             production_date = self.attributes["HLS_PROCESSING_TIME"]
-        version = self.data_file[-7:].replace("." + self.data_format, "")
-        extension = "." + ".".join(["v" + version, self.data_format])
+        version = self.data_file[-7:].replace("." + self.file_extension, "")
+        extension = "." + ".".join(["v" + version, self.file_extension])
         data_granule = OrderedDict()
         data_granule["SizeMBDataGranule"] = int(
             os.path.getsize(self.data_path) / 1024
@@ -261,7 +262,7 @@ class Metadata:
         data_granule["DayNightFlag"] = "DAY"
         data_granule["ProductionDateTime"] = production_date
         data_granule["LocalVersionId"] = self.data_file[-7:].replace(
-            "." + self.data_format, ""
+            "." + self.file_extension, ""
         )
         self.root["DataGranule"] = data_granule
 
