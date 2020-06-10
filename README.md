@@ -1,4 +1,4 @@
-#hls-metadata-brian - creates metadata for HLS
+#hls-metadata - creates metadata for HLS
 
 The use of rasterio does not allow for the regular pip install of rasterio using wheels. To run this, you must make sure that there is a gdal version that supports HDF4 installed on the system and install rasterio using
 ```
