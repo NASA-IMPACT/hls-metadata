@@ -150,13 +150,13 @@
 			{
                                 "Name": "IDENTIFIER_PRODUCT_DOI",
                                 "DataType": "STRING",
-                                "Description": "digitial object identifier",
+                                "Description": "Digital object identifier that uniquely identifies this data product",
 				"Values": ["10.5067/HLS/HLSL30.015"]
                         },
 			{
                                 "Name": "IDENTIFIER_PRODUCT_DOI_AUTHORITY",
                                 "DataType": "STRING",
-                                "Description": "doi authority",
+                                "Description": "URL of the digital object identifier resolving authority",
 				"Values": ["https://doi.org"]
 			}
 		]
