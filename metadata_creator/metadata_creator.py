@@ -160,8 +160,6 @@ class Metadata:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
             if attribute_name == "NBAR_SOLAR_ZENITH":
-                print(attribute_name, value)
-                print(self.attributes.keys())
                 value = value  if not math.isnan(value) else self.attributes.get("MEAN_SUN_ZENITH_ANGLE",None)
             datatype = attribute["DataType"]
             del attribute["DataType"]
