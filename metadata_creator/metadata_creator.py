@@ -1,14 +1,18 @@
-import os
-import datetime
-import re
-import json
 import boto3
-import update_credentials
 import click
+import datetime
+import json
 import logging
-from collections import OrderedDict
-from pyhdf.SD import SD
+import math
+import os
 import rasterio
+import re
+import update_credentials
+
+from botocore.exceptions import ClientError
+from collections import OrderedDict
+from lxml import etree
+from pyhdf.SD import SD
 from rasterio import features
 from shapely.geometry import (
     polygon,
@@ -24,8 +28,6 @@ try:
     from pyproj import CRS, transform
 except ImportError:
     from pyproj import Proj, transform
-from botocore.exceptions import ClientError
-from lxml import etree
 
 current_dir = os.path.dirname(__file__)
 util_dir = os.path.join(current_dir, "templates")
@@ -76,10 +78,11 @@ class Metadata:
         self.root["Temporal"] = {}
         self.root["Spatial"] = {}
         self.root["Platforms"] = []
-        # self.root["OnlineAccessURLs"] = []
-        # self.root["OnlineResources"] = []
-        # self.root["AssociatedBrowseImageUrls"] = []
         self.root["AdditionalAttributes"] = []
+        self.root["OnlineAccessURLs"] = []
+        self.root["OnlineResources"] = []
+        self.root["DataFormat"] = []
+        self.root["AssociatedBrowseImageUrls"] = []
 
         self.data_path = data_path
         self.data_file = os.path.basename(self.data_path)
@@ -156,6 +159,10 @@ class Metadata:
         for attribute in self.root["AdditionalAttributes"]:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
+            if attribute_name == "NBAR_SOLAR_ZENITH":
+                print(attribute_name, value)
+                print(self.attributes.keys())
+                value = value  if not math.isnan(value) else self.attributes.get("MEAN_SUN_ZENITH_ANGLE",None)
             datatype = attribute["DataType"]
             del attribute["DataType"]
             del attribute["Description"]
@@ -195,6 +202,7 @@ class Metadata:
                 else:
                     value = round(float(value), 8)
             attribute["Values"] = values
+
 
     def online_resource(self):
         """

@@ -19,7 +19,7 @@ ignores the hdr file and only accesses the hdf files in the data bucket.
 
 file_type = "debug"
 s2Tile = "T60WVC"
-
+date = "2020116"
 buckets = {"sample": "hls-global",
     "debug": "hls-debug-output"
 }
@@ -129,7 +129,8 @@ def run_metadata():
             reset_credentials = True
 
         file_name = obj.key.split("/")[-1]
-        if file_name.endswith(".v1.5.hdf") and file_name not in ignore_list:
+        if file_name.endswith(".v1.5.hdf") and date in file_name and file_name not in ignore_list:
+            print(file_name)
             bucket.download_file(obj.key, file_name)
             result = Metadata(file_name).save_to_S3()
             count += 1
