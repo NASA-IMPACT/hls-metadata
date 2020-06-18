@@ -96,7 +96,8 @@
 			{
 				"Name": "SPATIAL_RESAMPLING_ALG",
 				"DataType": "STRING",
-				"Description": "Spatial Re-sampling Algorithm"
+				"Description": "Spatial Re-sampling Algorithm",
+				"Values": ["Area Weighted Average"]
 			},
 			{
 				"Name": "ADD_OFFSET",

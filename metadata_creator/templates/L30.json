@@ -47,6 +47,12 @@
 				"DataType": "FLOAT",
 				"Description": "Spatial resolution"
 			},
+                        {
+                                "Name": "SPATIAL_RESAMPLING_ALG",
+                                "DataType": "STRING",
+                                "Description": "Spatial Re-sampling Algorithm",
+                                "Values": ["Cubic Convolution"]
+                        },
 			{
                                 "Name": "HLS_PROCESSING_TIME",
                                 "DataType": "STRING",
