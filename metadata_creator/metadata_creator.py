@@ -1,15 +1,11 @@
-import boto3
 import click
 import datetime
 import json
-import logging
 import math
 import os
 import rasterio
 import re
-import update_credentials
 
-from botocore.exceptions import ClientError
 from collections import OrderedDict
 from lxml import etree
 from pyhdf.SD import SD
@@ -159,8 +155,8 @@ class Metadata:
         for attribute in self.root["AdditionalAttributes"]:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
-            if attribute_name == "NBAR_SOLAR_ZENITH":
-                value = value  if not math.isnan(value) else self.attributes.get("MEAN_SUN_ZENITH_ANGLE",None)
+            if attribute_name == "NBAR_SOLAR_ZENITH" and value:
+                value = value if not math.isnan(value) else self.attributes.get("MEAN_SUN_ZENITH_ANGLE", None)
             datatype = attribute["DataType"]
             del attribute["DataType"]
             del attribute["Description"]
@@ -200,7 +196,6 @@ class Metadata:
                 else:
                     value = round(float(value), 8)
             attribute["Values"] = values
-
 
     def online_resource(self):
         """
@@ -439,33 +434,6 @@ class Metadata:
 
         self.root["Spatial"] = spatial
 
-    def save_to_S3(self):
-        """
-        If the metadata file is able to be successfully written by the
-        processing code, we move the data to S3 using the assumed role
-        from GCC. This is required for the bucket access policy to be
-        applied correctly such that LPDAAC has read/get access.
-        """
-
-        object_name = "/".join([self.product, "metadata", self.report_name])
-        creds = update_credentials.assume_role(
-            "arn:aws:iam::611670965994:role/gcc-S3Test", "brian_test"
-        )
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=creds["AccessKeyId"],
-            aws_secret_access_key=creds["SecretAccessKey"],
-            aws_session_token=creds["SessionToken"],
-        )
-        try:
-            client.put_object(
-                Bucket=self.bucket, Key=object_name, Body=self.xml
-            )
-        except ClientError as e:
-            logging.error(e)
-            return False
-        return True
-
     def save_to_file(self, output_path=None):
         if not output_path:
             output_path = self.report_name
@@ -523,13 +491,12 @@ class Metadata:
     "-f",
     nargs=1,
     default="xml",
-    help="Metadata Format (xml, json, yaml)",
+    help="Metadata Format (xml, json)",
 )
 @click.option("--save", nargs=1, help="Save Metadata to File")
-@click.option("--s3", default=False, help="Save Metadata to S3")
 @click.option("--debug/--no-debug", default=False, help="Add debugging output")
 def create_metadata(
-    data_path, outputformat="xml", save=None, s3=False, debug=False
+    data_path, outputformat="xml", save=None, debug=False
 ):
     """
     Extract Metadata from HDF file
@@ -538,13 +505,8 @@ def create_metadata(
     if save:
         md.save_to_file(output_path=save)
         return
-    if s3:
-        md.save_to_S3()
-        return
     if outputformat == "json":
         print(md.json)
-    elif outputformat == "yaml":
-        print(md.yaml)
     else:
         print(md.xml)
 
