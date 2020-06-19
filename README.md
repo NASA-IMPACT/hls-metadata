@@ -1,4 +1,5 @@
-#hls-metadata - creates metadata for HLS
+# hls-metadata
+## Generate CMR metdata for HLS products
 
 The use of rasterio does not allow for the regular pip install of rasterio using wheels. To run this, you must make sure that there is a gdal version that supports HDF4 installed on the system and install rasterio using
 ```
@@ -8,12 +9,13 @@ pip install rasterio --no-binary rasterio
 You can run/test using the included Dockerfile which will use the system that is used in the orchestration to run.
 
 ```bash
-docker build -t metadata
+docker build -t metadata .
 
-# run tests
+ run tests
 docker run metadata
 
 # run interactively
+cd tests/data
 docker run -it -v $PWD:/data metadata /bin/bash
 ```
 
@@ -33,12 +35,8 @@ This will install both the metadata_creator package as well as install a create_
 
 Examle Usage
 ```bash
-create_metadata file.hdf >metadata.xml # Send XML metadata to stdout
+create_metadata file.hdf > metadata.xml # Send XML metadata to stdout
 create_metadata file.hdf --save metadata.xml # Use --save argument to set destination
-create_metadata file.hdf --s3 # Save to default hls-global bucket location
-create_metadata file.hdf --s3 bucket/key
-
-run_metadata # runs the run_metadata script
 ```
 
 Run Tests on Py 2.7 and 3.7

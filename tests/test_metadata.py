@@ -8,7 +8,7 @@ from doctest import Example
 current_dir = os.path.dirname(__file__)
 test_dir = os.path.join(current_dir, "data")
 
-test_granule = "HLS.S30.T02LNH.20200224.20200224T230359.v1.5"
+test_granule = "HLS.S30.T23XNL.2020116T195901.v1.5"
 
 
 def sortxml(xml):
