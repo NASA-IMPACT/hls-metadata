@@ -18,7 +18,7 @@ Install for local testing
 pip install -e .["test"]
 ```
 
-This will install both the metadata_creator package as well as install a create_metadata and run_metadata executable on your path.
+This will install both the metadata_creator package as well as install a create_metadata executable on your path.
 
 Examle Usage
 ```bash
