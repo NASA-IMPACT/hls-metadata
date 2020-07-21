@@ -156,7 +156,10 @@ class Metadata:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
             if attribute_name == "NBAR_SOLAR_ZENITH" and value:
-                value = value if not math.isnan(value) else self.attributes.get("MEAN_SUN_ZENITH_ANGLE", None)
+                if not math.isnan(value):
+                    value = value
+                else:
+                    value = self.attributes.get("MEAN_SUN_ZENITH_ANGLE", None)
             datatype = attribute["DataType"]
             del attribute["DataType"]
             del attribute["Description"]
@@ -180,11 +183,7 @@ class Metadata:
             if isinstance(value, list):
                 values = value
 
-            if (
-                not values
-                and datatype in ("FLOAT", "INT")
-                and "," in str(value)
-            ):
+            if (not values and datatype in ("FLOAT", "INT") and "," in str(value)):
                 values = value.split(",")
 
             if not values:

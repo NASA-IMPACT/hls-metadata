@@ -12,9 +12,9 @@ setup(
         "pyproj",
         "rasterio",
         "shapely",
+        "lxml"
     ],
     extras_require={"dev": ["flake8", "black"], "test": ["pytest", "lxml"]},
-    package_data={"metadata_creator": ["templates/*.json"]},
     entry_points={
         "console_scripts": [
             "create_metadata=metadata_creator.metadata_creator:create_metadata",

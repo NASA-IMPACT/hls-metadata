@@ -39,7 +39,8 @@ create_metadata file.hdf > metadata.xml # Send XML metadata to stdout
 create_metadata file.hdf --save metadata.xml # Use --save argument to set destination
 ```
 
-Run Tests on Py 2.7 and 3.7
+Run Tests on Docker
 ```bash
-tox
+docker build -t hls-metadata .
+docker run
 ```

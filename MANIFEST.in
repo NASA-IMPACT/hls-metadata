@@ -1,0 +1,3 @@
+include metadata_creator/templates/*.json
+include tests/data/*.xml
+include tests/data/*.hdf
