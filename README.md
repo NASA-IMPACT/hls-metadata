@@ -20,14 +20,15 @@ pip install -e .["test"]
 
 This will install both the metadata_creator package as well as install a create_metadata executable on your path.
 
+### Tests
+Run Tests on Docker
+```bash
+docker build -t hls-metadata .
+docker run hls-metadata
+```
+
 Examle Usage
 ```bash
 create_metadata file.hdf > metadata.xml # Send XML metadata to stdout
 create_metadata file.hdf --save metadata.xml # Use --save argument to set destination
-```
-
-Run Tests on Docker
-```bash
-docker build -t hls-metadata .
-docker run
 ```
