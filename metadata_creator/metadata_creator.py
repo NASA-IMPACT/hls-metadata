@@ -6,6 +6,7 @@ import os
 import rasterio
 import re
 
+from io import StringIO
 from collections import OrderedDict
 from lxml import etree
 from pyhdf.SD import SD
@@ -156,7 +157,10 @@ class Metadata:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
             if attribute_name == "NBAR_SOLAR_ZENITH" and value:
-                value = value if not math.isnan(value) else self.attributes.get("MEAN_SUN_ZENITH_ANGLE", None)
+                if not math.isnan(value):
+                    value = value
+                else:
+                    value = self.attributes.get("MEAN_SUN_ZENITH_ANGLE", None)
             datatype = attribute["DataType"]
             del attribute["DataType"]
             del attribute["Description"]
@@ -180,11 +184,7 @@ class Metadata:
             if isinstance(value, list):
                 values = value
 
-            if (
-                not values
-                and datatype in ("FLOAT", "INT")
-                and "," in str(value)
-            ):
+            if (not values and datatype in ("FLOAT", "INT") and "," in str(value)):
                 values = value.split(",")
 
             if not values:
@@ -423,7 +423,7 @@ class Metadata:
                 p = polygon.orient(p, sign=1.0)
                 for x, y in p.exterior.coords[:-1]:
                     points.append(
-                        OrderedDict({"PointLatitude": y, "PointLongitude": x})
+                        OrderedDict({"PointLongitude": x, "PointLatitude": y})
                     )
                 gpoly = {"Boundary": points[::-1]}
                 geometries.append(gpoly)
@@ -502,11 +502,15 @@ def create_metadata(
     Extract Metadata from HDF file
     """
     md = Metadata(data_path, debug=debug)
+    current_dir = os.path.dirname(__file__)
+    schema_file = os.path.join(current_dir, "templates", "Granule.xsd")
+    xmlschema_doc = etree.parse(schema_file)
+    xmlschema = etree.XMLSchema(xmlschema_doc)
+    md_xml = etree.parse(StringIO(md.xml))
+    xmlschema.assertValid(md_xml)
     if save:
         md.save_to_file(output_path=save)
         return
-    if outputformat == "json":
-        print(md.json)
     else:
         print(md.xml)
 

@@ -8,7 +8,7 @@ from doctest import Example
 current_dir = os.path.dirname(__file__)
 test_dir = os.path.join(current_dir, "data")
 
-test_granule = "HLS.S30.T23XNL.2020116T195901.v1.5"
+test_granule = "HLS.S30.T12XWF.2020071T191201.v1.5"
 
 
 def sortxml(xml):
@@ -28,7 +28,7 @@ def assert_xml_equals(reference, result):
 
 def test_metadata():
     with open(
-        os.path.join(test_dir, test_granule + ".cmr.xml",), "r",
+        os.path.join(test_dir, test_granule + ".xml",), "r",
     ) as file:
         wanted = file.read()
 
@@ -45,5 +45,4 @@ def test_metadata():
     tags = ["InsertTime", "LastUpdate"]
     wanted = strip_times(wanted, tags)
     metadata = strip_times(metadata, tags)
-
     assert_xml_equals(str(wanted), str(metadata))
