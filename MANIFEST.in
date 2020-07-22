@@ -1,1 +1,2 @@
 include metadata_creator/templates/*.json
+include metadata_creator/templates/*.xsd
