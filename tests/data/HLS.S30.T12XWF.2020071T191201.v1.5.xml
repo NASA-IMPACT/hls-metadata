@@ -24,16 +24,16 @@
         <GPolygon>
           <Boundary>
             <Point>
-              <PointLatitude>71.99428821</PointLatitude>
               <PointLongitude>-108.42082017</PointLongitude>
+              <PointLatitude>71.99428821</PointLatitude>
             </Point>
             <Point>
-              <PointLatitude>72.43273427</PointLatitude>
               <PointLongitude>-107.73985732</PointLongitude>
+              <PointLatitude>72.43273427</PointLatitude>
             </Point>
             <Point>
-              <PointLatitude>71.98536776</PointLatitude>
               <PointLongitude>-107.81826404</PointLongitude>
+              <PointLatitude>71.98536776</PointLatitude>
             </Point>
           </Boundary>
         </GPolygon>

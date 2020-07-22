@@ -23,8 +23,7 @@ This will install both the metadata_creator package as well as install a create_
 ### Tests
 Run Tests on Docker
 ```bash
-docker build -t hls-metadata .
-docker run hls-metadata
+docker build -t hls-metadata . && docker run hls-metadata
 ```
 
 Examle Usage

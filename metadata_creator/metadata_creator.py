@@ -6,6 +6,7 @@ import os
 import rasterio
 import re
 
+from io import StringIO
 from collections import OrderedDict
 from lxml import etree
 from pyhdf.SD import SD
@@ -422,7 +423,7 @@ class Metadata:
                 p = polygon.orient(p, sign=1.0)
                 for x, y in p.exterior.coords[:-1]:
                     points.append(
-                        OrderedDict({"PointLatitude": y, "PointLongitude": x})
+                        OrderedDict({"PointLongitude": x, "PointLatitude": y})
                     )
                 gpoly = {"Boundary": points[::-1]}
                 geometries.append(gpoly)
@@ -501,11 +502,15 @@ def create_metadata(
     Extract Metadata from HDF file
     """
     md = Metadata(data_path, debug=debug)
+    current_dir = os.path.dirname(__file__)
+    schema_file = os.path.join(current_dir, "templates", "Granule.xsd")
+    xmlschema_doc = etree.parse(schema_file)
+    xmlschema = etree.XMLSchema(xmlschema_doc)
+    md_xml = etree.parse(StringIO(md.xml))
+    xmlschema.assertValid(md_xml)
     if save:
         md.save_to_file(output_path=save)
         return
-    if outputformat == "json":
-        print(md.json)
     else:
         print(md.xml)
 
