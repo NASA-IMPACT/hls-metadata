@@ -8,8 +8,6 @@ from doctest import Example
 current_dir = os.path.dirname(__file__)
 test_dir = os.path.join(current_dir, "data")
 
-test_granule = "HLS.S30.T12XWF.2020071T191201.v1.5"
-
 
 def sortxml(xml):
     doc = etree.XML(xml, etree.XMLParser(remove_blank_text=True))
@@ -26,7 +24,31 @@ def assert_xml_equals(reference, result):
         pytest.fail(message)
 
 
-def test_metadata():
+def test_S30_metadata():
+    test_granule = "HLS.S30.T12XWF.2020071T191201.v1.5"
+    with open(
+        os.path.join(test_dir, test_granule + ".xml",), "r",
+    ) as file:
+        wanted = file.read()
+
+    metadata = Metadata(os.path.join(test_dir, test_granule + ".hdf",)).xml
+
+    # Strip times which will be different when comparing to test output
+    # Use pretty_print to make sure xml is formatted the same
+    def strip_times(xml, tags):
+        root = etree.fromstring(xml)
+        for tag in tags:
+            etree.strip_elements(root, tag)
+        return etree.tostring(root, pretty_print=True)
+
+    tags = ["InsertTime", "LastUpdate"]
+    wanted = strip_times(wanted, tags)
+    metadata = strip_times(metadata, tags)
+    assert_xml_equals(str(wanted), str(metadata))
+
+
+def test_L30_metadata():
+    test_granule = "HLS.L30.39TVF.2020158.165.v1.5"
     with open(
         os.path.join(test_dir, test_granule + ".xml",), "r",
     ) as file:
