@@ -6,7 +6,8 @@ import pytest
 from doctest import Example
 
 current_dir = os.path.dirname(__file__)
-test_dir = os.path.join(current_dir, "data")
+metadata_dir = os.path.join(current_dir, "data")
+data_dir = "/hls-testing_data"
 
 
 def sortxml(xml):
@@ -25,13 +26,13 @@ def assert_xml_equals(reference, result):
 
 
 def test_S30_metadata():
-    test_granule = "HLS.S30.T12XWF.2020071T191201.v1.5"
+    test_granule = "HLS.S30.T01LAH.2020097T222759.v1.5"
     with open(
-        os.path.join(test_dir, test_granule + ".xml",), "r",
+        os.path.join(metadata_dir, test_granule + ".xml",), "r",
     ) as file:
         wanted = file.read()
 
-    metadata = Metadata(os.path.join(test_dir, test_granule + ".hdf",)).xml
+    metadata = Metadata(os.path.join(data_dir, test_granule + ".hdf",)).xml
 
     # Strip times which will be different when comparing to test output
     # Use pretty_print to make sure xml is formatted the same
@@ -50,11 +51,11 @@ def test_S30_metadata():
 def test_L30_metadata():
     test_granule = "HLS.L30.39TVF.2020158.165.v1.5"
     with open(
-        os.path.join(test_dir, test_granule + ".xml",), "r",
+        os.path.join(metadata_dir, test_granule + ".xml",), "r",
     ) as file:
         wanted = file.read()
 
-    metadata = Metadata(os.path.join(test_dir, test_granule + ".hdf",)).xml
+    metadata = Metadata(os.path.join(data_dir, test_granule + ".hdf",)).xml
 
     # Strip times which will be different when comparing to test output
     # Use pretty_print to make sure xml is formatted the same
