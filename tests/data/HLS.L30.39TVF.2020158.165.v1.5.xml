@@ -1,7 +1,7 @@
 <Granule>
   <GranuleUR>HLS.L30.39TVF.2020158.165.v1.5</GranuleUR>
-  <InsertTime>2020-08-11T02:13:07.080714Z</InsertTime>
-  <LastUpdate>2020-08-11T02:13:07.080735Z</LastUpdate>
+  <InsertTime>2020-09-21T19:22:11.078696Z</InsertTime>
+  <LastUpdate>2020-09-21T19:22:11.078710Z</LastUpdate>
   <Collection>
     <DataSetId>HLS Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30 m V1.5</DataSetId>
   </Collection>
@@ -176,9 +176,21 @@
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
+      <Name>MEAN_VIEW_AZIMUTH_ANGLE</Name>
+      <Values>
+        <Value>103.80426829</Value>
+      </Values>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
+      <Name>MEAN_VIEW_ZENITH_ANGLE</Name>
+      <Values>
+        <Value>7.54596088</Value>
+      </Values>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>NBAR_SOLAR_ZENITH</Name>
       <Values>
-        <Value>-9999.9</Value>
+        <Value>23.39742854</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
