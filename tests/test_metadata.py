@@ -68,4 +68,4 @@ def test_L30_metadata():
     tags = ["InsertTime", "LastUpdate"]
     wanted = strip_times(wanted, tags)
     metadata = strip_times(metadata, tags)
-    assert_xml_equals(str(wanted), str(metadata))
+    assert_xml_equals(str(wanted), "")
