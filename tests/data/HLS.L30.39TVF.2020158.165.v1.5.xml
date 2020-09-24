@@ -1,7 +1,7 @@
 <Granule>
   <GranuleUR>HLS.L30.39TVF.2020158.165.v1.5</GranuleUR>
-  <InsertTime>2020-09-21T19:22:11.078696Z</InsertTime>
-  <LastUpdate>2020-09-21T19:22:11.078710Z</LastUpdate>
+  <InsertTime>2020-09-24T00:10:23.205826Z</InsertTime>
+  <LastUpdate>2020-09-24T00:10:23.205896Z</LastUpdate>
   <Collection>
     <DataSetId>HLS Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30 m V1.5</DataSetId>
   </Collection>
@@ -58,7 +58,8 @@
     <AdditionalAttribute>
       <Name>LANDSAT_PRODUCT_ID</Name>
       <Values>
-        <Value>LC08_L1TP_165031_20200606_20200608_01_T1; LC08_L1TP_165032_20200606_20200608_01_T1</Value>
+        <Value>LC08_L1TP_165031_20200606_20200608_01_T1</Value>
+        <Value>LC08_L1TP_165032_20200606_20200608_01_T1</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
@@ -100,13 +101,15 @@
     <AdditionalAttribute>
       <Name>SENSING_TIME</Name>
       <Values>
-        <Value>2020-06-06T07:12:14.9827230Z; 2020-06-06T07:12:38.8695260Z</Value>
+        <Value>2020-06-06T07:12:14.9827230Z</Value>
+        <Value>2020-06-06T07:12:38.8695260Z</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>HORIZONTAL_CS_NAME</Name>
       <Values>
-        <Value>UTM, WGS84, UTM ZONE 39; UTM, WGS84, UTM ZONE 39</Value>
+        <Value>UTM,WGS84,UTMZONE39</Value>
+        <Value>UTM,WGS84,UTMZONE39</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
@@ -196,19 +199,22 @@
     <AdditionalAttribute>
       <Name>ACCODE</Name>
       <Values>
-        <Value>Lasrc; Lasrc</Value>
+        <Value>Lasrc</Value>
+        <Value>Lasrc</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>TIRS_SSM_MODEL</Name>
       <Values>
-        <Value>ACTUAL; ACTUAL</Value>
+        <Value>ACTUAL</Value>
+        <Value>ACTUAL</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>TIRS_SSM_POSITION_STATUS</Name>
       <Values>
-        <Value>NOMINAL; NOMINAL</Value>
+        <Value>NOMINAL</Value>
+        <Value>NOMINAL</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
