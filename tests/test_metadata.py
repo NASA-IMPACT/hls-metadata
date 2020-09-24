@@ -65,7 +65,7 @@ def test_L30_metadata():
             etree.strip_elements(root, tag)
         return etree.tostring(root, pretty_print=True)
 
-    tags = ["InsertTime", "LastUpdate"]
+    tags = ["InsertTime", "LastUpdate", "DataGranule"]
     wanted = strip_times(wanted, tags)
     metadata = strip_times(metadata, tags)
     assert_xml_equals(str(wanted), str(metadata))
