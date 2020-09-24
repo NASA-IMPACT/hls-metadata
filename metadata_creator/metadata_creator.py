@@ -187,6 +187,9 @@ class Metadata:
             if (not values and datatype in ("FLOAT", "INT") and "," in str(value)):
                 values = value.split(",")
 
+            if (not values and ";" in str(value)):
+                values = [x.replace(" ", "") for x in value.split(";")]
+
             if not values:
                 values = [value]
 

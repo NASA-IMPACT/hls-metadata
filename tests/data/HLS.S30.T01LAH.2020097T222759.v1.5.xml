@@ -1,15 +1,15 @@
 <Granule>
   <GranuleUR>HLS.S30.T01LAH.2020097T222759.v1.5</GranuleUR>
-  <InsertTime>2020-08-11T02:16:19.306435Z</InsertTime>
-  <LastUpdate>2020-08-11T02:16:19.306455Z</LastUpdate>
+  <InsertTime>2020-09-24T00:12:27.556927Z</InsertTime>
+  <LastUpdate>2020-09-24T00:12:27.556948Z</LastUpdate>
   <Collection>
     <DataSetId>HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5</DataSetId>
   </Collection>
   <DataGranule>
-    <SizeMBDataGranule>46619</SizeMBDataGranule>
+    <SizeMBDataGranule>47265</SizeMBDataGranule>
     <ProducerGranuleId>HLS.S30.T01LAH.2020097T222759</ProducerGranuleId>
     <DayNightFlag>DAY</DayNightFlag>
-    <ProductionDateTime>2020-04-14T03:34:56.000000Z</ProductionDateTime>
+    <ProductionDateTime>2020-09-18T18:01:07.000000Z</ProductionDateTime>
     <LocalVersionId>1.5</LocalVersionId>
   </DataGranule>
   <Temporal>
@@ -25,11 +25,15 @@
           <Boundary>
             <Point>
               <PointLongitude>-180.0</PointLongitude>
-              <PointLatitude>-10.8419401591047</PointLatitude>
+              <PointLatitude>-10.840859466359879</PointLatitude>
             </Point>
             <Point>
-              <PointLongitude>-179.99995308</PointLongitude>
-              <PointLatitude>-10.84194681</PointLatitude>
+              <PointLongitude>-179.99720136</PointLongitude>
+              <PointLatitude>-10.84088971</PointLatitude>
+            </Point>
+            <Point>
+              <PointLongitude>-179.99979252</PointLongitude>
+              <PointLatitude>-10.85332933</PointLatitude>
             </Point>
             <Point>
               <PointLongitude>-179.99951842</PointLongitude>
@@ -48,32 +52,20 @@
               <PointLatitude>-10.85551195129015</PointLatitude>
             </Point>
             <Point>
-              <PointLongitude>179.99989071480115</PointLongitude>
-              <PointLatitude>-10.856006648765547</PointLatitude>
+              <PointLongitude>179.91877534</PointLongitude>
+              <PointLatitude>-11.22318877</PointLatitude>
             </Point>
             <Point>
-              <PointLongitude>179.99183505</PointLongitude>
-              <PointLatitude>-10.84078278</PointLatitude>
+              <PointLongitude>179.99993337</PointLongitude>
+              <PointLatitude>-10.85332665</PointLatitude>
+            </Point>
+            <Point>
+              <PointLongitude>179.34246202</PointLongitude>
+              <PointLatitude>-10.83375375</PointLatitude>
             </Point>
             <Point>
               <PointLongitude>180.0</PointLongitude>
-              <PointLatitude>-10.8419401591047</PointLatitude>
-            </Point>
-          </Boundary>
-        </GPolygon>
-        <GPolygon>
-          <Boundary>
-            <Point>
-              <PointLongitude>179.99989071480115</PointLongitude>
-              <PointLatitude>-10.856006648765547</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>179.99990632</PointLongitude>
-              <PointLatitude>-10.85603614</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>179.91877534</PointLongitude>
-              <PointLatitude>-11.22318877</PointLatitude>
+              <PointLatitude>-10.840859466359879</PointLatitude>
             </Point>
           </Boundary>
         </GPolygon>
@@ -124,7 +116,7 @@
     <AdditionalAttribute>
       <Name>HLS_PROCESSING_TIME</Name>
       <Values>
-        <Value>2020-04-14T03:34:56Z</Value>
+        <Value>2020-09-18T18:01:07Z</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
@@ -200,33 +192,33 @@
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
-      <Name>MEAN_SUN_AZIMUTH_ANGLE(B01)</Name>
+      <Name>MEAN_SUN_AZIMUTH_ANGLE</Name>
       <Values>
-        <Value>-9999.9</Value>
+        <Value>53.75232359</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
-      <Name>MEAN_SUN_ZENITH_ANGLE(B01)</Name>
+      <Name>MEAN_SUN_ZENITH_ANGLE</Name>
       <Values>
-        <Value>-9999.9</Value>
+        <Value>29.52538896</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
-      <Name>MEAN_VIEW_AZIMUTH_ANGLE(B01)</Name>
+      <Name>MEAN_VIEW_AZIMUTH_ANGLE</Name>
       <Values>
-        <Value>-9999.9</Value>
+        <Value>286.00542039</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
-      <Name>MEAN_VIEW_ZENITH_ANGLE(B01)</Name>
+      <Name>MEAN_VIEW_ZENITH_ANGLE</Name>
       <Values>
-        <Value>-9999.9</Value>
+        <Value>9.47196944</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>NBAR_SOLAR_ZENITH</Name>
       <Values>
-        <Value>-9999.9</Value>
+        <Value>32.43424711</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
@@ -306,24 +298,6 @@
       <Name>AROP_S2_REFIMG</Name>
       <Values>
         <Value>NONE</Value>
-      </Values>
-    </AdditionalAttribute>
-    <AdditionalAttribute>
-      <Name>ANGLEBAND</Name>
-      <Values>
-        <Value>0</Value>
-        <Value>1</Value>
-        <Value>2</Value>
-        <Value>3</Value>
-        <Value>4</Value>
-        <Value>5</Value>
-        <Value>6</Value>
-        <Value>7</Value>
-        <Value>8</Value>
-        <Value>9</Value>
-        <Value>10</Value>
-        <Value>11</Value>
-        <Value>12</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>

@@ -134,22 +134,22 @@
 				"Description": "Number of rows"
 			},
 			{
-				"Name": "MEAN_SUN_AZIMUTH_ANGLE(B01)",
+				"Name": "MEAN_SUN_AZIMUTH_ANGLE",
 				"DataType": "FLOAT",
 				"Description": "Mean sun azimuth angle band 1"
 			},
 			{
-				"Name": "MEAN_SUN_ZENITH_ANGLE(B01)",
+				"Name": "MEAN_SUN_ZENITH_ANGLE",
 				"DataType": "FLOAT",
 				"Description": "Mean sun zenith angle band 1"
 			},
 			{
-				"Name": "MEAN_VIEW_AZIMUTH_ANGLE(B01)",
+				"Name": "MEAN_VIEW_AZIMUTH_ANGLE",
 				"DataType": "FLOAT",
 				"Description": "Mean view azimuth angle band 1"
 			},
 			{
-				"Name": "MEAN_VIEW_ZENITH_ANGLE(B01)",
+				"Name": "MEAN_VIEW_ZENITH_ANGLE",
 				"DataType": "FLOAT",
 				"Description": "Mean view zenith angle band 1"
 			},
@@ -217,11 +217,6 @@
 				"Name": "AROP_S2_REFIMG",
 				"DataType": "STRING",
 				"Description": "arop s2 remimg"
-			},
-			{
-				"Name": "ANGLEBAND",
-				"DataType": "INT",
-				"Description": "Angle Band"
 			},
 			{
 				"Name": "ACCODE",

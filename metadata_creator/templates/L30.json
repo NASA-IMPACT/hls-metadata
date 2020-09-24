@@ -128,6 +128,16 @@
 				"DataType": "FLOAT",
 				"Description": "Mean sun zenith angle"
 			},
+                        {
+                                "Name": "MEAN_VIEW_AZIMUTH_ANGLE",
+                                "DataType": "FLOAT",
+                                "Description": "Mean view azimuth angle"
+                        },
+                        {
+                                "Name": "MEAN_VIEW_ZENITH_ANGLE",
+                                "DataType": "FLOAT",
+                                "Description": "Mean view zenith angle"
+                        },
 			{
 				"Name": "NBAR_SOLAR_ZENITH",
 				"DataType": "FLOAT",
