@@ -257,8 +257,8 @@ class Metadata:
         version = self.data_file[-7:].replace("." + self.file_extension, "")
         extension = "." + ".".join(["v" + version, self.file_extension])
         data_granule = OrderedDict()
-        data_granule["SizeMBDataGranule"] = int(
-            os.path.getsize(self.data_path) / 1024
+        data_granule["DataGranuleSizeInBytes"] = int(
+            os.path.getsize(self.data_path)
         )
         data_granule["ProducerGranuleId"] = self.data_file.replace(
             extension, ""
