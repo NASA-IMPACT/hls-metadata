@@ -6,7 +6,7 @@
     <DataSetId>HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5</DataSetId>
   </Collection>
   <DataGranule>
-    <SizeMBDataGranule>1644</SizeMBDataGranule>
+    <DataGranuleSizeInBytes>1684246</DataGranuleSizeInBytes>
     <ProducerGranuleId>HLS.S30.T48UXF.2020274T041601</ProducerGranuleId>
     <DayNightFlag>DAY</DayNightFlag>
     <ProductionDateTime>2020-10-17T00:41:35.000000Z</ProductionDateTime>
