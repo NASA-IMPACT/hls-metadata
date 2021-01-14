@@ -9,7 +9,7 @@ setup(
         "click",
         "numpy",
         "pyhdf",
-        "pyproj",
+        "pyproj==2.6.1",
         "rasterio",
         "shapely",
         "lxml"
