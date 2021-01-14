@@ -1,12 +1,12 @@
 <Granule>
   <GranuleUR>HLS.L30.39TVF.2020158.165.v1.5</GranuleUR>
-  <InsertTime>2020-09-24T00:10:23.205826Z</InsertTime>
-  <LastUpdate>2020-09-24T00:10:23.205896Z</LastUpdate>
+  <InsertTime>2020-10-13T16:46:19.162114Z</InsertTime>
+  <LastUpdate>2020-10-13T16:46:19.162123Z</LastUpdate>
   <Collection>
     <DataSetId>HLS Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30 m V1.5</DataSetId>
   </Collection>
   <DataGranule>
-    <SizeMBDataGranule>27947</SizeMBDataGranule>
+    <DataGranuleSizeInBytes>28618741</DataGranuleSizeInBytes>
     <ProducerGranuleId>HLS.L30.39TVF.2020158.165</ProducerGranuleId>
     <DayNightFlag>DAY</DayNightFlag>
     <ProductionDateTime>2020-08-06T19:26:35.000000Z</ProductionDateTime>

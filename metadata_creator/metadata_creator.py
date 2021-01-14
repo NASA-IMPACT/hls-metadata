@@ -4,7 +4,6 @@ import json
 import math
 import os
 import rasterio
-import re
 
 from io import StringIO
 from collections import OrderedDict
@@ -20,11 +19,7 @@ from shapely.geometry import (
     mapping,
 )
 from shapely import wkt, ops
-
-try:
-    from pyproj import CRS, transform
-except ImportError:
-    from pyproj import Proj, transform
+from pyproj import Transformer
 
 current_dir = os.path.dirname(__file__)
 util_dir = os.path.join(current_dir, "templates")
@@ -257,8 +252,8 @@ class Metadata:
         version = self.data_file[-7:].replace("." + self.file_extension, "")
         extension = "." + ".".join(["v" + version, self.file_extension])
         data_granule = OrderedDict()
-        data_granule["SizeMBDataGranule"] = int(
-            os.path.getsize(self.data_path) / 1024
+        data_granule["DataGranuleSizeInBytes"] = int(
+            os.path.getsize(self.data_path)
         )
         data_granule["ProducerGranuleId"] = self.data_file.replace(
             extension, ""
@@ -305,33 +300,23 @@ class Metadata:
         )
         self.root["Temporal"] = temporal
 
-    def lat_lon_4326(self, bound):
+    def lat_lon_4326(self, bound, src_projection, target_projection):
         """
         Public: Change coordinates into proper projection (EPSG:4326)
 
         Examples
 
           m = Metadata('<file path>')
-          m.lat_lon_4326([])
+          m.lat_lon_4326([],src_projection, target_projection)
           # => []
 
         Returns the boundingbox in EPSG:4326 format
         """
 
-        # deal with older and newer versions of pyproj
-        try:
-            hdf_proj = CRS.from_epsg(3857)
-            reproj_proj = CRS.from_epsg(4326)
-        except NameError:
-            hdf_proj = Proj(init="EPSG:3857")
-            reproj_proj = Proj(init="EPSG:4326")
+        transformer = Transformer.from_crs(src_projection, target_projection)
+        top_left_lat, top_left_lon = transformer.transform(bound[0], bound[1])
+        bottom_right_lat, bottom_right_lon = transformer.transform(bound[2], bound[3])
 
-        top_left_lon, top_left_lat = transform(
-            hdf_proj, reproj_proj, bound[0], bound[1]
-        )
-        bottom_right_lon, bottom_right_lat = transform(
-            hdf_proj, reproj_proj, bound[2], bound[3]
-        )
         return [top_left_lon, top_left_lat, bottom_right_lon, bottom_right_lat]
 
     def location_handler(self):
@@ -343,22 +328,27 @@ class Metadata:
         The lat_lon_4326 method returns a bounding box in the following
         format [East,South,West,North].
         """
-        FLOAT_REGEX = r"\d+\.\d+"
-        coords = self.attributes["StructMetadata.0"].split("\n\t\t")[5:7]
-        coords = [
-            float(elem)
-            for coord in coords
-            for elem in re.findall(FLOAT_REGEX, coord)
-        ]
-        coords = [coords[1], coords[0], coords[3], coords[2]]
-        bounding_box = self.lat_lon_4326(coords)
+
+        ulx = float(self.attributes["ULX"])
+        uly = float(self.attributes["ULY"])
+        nrows = int(self.attributes["NROWS"])
+        ncols = int(self.attributes["NCOLS"])
+        resolution = int(self.attributes["SPATIAL_RESOLUTION"])
+        src_projection = self.attributes.get("HORIZONTAL_CS_CODE", "EPSG:32648")
+        target_projection = "EPSG:4326"
+        lrx = ulx + ncols * resolution
+        lry = uly - nrows * resolution
+
+        coords = [ulx, uly, lrx, lry]
+        bounding_box = self.lat_lon_4326(coords, src_projection, target_projection)
         bounding_box = [round(c, 8) for c in bounding_box]
+
         self.root["Spatial"]["HorizontalSpatialDomain"] = {"Geometry": {}}
         bounding_box_dict = OrderedDict()
-        bounding_box_dict["WestBoundingCoordinate"] = bounding_box[2]
-        bounding_box_dict["NorthBoundingCoordinate"] = bounding_box[3]
-        bounding_box_dict["EastBoundingCoordinate"] = bounding_box[0]
-        bounding_box_dict["SouthBoundingCoordinate"] = bounding_box[1]
+        bounding_box_dict["WestBoundingCoordinate"] = bounding_box[0]
+        bounding_box_dict["NorthBoundingCoordinate"] = bounding_box[1]
+        bounding_box_dict["EastBoundingCoordinate"] = bounding_box[2]
+        bounding_box_dict["SouthBoundingCoordinate"] = bounding_box[3]
         self.root["Spatial"]["HorizontalSpatialDomain"]["Geometry"][
             "BoundingRectangle"
         ] = bounding_box_dict

@@ -69,3 +69,26 @@ def test_L30_metadata():
     wanted = strip_times(wanted, tags)
     metadata = strip_times(metadata, tags)
     assert_xml_equals(str(wanted), str(metadata))
+
+
+def test_S30_bounding_box():
+    test_granule = "HLS.S30.T48UXF.2020274T041601.v1.5"
+    with open(
+        os.path.join(metadata_dir, test_granule + ".xml",), "r",
+    ) as file:
+        wanted = file.read()
+
+    metadata = Metadata(os.path.join(data_dir, test_granule + ".hdf",)).xml
+
+    # Strip times which will be different when comparing to test output
+    # Use pretty_print to make sure xml is formatted the same
+    def strip_times(xml, tags):
+        root = etree.fromstring(xml)
+        for tag in tags:
+            etree.strip_elements(root, tag)
+        return etree.tostring(root, pretty_print=True)
+
+    tags = ["InsertTime", "LastUpdate"]
+    wanted = strip_times(wanted, tags)
+    metadata = strip_times(metadata, tags)
+    assert_xml_equals(str(wanted), str(metadata))

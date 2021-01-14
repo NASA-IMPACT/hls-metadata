@@ -1,80 +1,38 @@
 <Granule>
-  <GranuleUR>HLS.S30.T01LAH.2020097T222759.v1.5</GranuleUR>
-  <InsertTime>2020-10-13T16:44:23.161695Z</InsertTime>
-  <LastUpdate>2020-10-13T16:44:23.161703Z</LastUpdate>
+  <GranuleUR>HLS.S30.T48UXF.2020274T041601.v1.5</GranuleUR>
+  <InsertTime>2020-10-27T17:11:55.803680Z</InsertTime>
+  <LastUpdate>2020-10-27T17:11:55.803699Z</LastUpdate>
   <Collection>
     <DataSetId>HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5</DataSetId>
   </Collection>
   <DataGranule>
-    <DataGranuleSizeInBytes>48399637</DataGranuleSizeInBytes>
-    <ProducerGranuleId>HLS.S30.T01LAH.2020097T222759</ProducerGranuleId>
+    <DataGranuleSizeInBytes>1684246</DataGranuleSizeInBytes>
+    <ProducerGranuleId>HLS.S30.T48UXF.2020274T041601</ProducerGranuleId>
     <DayNightFlag>DAY</DayNightFlag>
-    <ProductionDateTime>2020-09-18T18:01:07.000000Z</ProductionDateTime>
+    <ProductionDateTime>2020-10-17T00:41:35.000000Z</ProductionDateTime>
     <LocalVersionId>1.5</LocalVersionId>
   </DataGranule>
   <Temporal>
     <RangeDateTime>
-      <BeginningDateTime>2020-04-06T22:28:58.717040Z</BeginningDateTime>
-      <EndingDateTime>2020-04-06T22:28:58.717040Z</EndingDateTime>
+      <BeginningDateTime>2020-09-30T04:22:57.764910Z</BeginningDateTime>
+      <EndingDateTime>2020-09-30T04:22:57.764910Z</EndingDateTime>
     </RangeDateTime>
   </Temporal>
   <Spatial>
     <HorizontalSpatialDomain>
       <Geometry>
-        <GPolygon>
-          <Boundary>
-            <Point>
-              <PointLongitude>-180.0</PointLongitude>
-              <PointLatitude>-10.840859466359879</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>-179.99720136</PointLongitude>
-              <PointLatitude>-10.84088971</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>-179.99979252</PointLongitude>
-              <PointLatitude>-10.85332933</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>-179.99951842</PointLongitude>
-              <PointLatitude>-10.853332</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>-180.0</PointLongitude>
-              <PointLatitude>-10.85551195129015</PointLatitude>
-            </Point>
-          </Boundary>
-        </GPolygon>
-        <GPolygon>
-          <Boundary>
-            <Point>
-              <PointLongitude>180.0</PointLongitude>
-              <PointLatitude>-10.85551195129015</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>179.91877534</PointLongitude>
-              <PointLatitude>-11.22318877</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>179.99993337</PointLongitude>
-              <PointLatitude>-10.85332665</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>179.34246202</PointLongitude>
-              <PointLatitude>-10.83375375</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>180.0</PointLongitude>
-              <PointLatitude>-10.840859466359879</PointLatitude>
-            </Point>
-          </Boundary>
-        </GPolygon>
+        <BoundingRectangle>
+          <WestBoundingCoordinate>106.56477271</WestBoundingCoordinate>
+          <NorthBoundingCoordinate>55.03692859</NorthBoundingCoordinate>
+          <EastBoundingCoordinate>108.20249454</EastBoundingCoordinate>
+          <SouthBoundingCoordinate>54.01754158</SouthBoundingCoordinate>
+        </BoundingRectangle>
       </Geometry>
     </HorizontalSpatialDomain>
   </Spatial>
   <Platforms>
     <Platform>
-      <ShortName>Sentinel-2B</ShortName>
+      <ShortName>Sentinel-2A</ShortName>
       <Instruments>
         <Instrument>
           <ShortName>Sentinel-2 MSI</ShortName>
@@ -86,25 +44,25 @@
     <AdditionalAttribute>
       <Name>PRODUCT_URI</Name>
       <Values>
-        <Value>S2B_MSIL1C_20200406T222759_N0209_R072_T01LAH_20200406T235448.SAFE</Value>
+        <Value>S2A_MSIL1C_20200930T041601_N0209_R090_T48UXF_20200930T074801.SAFE</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>CLOUD_COVERAGE</Name>
       <Values>
-        <Value>74</Value>
+        <Value>0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>MGRS_TILE_ID</Name>
       <Values>
-        <Value>01LAH</Value>
+        <Value>48UXF</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>SPATIAL_COVERAGE</Name>
       <Values>
-        <Value>20</Value>
+        <Value>0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
@@ -116,37 +74,37 @@
     <AdditionalAttribute>
       <Name>HLS_PROCESSING_TIME</Name>
       <Values>
-        <Value>2020-09-18T18:01:07Z</Value>
+        <Value>2020-10-17T00:41:35Z</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>SENSING_TIME</Name>
       <Values>
-        <Value>2020-04-06T22:28:58.717043Z</Value>
+        <Value>2020-09-30T04:22:57.764917Z</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>HORIZONTAL_CS_CODE</Name>
       <Values>
-        <Value>EPSG:32701</Value>
+        <Value>EPSG:32648</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>HORIZONTAL_CS_NAME</Name>
       <Values>
-        <Value>WGS84 / UTM zone 01S</Value>
+        <Value>WGS84 / UTM zone 48N</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>ULX</Name>
       <Values>
-        <Value>99960.0</Value>
+        <Value>600000.0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>ULY</Name>
       <Values>
-        <Value>-1200000.0</Value>
+        <Value>6100020.0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
@@ -194,31 +152,31 @@
     <AdditionalAttribute>
       <Name>MEAN_SUN_AZIMUTH_ANGLE</Name>
       <Values>
-        <Value>53.75232359</Value>
+        <Value>0.0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>MEAN_SUN_ZENITH_ANGLE</Name>
       <Values>
-        <Value>29.52538896</Value>
+        <Value>0.0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>MEAN_VIEW_AZIMUTH_ANGLE</Name>
       <Values>
-        <Value>286.00542039</Value>
+        <Value>0.0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>MEAN_VIEW_ZENITH_ANGLE</Name>
       <Values>
-        <Value>9.47196944</Value>
+        <Value>0.0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>NBAR_SOLAR_ZENITH</Name>
       <Values>
-        <Value>32.43424711</Value>
+        <Value>58.17520439</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
@@ -238,36 +196,36 @@
     <AdditionalAttribute>
       <Name>MSI_BAND_03_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET</Name>
       <Values>
-        <Value>1.0075</Value>
-        <Value>-0.0008</Value>
+        <Value>1.0053</Value>
+        <Value>-0.0009</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>MSI_BAND_04_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET</Name>
       <Values>
-        <Value>0.9761</Value>
-        <Value>0.001</Value>
+        <Value>0.9765</Value>
+        <Value>0.0009</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>MSI_BAND_11_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET</Name>
       <Values>
-        <Value>1.0</Value>
-        <Value>-0.0003</Value>
+        <Value>0.9987</Value>
+        <Value>-0.0011</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>MSI_BAND_12_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET</Name>
       <Values>
-        <Value>0.9867</Value>
-        <Value>0.0004</Value>
+        <Value>1.003</Value>
+        <Value>-0.0012</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
       <Name>MSI_BAND_8A_BANDPASS_ADJUSTMENT_SLOPE_AND_OFFSET</Name>
       <Values>
-        <Value>0.9966</Value>
-        <Value>0.0</Value>
+        <Value>0.9983</Value>
+        <Value>-0.0001</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
