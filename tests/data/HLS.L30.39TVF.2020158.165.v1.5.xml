@@ -199,8 +199,7 @@
     <AdditionalAttribute>
       <Name>ACCODE</Name>
       <Values>
-        <Value>Lasrc</Value>
-        <Value>Lasrc</Value>
+        <Value>LaSRC v3.5.5</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>

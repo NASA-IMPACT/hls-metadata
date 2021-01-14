@@ -221,7 +221,8 @@
 			{
 				"Name": "ACCODE",
 				"DataType": "STRING",
-				"Description": "LaSRC Version"
+				"Description": "LaSRC Version",
+                                "Values": ["LaSRC v3.5.5"]
 			},
 			{
 				"Name": "PROCESSING_BASELINE",
