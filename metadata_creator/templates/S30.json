@@ -1,7 +1,7 @@
 {
 	"S30": {
 		"ShortName": "HLSS30",
-		"DataSetId": "HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5",
+		"DataSetId": "HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V2.0",
 		"Orderable": false,
 		"Visible": true,
                 "DataFormat": "Cloud Optimized GeoTIFF (COG)",
@@ -221,7 +221,8 @@
 			{
 				"Name": "ACCODE",
 				"DataType": "STRING",
-				"Description": "LaSRC Version"
+				"Description": "LaSRC Version",
+                                "Values": ["LaSRC v3.1.0"]
 			},
 			{
 				"Name": "PROCESSING_BASELINE",
