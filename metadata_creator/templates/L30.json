@@ -1,7 +1,7 @@
 {
 	"L30": {
 		"ShortName": "HLSL30",
-		"DataSetId": "HLS Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30 m V2.0",
+		"DataSetId": "HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0",
 		"Visible": true,
 		"Orderable": false,
                 "DataFormat": "Cloud Optimized GeoTIFF (COG)",
