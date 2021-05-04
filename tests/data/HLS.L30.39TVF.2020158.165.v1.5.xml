@@ -3,7 +3,7 @@
   <InsertTime>2020-10-13T16:46:19.162114Z</InsertTime>
   <LastUpdate>2020-10-13T16:46:19.162123Z</LastUpdate>
   <Collection>
-    <DataSetId>HLS Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30 m V1.5</DataSetId>
+    <DataSetId>HLS Landsat Operational Land Imager Surface Reflectance and TOA Brightness Daily Global 30m v2.0</DataSetId>
   </Collection>
   <DataGranule>
     <DataGranuleSizeInBytes>28618741</DataGranuleSizeInBytes>
@@ -199,8 +199,7 @@
     <AdditionalAttribute>
       <Name>ACCODE</Name>
       <Values>
-        <Value>Lasrc</Value>
-        <Value>Lasrc</Value>
+        <Value>LaSRC v3.0.5</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>

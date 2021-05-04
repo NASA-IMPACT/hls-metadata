@@ -3,7 +3,7 @@
   <InsertTime>2020-10-27T17:11:55.803680Z</InsertTime>
   <LastUpdate>2020-10-27T17:11:55.803699Z</LastUpdate>
   <Collection>
-    <DataSetId>HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30 m V1.5</DataSetId>
+    <DataSetId>HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0</DataSetId>
   </Collection>
   <DataGranule>
     <DataGranuleSizeInBytes>1684246</DataGranuleSizeInBytes>
@@ -261,7 +261,7 @@
     <AdditionalAttribute>
       <Name>ACCODE</Name>
       <Values>
-        <Value>LaSRC</Value>
+        <Value>LaSRC v3.1.0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
