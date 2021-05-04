@@ -3,7 +3,7 @@
   <InsertTime>2020-10-13T16:44:23.161695Z</InsertTime>
   <LastUpdate>2020-10-13T16:44:23.161703Z</LastUpdate>
   <Collection>
-    <DataSetId>HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m V2.0</DataSetId>
+    <DataSetId>HLS Sentinel-2 Multi-spectral Instrument Surface Reflectance Daily Global 30m v2.0</DataSetId>
   </Collection>
   <DataGranule>
     <DataGranuleSizeInBytes>48399637</DataGranuleSizeInBytes>
