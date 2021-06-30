@@ -168,7 +168,7 @@
                                 "Name": "IDENTIFIER_PRODUCT_DOI",
                                 "DataType": "STRING",
                                 "Description": "Digital object identifier that uniquely identifies this data product",
-				"Values": ["10.5067/HLS/HLSL30.015"]
+				"Values": ["10.5067/HLS/HLSL30.002"]
                         },
 			{
                                 "Name": "IDENTIFIER_PRODUCT_DOI_AUTHORITY",
