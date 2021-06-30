@@ -143,6 +143,12 @@
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
+      <Name>ANG_SCALE_FACTOR</Name>
+      <Values>
+        <Value>0.01</Value>
+      </Values>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>FILLVALUE</Name>
       <Values>
         <Value>-9999</Value>
