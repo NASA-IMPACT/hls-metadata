@@ -111,6 +111,12 @@
 				"Description": "Scale factor for reflectance bands",
 				"Values":[0.0001]
 			},
+                        {
+                                "Name": "ANG_SCALE_FACTOR",
+                                "DataType": "FLOAT",
+                                "Description": "Scale factor for angle bands",
+                                "Values":[0.01]
+                        },
 			{
 				"Name": "FILLVALUE",
 				"DataType": "INT",

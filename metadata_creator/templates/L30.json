@@ -97,6 +97,12 @@
                                 "Values":[0.01]
                         },
                         {
+                                "Name": "ANG_SCALE_FACTOR",
+                                "DataType": "FLOAT",
+                                "Description": "Scale factor for angle bands",
+                                "Values":[0.01]
+                        },
+                        {
                                 "Name": "FILLVALUE",
                                 "DataType": "INT",
                                 "Description": "Band Specific Data Fill Value",
