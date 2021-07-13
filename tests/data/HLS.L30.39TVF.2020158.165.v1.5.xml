@@ -108,8 +108,8 @@
     <AdditionalAttribute>
       <Name>HORIZONTAL_CS_NAME</Name>
       <Values>
-        <Value>UTM,WGS84,UTMZONE39</Value>
-        <Value>UTM,WGS84,UTMZONE39</Value>
+        <Value>UTM, WGS84, UTM ZONE 39</Value>
+        <Value>UTM, WGS84, UTM ZONE 39</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>

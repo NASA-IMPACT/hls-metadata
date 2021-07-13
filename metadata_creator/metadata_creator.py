@@ -183,7 +183,7 @@ class Metadata:
                 values = value.split(",")
 
             if (not values and ";" in str(value)):
-                values = [x.replace(" ", "") for x in value.split(";")]
+                values = value.replace("; ", ";").split(";")
 
             if not values:
                 values = [value]
