@@ -110,7 +110,7 @@
     <AdditionalAttribute>
       <Name>SPATIAL_RESOLUTION</Name>
       <Values>
-        <Value>30</Value>
+        <Value>30.0</Value>
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
