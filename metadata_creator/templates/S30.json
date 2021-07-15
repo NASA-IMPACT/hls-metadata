@@ -60,7 +60,7 @@
 			},
 			{
 				"Name": "SPATIAL_RESOLUTION",
-				"DataType": "INT",
+				"DataType": "FLOAT",
 				"Description": "Spatial Resolution"
 			},
 			{

@@ -29,7 +29,7 @@
 			},
 			{
 				"Name": "CLOUD_COVERAGE",
-				"DataType": "FLOAT",
+				"DataType": "INT",
 				"Description": "Percentage of cloud cover"
 			},
 			{
