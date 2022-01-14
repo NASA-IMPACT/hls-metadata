@@ -12,13 +12,6 @@ Installation requires python development libraries and hdf4 binaries. On an Ubun
 sudo apt-get install build-essential python3-dev python-dev libhdf4-dev # For Python 3
 
 ```
-### Installation
-Install for local testing
-```bash
-pip install -e .["test"]
-```
-
-This will install both the metadata_creator package as well as install a create_metadata executable on your path.
 
 ### Tests
 Run Tests on Docker
@@ -32,12 +25,21 @@ create_metadata file.hdf > metadata.xml # Send XML metadata to stdout
 create_metadata file.hdf --save metadata.xml # Use --save argument to set destination
 ```
 
-Run Metadata Interactively in Docker
+### Development
+Because of the C lib dependencies on HDF4, developing this application is easisest in Docker.  To use the development container run
 ```bash
-docker run -it hls-metadata /bin/bash
+docker run -it -v $PWD:/hls-metadata hls-metadata /bin/bash
+```
+At the container's shell prompt
+```bash
 cd hls-metadata
-pip3 install .
+tox -e dev
+source devenv/bin/activate
+```
+
+To interactively test the application in the container
+```bash
+cd hls-metadata
+pip3 install -e .
 create_metadata ../hls-testing_data/HLS.S30.T01LAH.2020097T222759.v1.5.hdf --save HLS.S30.T01LAH.2020097T222759.v1.5.xml
-create_metadata ../hls-testing_data/HLS.L30.39TVF.2020158.165.v1.5.hdf --save HLS.L30.39TVF.2020158.165.v1.5.xml
-create_metadata ../hls-testing_data/HLS.S30.T48UXF.2020274T041601.v1.5.hdf --save HLS.S30.T48UXF.2020274T041601.v1.5.xml
 ```
