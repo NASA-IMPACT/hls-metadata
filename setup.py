@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="metadata_creator",
@@ -12,9 +12,25 @@ setup(
         "pyproj==2.6.1",
         "rasterio",
         "shapely",
-        "lxml"
+        "lxml",
     ],
-    extras_require={"dev": ["flake8", "black"], "test": ["flake8", "pytest", "lxml"]},
+    extras_require={
+        "test": [
+            "pytest",
+            "pytest-cov",
+            "black",
+            "flake8",
+            "isort",
+        ],
+        "dev": [
+            "pytest",
+            "black",
+            "flake8",
+            "isort",
+            "pre-commit",
+            "pre-commit-hooks",
+        ],
+    },
     entry_points={
         "console_scripts": [
             "create_metadata=metadata_creator.metadata_creator:create_metadata",

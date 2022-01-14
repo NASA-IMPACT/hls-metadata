@@ -13,4 +13,4 @@ jobs:
         run: docker build . --tag hls-metadata
 
       - name: Tox tests in container
-        run: docker run hls-metadata
+        run: docker run -v $PWD:/hls-metadata hls-metadata
