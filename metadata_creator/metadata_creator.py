@@ -1,25 +1,25 @@
-import click
 import datetime
 import json
 import math
 import os
-import rasterio
-
-from io import StringIO
 from collections import OrderedDict
+from io import StringIO
+
+import click
+import rasterio
 from lxml import etree
 from pyhdf.SD import SD
+from pyproj import Transformer
 from rasterio import features
+from shapely import ops, wkt
 from shapely.geometry import (
-    polygon,
-    Polygon,
-    MultiPolygon,
     MultiPoint,
+    MultiPolygon,
+    Polygon,
     asShape,
     mapping,
+    polygon,
 )
-from shapely import wkt, ops
-from pyproj import Transformer
 
 current_dir = os.path.dirname(__file__)
 util_dir = os.path.join(current_dir, "templates")
@@ -117,9 +117,7 @@ class Metadata:
         constant values and establishes the required list of additional
         attributes for each granule.
         """
-        with open(
-            os.path.join(util_dir, self.product + ".json"), "r"
-        ) as template_file:
+        with open(os.path.join(util_dir, self.product + ".json"), "r") as template_file:
             template = json.load(template_file, object_pairs_hook=OrderedDict)
         template = template[self.product]
         spacecraft_name = self.attributes.get("SPACECRAFT_NAME")
@@ -129,9 +127,7 @@ class Metadata:
         self.file_extension = self.data_file.split(".")[-1]
         self.root["Platforms"].append(template[platform])
         self.root["AdditionalAttributes"] = template["AdditionalAttributes"]
-        self.root["GranuleUR"] = self.data_file.replace(
-            "." + self.file_extension, ""
-        )
+        self.root["GranuleUR"] = self.data_file.replace("." + self.file_extension, "")
 
     def attribute_handler(self):
         """
@@ -145,9 +141,7 @@ class Metadata:
             os.path.join(util_dir, self.product + "_attribute_mapping.json"),
             "r",
         ) as attribute_file:
-            attribute_mapping = json.load(
-                attribute_file, object_pairs_hook=OrderedDict
-            )
+            attribute_mapping = json.load(attribute_file, object_pairs_hook=OrderedDict)
         for attribute in self.root["AdditionalAttributes"]:
             attribute_name = attribute_mapping[attribute["Name"]]
             value = self.attributes.get(attribute_name, None)
@@ -161,9 +155,7 @@ class Metadata:
             del attribute["Description"]
             if value is None and attribute.get("Values", None) is None:
                 if attribute["Name"] == "MGRS_TILE_ID":
-                    attribute["Values"] = {
-                        "Value": self.data_file.split(".")[2][1:]
-                    }
+                    attribute["Values"] = {"Value": self.data_file.split(".")[2][1:]}
                 else:
                     missing_values = {
                         "INT": -9999,
@@ -179,10 +171,10 @@ class Metadata:
             if isinstance(value, list):
                 values = value
 
-            if (not values and datatype in ("FLOAT", "INT") and "," in str(value)):
+            if not values and datatype in ("FLOAT", "INT") and "," in str(value):
                 values = value.split(",")
 
-            if (not values and ";" in str(value)):
+            if not values and ";" in str(value):
                 values = value.replace("; ", ";").split(";")
 
             if not values:
@@ -206,9 +198,7 @@ class Metadata:
         path = "s3://" + "/".join([self.bucket, self.product, "data"])
         self.root["OnlineAccessURLs"]["OnlineAccessURL"] = {
             "URL": "/".join([path, self.data_file]),
-            "URLDescription": (
-                "This file may be downloaded directly from this link"
-            ),
+            "URLDescription": ("This file may be downloaded directly from this link"),
             "MimeType": "application/x-" + self.file_extension,
         }
         self.root["OnlineResources"]["OnlineResource"] = {
@@ -244,20 +234,14 @@ class Metadata:
             production_datetime = datetime.datetime.strptime(
                 self.attributes["HLS_PROCESSING_TIME"], "%Y-%m-%dT%H:%M:%SZ"
             )
-            production_date = production_datetime.strftime(
-                "%Y-%m-%dT%H:%M:%S.%fZ"
-            )
+            production_date = production_datetime.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
         except Exception:
             production_date = self.attributes["HLS_PROCESSING_TIME"]
         version = self.data_file[-7:].replace("." + self.file_extension, "")
         extension = "." + ".".join(["v" + version, self.file_extension])
         data_granule = OrderedDict()
-        data_granule["DataGranuleSizeInBytes"] = int(
-            os.path.getsize(self.data_path)
-        )
-        data_granule["ProducerGranuleId"] = self.data_file.replace(
-            extension, ""
-        )
+        data_granule["DataGranuleSizeInBytes"] = int(os.path.getsize(self.data_path))
+        data_granule["ProducerGranuleId"] = self.data_file.replace(extension, "")
         data_granule["DayNightFlag"] = "DAY"
         data_granule["ProductionDateTime"] = production_date
         data_granule["LocalVersionId"] = self.data_file[-7:].replace(
@@ -275,13 +259,9 @@ class Metadata:
         and Junchang that these are the appropriate fields.
         """
         time_format = "%Y-%m-%dT%H:%M:%S.%fZ"
-        self.root["InsertTime"] = datetime.datetime.utcnow().strftime(
-            time_format
-        )
+        self.root["InsertTime"] = datetime.datetime.utcnow().strftime(time_format)
         # This needs to be updated to last update time of file
-        self.root["LastUpdate"] = datetime.datetime.utcnow().strftime(
-            time_format
-        )
+        self.root["LastUpdate"] = datetime.datetime.utcnow().strftime(time_format)
 
         sensing_time = self.attributes["SENSING_TIME"].split(";")
         temporal = self.root["Temporal"]
@@ -295,9 +275,7 @@ class Metadata:
         temporal["RangeDateTime"]["BeginningDateTime"] = start_time.strftime(
             time_format
         )
-        temporal["RangeDateTime"]["EndingDateTime"] = end_time.strftime(
-            time_format
-        )
+        temporal["RangeDateTime"]["EndingDateTime"] = end_time.strftime(time_format)
         self.root["Temporal"] = temporal
 
     def lat_lon_4326(self, bound, src_projection, target_projection):
@@ -421,9 +399,7 @@ class Metadata:
                 gpoly = {"Boundary": points[::-1]}
                 geometries.append(gpoly)
 
-        spatial = OrderedDict(
-            {"HorizontalSpatialDomain": {"Geometry": geometries}}
-        )
+        spatial = OrderedDict({"HorizontalSpatialDomain": {"Geometry": geometries}})
 
         self.root["Spatial"] = spatial
 
@@ -444,16 +420,12 @@ class Metadata:
         for fields with a list of elements (e.g. AdditionalAttribute).
         For lists, it singularizes the key to the list to make the tag
         """
-        with open(
-            os.path.join(util_dir, "array_items.json"), "r"
-        ) as template_file:
+        with open(os.path.join(util_dir, "array_items.json"), "r") as template_file:
             template = json.load(template_file, object_pairs_hook=OrderedDict)
 
         def data2xml(d, name="data"):
             r = etree.Element(name)
-            return etree.tostring(
-                buildxml(r, d), pretty_print=True, encoding="unicode"
-            )
+            return etree.tostring(buildxml(r, d), pretty_print=True, encoding="unicode")
 
         def buildxml(r, d):
             if isinstance(d, dict):
@@ -488,9 +460,7 @@ class Metadata:
 )
 @click.option("--save", nargs=1, help="Save Metadata to File")
 @click.option("--debug/--no-debug", default=False, help="Add debugging output")
-def create_metadata(
-    data_path, outputformat="xml", save=None, debug=False
-):
+def create_metadata(data_path, outputformat="xml", save=None, debug=False):
     """
     Extract Metadata from HDF file
     """

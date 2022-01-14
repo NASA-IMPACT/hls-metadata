@@ -13,7 +13,6 @@ RUN apt-get install build-essential python3-dev python3-numpy libhdf4-dev -y
 RUN pip3 install tox tox-venv
 RUN pip3 install --upgrade setuptools
 RUN git clone https://github.com/NASA-IMPACT/hls-testing_data
-COPY ./ ./hls-metadata
 
 ENTRYPOINT ["/bin/sh", "-c"]
 CMD ["cd hls-metadata && tox -r"]
