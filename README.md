@@ -1,6 +1,12 @@
 # hls-metadata
 ## Generate CMR metdata for HLS products
 
+## Example Usage
+```bash
+create_metadata file.hdf > metadata.xml # Send XML metadata to stdout
+create_metadata file.hdf --save metadata.xml # Use --save argument to set destination
+```
+
 ### Requirements
 The use of rasterio for HDF does not allow for the regular pip install of rasterio using wheels. It requires a preinstalled gdal version that supports HDF4 installed on the system and install rasterio using
 ```
@@ -19,11 +25,6 @@ Run Tests on Docker
 docker build -t hls-metadata . &&  docker run -v $PWD:/hls-metadata hls-metadata
 ```
 
-Examle Usage
-```bash
-create_metadata file.hdf > metadata.xml # Send XML metadata to stdout
-create_metadata file.hdf --save metadata.xml # Use --save argument to set destination
-```
 
 ### Development
 Because of the C lib dependencies on HDF4, developing this application is easisest in Docker.  To use the development container run
