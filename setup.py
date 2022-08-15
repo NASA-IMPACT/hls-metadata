@@ -18,13 +18,13 @@ setup(
         "test": [
             "pytest",
             "pytest-cov",
-            "black",
+            "black==20.8b1",
             "flake8",
             "isort",
         ],
         "dev": [
             "pytest",
-            "black",
+            "black==20.8b1",
             "flake8",
             "isort",
             "pre-commit",
