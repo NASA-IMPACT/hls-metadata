@@ -125,9 +125,7 @@ class Metadata:
         if product_uri is not None:
             platform = "Sentinel-2B" if "S2B" in product_uri else "Sentinel-2A"
         if landsat_product_id is not None:
-            print(landsat_product_id)
             platform = "LANDSAT-8" if "LC08" in landsat_product_id else "LANDSAT-9"
-            print(platform)
         self.root["Collection"]["DataSetId"] = template["DataSetId"]
         self.root["DataFormat"] = template["DataFormat"]
         self.file_extension = self.data_file.split(".")[-1]
