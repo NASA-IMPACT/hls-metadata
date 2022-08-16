@@ -11,20 +11,19 @@ setup(
         "pyhdf",
         "pyproj==2.6.1",
         "rasterio",
-        "shapely",
+        "shapely==1.8a1",
         "lxml",
     ],
     extras_require={
         "test": [
             "pytest",
             "pytest-cov",
-            "black",
             "flake8",
             "isort",
         ],
         "dev": [
             "pytest",
-            "black",
+            "black==20.8b1",
             "flake8",
             "isort",
             "pre-commit",

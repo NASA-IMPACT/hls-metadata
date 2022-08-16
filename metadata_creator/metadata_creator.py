@@ -120,8 +120,12 @@ class Metadata:
         with open(os.path.join(util_dir, self.product + ".json"), "r") as template_file:
             template = json.load(template_file, object_pairs_hook=OrderedDict)
         template = template[self.product]
-        spacecraft_name = self.attributes.get("SPACECRAFT_NAME")
-        platform = "LANDSAT-8" if spacecraft_name is None else spacecraft_name
+        product_uri = self.attributes.get("PRODUCT_URI")
+        landsat_product_id = self.attributes.get("LANDSAT_PRODUCT_ID")
+        if product_uri is not None:
+            platform = "Sentinel-2B" if "S2B" in product_uri else "Sentinel-2A"
+        if landsat_product_id is not None:
+            platform = "LANDSAT-8" if "LC08" in landsat_product_id else "LANDSAT-9"
         self.root["Collection"]["DataSetId"] = template["DataSetId"]
         self.root["DataFormat"] = template["DataFormat"]
         self.file_extension = self.data_file.split(".")[-1]
