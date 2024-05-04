@@ -8,7 +8,6 @@ from io import StringIO
 import click
 import rasterio
 from lxml import etree
-from pyhdf.SD import SD
 from pyproj import Transformer
 from rasterio import features
 from shapely import ops, wkt
@@ -101,13 +100,10 @@ class Metadata:
         return
 
     def extract_attributes(self):
-        # extract the attributes from the data file
-        try:
-            granule = SD(self.data_path, 1)
-        except TypeError:
-            granule = SD(self.data_path.encode("utf-8"), 1)
-        self.attributes = granule.attributes()
-        granule.end()
+        with rasterio.open(self.data_path) as dataset:
+            tags = dataset.tags()
+            print(tags)
+            self.attributes = tags
 
     def template_handler(self):
         """
@@ -146,50 +142,62 @@ class Metadata:
             "r",
         ) as attribute_file:
             attribute_mapping = json.load(attribute_file, object_pairs_hook=OrderedDict)
-        for attribute in self.root["AdditionalAttributes"]:
-            attribute_name = attribute_mapping[attribute["Name"]]
-            value = self.attributes.get(attribute_name, None)
-            if attribute_name == "NBAR_SOLAR_ZENITH" and value:
-                if not math.isnan(value):
-                    value = value
-                else:
-                    value = self.attributes.get("MEAN_SUN_ZENITH_ANGLE", None)
-            datatype = attribute["DataType"]
-            del attribute["DataType"]
-            del attribute["Description"]
-            if value is None and attribute.get("Values", None) is None:
-                if attribute["Name"] == "MGRS_TILE_ID":
-                    attribute["Values"] = {"Value": self.data_file.split(".")[2][1:]}
-                else:
-                    missing_values = {
-                        "INT": -9999,
-                        "FLOAT": -9999.9,
-                        "STRING": "Not Available",
-                    }
-                    attribute["Values"] = {"Value": missing_values[datatype]}
-                continue
-            elif attribute.get("Values", None) is not None:
-                continue
+            for attribute in self.root["AdditionalAttributes"]:
+                attribute_name = attribute_mapping[attribute["Name"]]
+                value = self.attributes.get(attribute_name, None)
+                if attribute_name == "NBAR_SOLAR_ZENITH" and value:
+                    try:
+                        value = float(value)
+                    except ValueError:
+                        print("Float conversion failed for NBAR_SOLAR_ZENITH")
+                    if not math.isnan(value):
+                        value = value
+                    else:
+                        value = self.attributes.get("MEAN_SUN_ZENITH_ANGLE", None)
+                datatype = attribute["DataType"]
+                del attribute["DataType"]
+                del attribute["Description"]
+                if value is None and attribute.get("Values", None) is None:
+                    if attribute["Name"] == "MGRS_TILE_ID":
+                        attribute["Values"] = {
+                            "Value": self.data_file.split(".")[2][1:]
+                        }
+                    else:
+                        missing_values = {
+                            "INT": -9999,
+                            "FLOAT": -9999.9,
+                            "STRING": "Not Available",
+                        }
+                        attribute["Values"] = {"Value": missing_values[datatype]}
+                    continue
+                elif attribute.get("Values", None) is not None:
+                    continue
 
-            values = None
-            if isinstance(value, list):
-                values = value
+                values = None
+                if isinstance(value, list):
+                    values = value
 
-            if not values and datatype in ("FLOAT", "INT") and "," in str(value):
-                values = value.split(",")
+                if not values and datatype in ("FLOAT", "INT") and "," in str(value):
+                    values = value.split(",")
 
-            if not values and ";" in str(value):
-                values = value.replace("; ", ";").split(";")
+                if not values and ";" in str(value):
+                    values = value.replace("; ", ";").split(";")
 
-            if not values:
-                values = [value]
+                if not values:
+                    values = [value]
 
-            if datatype == "FLOAT" and value is not None:
-                if values:
-                    values = [round(float(v), 8) for v in values]
-                else:
-                    value = round(float(value), 8)
-            attribute["Values"] = values
+                if datatype == "FLOAT" and value is not None:
+                    if values:
+                        values = [round(float(v), 8) for v in values]
+                    else:
+                        value = round(float(value), 8)
+
+                if datatype == "INT" and value is not None:
+                    if values:
+                        values = [int(v) for v in values]
+                    else:
+                        value = int(value)
+                attribute["Values"] = values
 
     def online_resource(self):
         """

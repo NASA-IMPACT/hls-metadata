@@ -2,6 +2,7 @@
 *.pyo
 __pycache__/
 venv/
+devenv/
 .vscode/
 .tox/
 dist/

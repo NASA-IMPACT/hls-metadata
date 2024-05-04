@@ -29,6 +29,7 @@ docker build -t hls-metadata . &&  docker run -v $PWD:/hls-metadata hls-metadata
 ### Development
 Because of the C lib dependencies on HDF4, developing this application is easisest in Docker.  To use the development container run
 ```bash
+docker compose up --build
 docker run -it -v $PWD:/hls-metadata hls-metadata /bin/bash
 ```
 At the container's shell prompt
@@ -43,4 +44,9 @@ To interactively test the application in the container
 cd hls-metadata
 pip3 install -e .
 create_metadata ../hls-testing_data/HLS.S30.T01LAH.2020097T222759.v1.5.hdf --save HLS.S30.T01LAH.2020097T222759.v1.5.xml
+```
+
+To run the unit tests
+```bash
+docker compose up --build
 ```

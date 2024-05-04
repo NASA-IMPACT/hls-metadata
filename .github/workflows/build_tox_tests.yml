@@ -6,11 +6,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Build image
-        run: docker build . --tag hls-metadata
-
-      - name: Tox tests in container
-        run: docker run -v $PWD:/hls-metadata hls-metadata
+      - name: Tox in docker
+        run: docker compose up --build
