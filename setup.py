@@ -8,7 +8,6 @@ setup(
     install_requires=[
         "click~=7.1.0",
         "numpy",
-        "pyhdf",
         "pyproj==2.6.1",
         "rasterio",
         "shapely==1.8a1",
