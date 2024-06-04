@@ -153,7 +153,7 @@
 				"Name": "ACCODE",
 				"DataType": "STRING",
 				"Description": " LaSRC Version",
-                                "Values": ["LaSRC v3.0.5"]
+                                "Values": ["LaSRC v3.5.1"]
 			},
 			{
 				"Name": "TIRS_SSM_MODEL",
