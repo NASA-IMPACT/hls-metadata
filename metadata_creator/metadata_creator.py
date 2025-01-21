@@ -119,7 +119,12 @@ class Metadata:
         product_uri = self.attributes.get("PRODUCT_URI")
         landsat_product_id = self.attributes.get("LANDSAT_PRODUCT_ID")
         if product_uri is not None:
-            platform = "Sentinel-2B" if "S2B" in product_uri else "Sentinel-2A"
+            if "S2A" in product_uri:
+                platform = "Sentinel-2A"
+            elif "S2B" in product_uri:
+                platform = "Sentinel-2B"
+            elif "S2C" in product_uri:
+                platform = "Sentinel-2C"
         if landsat_product_id is not None:
             platform = "LANDSAT-8" if "LC08" in landsat_product_id else "LANDSAT-9"
         self.root["Collection"]["DataSetId"] = template["DataSetId"]
