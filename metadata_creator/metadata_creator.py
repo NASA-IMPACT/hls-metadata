@@ -15,7 +15,7 @@ from shapely.geometry import (
     MultiPoint,
     MultiPolygon,
     Polygon,
-    asShape,
+    shape,
     mapping,
     polygon,
 )
@@ -366,7 +366,7 @@ class Metadata:
                 precision=8,
             ):
                 # get list of coordinates from polygons
-                g = asShape(record["geometry"])
+                g = shape(record["geometry"])
                 points.extend(list(g.exterior.coords))
 
             # short circuit if there are no points
