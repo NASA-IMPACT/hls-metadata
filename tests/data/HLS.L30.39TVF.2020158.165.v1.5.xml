@@ -24,20 +24,20 @@
         <GPolygon>
           <Boundary>
             <Point>
-              <PointLongitude>51.11703163</PointLongitude>
-              <PointLatitude>41.55178512</PointLatitude>
+              <PointLongitude>51.1170186</PointLongitude>
+              <PointLatitude>41.55184248</PointLatitude>
             </Point>
             <Point>
-              <PointLongitude>51.11529156</PointLongitude>
-              <PointLatitude>40.56269239</PointLatitude>
+              <PointLongitude>51.11527873</PointLongitude>
+              <PointLatitude>40.56274929</PointLatitude>
             </Point>
             <Point>
-              <PointLongitude>49.81837971</PointLongitude>
-              <PointLatitude>40.55670691</PointLatitude>
+              <PointLongitude>49.81836515</PointLongitude>
+              <PointLatitude>40.55676366</PointLatitude>
             </Point>
             <Point>
-              <PointLongitude>49.8005509</PointLongitude>
-              <PointLatitude>41.54558877</PointLatitude>
+              <PointLongitude>49.8005361</PointLongitude>
+              <PointLatitude>41.54564597</PointLatitude>
             </Point>
           </Boundary>
         </GPolygon>
