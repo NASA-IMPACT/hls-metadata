@@ -406,7 +406,10 @@ class Metadata:
             if debug:
                 print(gj)
 
-            for p in mpoly:
+            # Normalize to have deterministic vertex and polygon order.
+            # This helps ensure consistency across GEOS/shapely versions.
+            polygons = mpoly.normalize().geoms
+            for p in polygons:
                 points = []
                 p = polygon.orient(p, sign=1.0)
                 for x, y in p.exterior.coords[:-1]:
