@@ -9,4 +9,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Tox in docker
-        run: docker compose up --build
+        run: |
+          docker compose build tox
+          docker compose run tox
