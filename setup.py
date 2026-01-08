@@ -2,15 +2,15 @@ from setuptools import find_packages, setup
 
 setup(
     name="metadata_creator",
-    version="2.7",
+    version="2.8",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        "click~=7.1.0",
+        "click",
         "numpy",
-        "pyproj==2.6.1",
+        "pyproj",
         "rasterio",
-        "shapely==1.8a1",
+        "shapely",
         "lxml",
     ],
     extras_require={

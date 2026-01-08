@@ -15,10 +15,10 @@ from shapely.geometry import (
     MultiPoint,
     MultiPolygon,
     Polygon,
-    asShape,
+    shape,
     mapping,
-    polygon,
 )
+from shapely.geometry.polygon import orient as orient_polygon
 
 current_dir = os.path.dirname(__file__)
 util_dir = os.path.join(current_dir, "templates")
@@ -366,8 +366,12 @@ class Metadata:
                 precision=8,
             ):
                 # get list of coordinates from polygons
-                g = asShape(record["geometry"])
-                points.extend(list(g.exterior.coords))
+                g = shape(record["geometry"])
+                if isinstance(g, MultiPolygon):
+                    for polygon in g.geoms:
+                        points.extend(list(polygon.exterior.coords))
+                else:
+                    points.extend(list(g.exterior.coords))
 
             # short circuit if there are no points
             if len(points) < 3:
@@ -406,9 +410,12 @@ class Metadata:
             if debug:
                 print(gj)
 
-            for p in mpoly:
+            # Normalize to have deterministic vertex and polygon order.
+            # This helps ensure consistency across GEOS/shapely versions.
+            polygons = mpoly.normalize().geoms
+            for p in polygons:
                 points = []
-                p = polygon.orient(p, sign=1.0)
+                p = orient_polygon(p, sign=1.0)
                 for x, y in p.exterior.coords[:-1]:
                     points.append(
                         OrderedDict({"PointLongitude": x, "PointLatitude": y})

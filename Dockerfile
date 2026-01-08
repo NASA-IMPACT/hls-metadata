@@ -13,8 +13,11 @@ RUN : \
     git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && pip3 install --no-cache --upgrade setuptools \
-    && pip3 install --no-cache rasterio==1.1.3 tox tox-venv --no-binary rasterio \
+    && pip3 install --no-cache --upgrade setuptools pip \
+    && pip install --no-cache \
+        tox tox-venv \
+        rasterio==1.2.10 --no-binary rasterio \
+        'pyproj>=2,<3' \
     && :
 
 RUN git clone https://github.com/NASA-IMPACT/hls-testing_data

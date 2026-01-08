@@ -24,16 +24,40 @@
         <GPolygon>
           <Boundary>
             <Point>
+              <PointLongitude>180.0</PointLongitude>
+              <PointLatitude>-10.84086245</PointLatitude>
+            </Point>
+            <Point>
+              <PointLongitude>180.0</PointLongitude>
+              <PointLatitude>-10.853596160180942</PointLatitude>
+            </Point>
+            <Point>
+              <PointLongitude>179.99060551442886</PointLongitude>
+              <PointLatitude>-10.85874929986336</PointLatitude>
+            </Point>
+          </Boundary>
+        </GPolygon>
+        <GPolygon>
+          <Boundary>
+            <Point>
+              <PointLongitude>179.99060551442886</PointLongitude>
+              <PointLatitude>-10.85874929986336</PointLatitude>
+            </Point>
+            <Point>
+              <PointLongitude>179.89099186</PointLongitude>
+              <PointLatitude>-11.04841104</PointLatitude>
+            </Point>
+            <Point>
+              <PointLongitude>179.51697787</PointLongitude>
+              <PointLatitude>-11.11854739</PointLatitude>
+            </Point>
+          </Boundary>
+        </GPolygon>
+        <GPolygon>
+          <Boundary>
+            <Point>
               <PointLongitude>-180.0</PointLongitude>
-              <PointLatitude>-10.840859466359879</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>-179.99720136</PointLongitude>
-              <PointLatitude>-10.84088971</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>-179.99979252</PointLongitude>
-              <PointLatitude>-10.85332933</PointLatitude>
+              <PointLatitude>-10.84086245</PointLatitude>
             </Point>
             <Point>
               <PointLongitude>-179.99951842</PointLongitude>
@@ -41,31 +65,7 @@
             </Point>
             <Point>
               <PointLongitude>-180.0</PointLongitude>
-              <PointLatitude>-10.85551195129015</PointLatitude>
-            </Point>
-          </Boundary>
-        </GPolygon>
-        <GPolygon>
-          <Boundary>
-            <Point>
-              <PointLongitude>180.0</PointLongitude>
-              <PointLatitude>-10.85551195129015</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>179.91877534</PointLongitude>
-              <PointLatitude>-11.22318877</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>179.99993337</PointLongitude>
-              <PointLatitude>-10.85332665</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>179.34246202</PointLongitude>
-              <PointLatitude>-10.83375375</PointLatitude>
-            </Point>
-            <Point>
-              <PointLongitude>180.0</PointLongitude>
-              <PointLatitude>-10.840859466359879</PointLatitude>
+              <PointLatitude>-10.853596160180942</PointLatitude>
             </Point>
           </Boundary>
         </GPolygon>

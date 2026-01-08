@@ -6,7 +6,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
 
       - name: Tox in docker
-        run: docker compose up --build
+        run: |
+          docker compose build tox
+          docker compose run tox
