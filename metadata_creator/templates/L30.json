@@ -156,9 +156,9 @@
                                 "Values": ["LaSRC v3.5.1.0"]
 			},
 			{
-				"Name": "FMASK_VERSION",
+				"Name": "CLOUD_MASKING_CODE",
 				"DataType": "STRING",
-				"Description": "Fmask Version"
+				"Description": "Cloud masking algorithm and version"
 			},
 			{
 				"Name": "TIRS_SSM_MODEL",
