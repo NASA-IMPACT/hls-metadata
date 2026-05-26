@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="metadata_creator",
-    version="2.8",
+    version="2.9",
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
