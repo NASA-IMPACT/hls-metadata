@@ -156,6 +156,11 @@
                                 "Values": ["LaSRC v3.5.1.0"]
 			},
 			{
+				"Name": "FMASK_VERSION",
+				"DataType": "STRING",
+				"Description": "Fmask Version"
+			},
+			{
 				"Name": "TIRS_SSM_MODEL",
 				"DataType": "STRING",
 				"Description": "TIRS SSM model"

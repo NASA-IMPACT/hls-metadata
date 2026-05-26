@@ -231,6 +231,11 @@
                                 "Values": ["LaSRC v3.5.1.0"]
 			},
 			{
+				"Name": "FMASK_VERSION",
+				"DataType": "STRING",
+				"Description": "Fmask Version"
+			},
+			{
 				"Name": "PROCESSING_BASELINE",
 				"DataType": "STRING",
 				"Description": "Processing baseline"
