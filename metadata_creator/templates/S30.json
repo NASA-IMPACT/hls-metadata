@@ -231,6 +231,11 @@
                                 "Values": ["LaSRC v3.5.1.0"]
 			},
 			{
+				"Name": "CLOUD_MASKING_CODE",
+				"DataType": "STRING",
+				"Description": "Cloud masking algorithm and version"
+			},
+			{
 				"Name": "PROCESSING_BASELINE",
 				"DataType": "STRING",
 				"Description": "Processing baseline"

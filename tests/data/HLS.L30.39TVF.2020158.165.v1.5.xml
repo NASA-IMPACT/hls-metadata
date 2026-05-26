@@ -209,6 +209,12 @@
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
+      <Name>CLOUD_MASKING_CODE</Name>
+      <Values>
+        <Value>Not Available</Value>
+      </Values>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>TIRS_SSM_MODEL</Name>
       <Values>
         <Value>ACTUAL</Value>

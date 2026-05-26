@@ -313,6 +313,12 @@
       </Values>
     </AdditionalAttribute>
     <AdditionalAttribute>
+      <Name>CLOUD_MASKING_CODE</Name>
+      <Values>
+        <Value>Not Available</Value>
+      </Values>
+    </AdditionalAttribute>
+    <AdditionalAttribute>
       <Name>PROCESSING_BASELINE</Name>
       <Values>
         <Value>02.09</Value>
